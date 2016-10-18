@@ -14,20 +14,10 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".UserAreaActivity" />
-        <activity android:name=".ProjectsActivity" />
-        <activity android:name=".AddProjectActivity" />
-        <activity android:name=".WelcomeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".UserAreaActivity"></activity>
     </application>
-
 </manifest>
