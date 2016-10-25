@@ -18,18 +18,18 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/textViewLocation"
+        android:id="@+id/textViewLocationText"
         tools:textColor="@android:color/black"/>
 
     <TextView
         android:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView4"
+        android:id="@+id/textViewLocation"
         tools:textColor="@android:color/black"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/textViewLocation"
-        android:layout_toEndOf="@+id/textViewLocation"
+        android:layout_toRightOf="@+id/textViewLocationText"
+        android:layout_toEndOf="@+id/textViewLocationText"
         android:layout_marginLeft="17dp"
         android:layout_marginStart="17dp" />
 
