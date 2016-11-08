@@ -25,7 +25,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
     protected String doInBackground(String... params) {
         String type = params[0];
         //String login_url = "http://examplecivicproject.net23.net/login.php";
-        String login_url = "http://192.168.1.102/login.php";
+        String login_url = "http://civicproject.3eeweb.com/login.php";
         if(type.equals("login")) {
             try {
                 String user_name = params[1];
