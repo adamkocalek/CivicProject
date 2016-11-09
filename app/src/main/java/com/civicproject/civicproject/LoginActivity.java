@@ -17,15 +17,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText etUsername, etPassword;
+    EditText etLoginUsername, etLoginPassword;
     Button bLogin;
     TextView tvRegisterLink;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        etUsername = (EditText) findViewById(R.id.etUsername);
-        etPassword = (EditText) findViewById(R.id.etPassword);
+        etLoginUsername = (EditText) findViewById(R.id.etLoginUsername);
+        etLoginPassword = (EditText) findViewById(R.id.etLoginPassword);
         tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);
         bLogin = (Button) findViewById(R.id.bSignIn);
 
@@ -34,13 +34,13 @@ public class LoginActivity extends AppCompatActivity {
 //        final TextView tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);
 //        final Button bLogin = (Button) findViewById(R.id.bSignIn);
 //
-//        tvRegisterLink.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-//                LoginActivity.this.startActivity(registerIntent);
-//            }
-//        });
+        tvRegisterLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                LoginActivity.this.startActivity(registerIntent);
+            }
+        });
 //
 //        bLogin.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -92,8 +92,8 @@ public class LoginActivity extends AppCompatActivity {
 //        });
     }
     public void onLogin(View view) {
-        String username = etUsername.getText().toString();
-        String password = etPassword.getText().toString();
+        String username = etLoginUsername.getText().toString();
+        String password = etLoginPassword.getText().toString();
         String type = "login";
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         backgroundWorker.execute(type, username, password);

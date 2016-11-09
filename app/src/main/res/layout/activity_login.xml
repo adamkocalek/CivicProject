@@ -10,7 +10,7 @@
     tools:context=".UserAreaActivity">
 
     <EditText
-        android:id="@+id/etUsername"
+        android:id="@+id/etLoginUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -22,14 +22,14 @@
         android:hint="Username" />
 
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/etLoginPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/etUsername"
+        android:layout_below="@+id/etLoginUsername"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword" />
@@ -42,7 +42,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/etPassword"
+        android:layout_below="@+id/etLoginPassword"
         android:text="Sign In"
         android:onClick="onLogin"/>
 
