@@ -12,14 +12,13 @@
     tools:context="com.civicproject.civicproject.AddProjectActivity">
 
     <TextView
-        android:text="Location: "
+        android:text="Lokalizacja: "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:id="@+id/textViewLocationText"
-        tools:textColor="@android:color/black"/>
+        tools:textColor="@android:color/black"
+        android:layout_below="@+id/imageViewPicture"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:text=""
@@ -27,21 +26,21 @@
         android:layout_height="wrap_content"
         android:id="@+id/textViewLocation"
         tools:textColor="@android:color/black"
-        android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/textViewLocationText"
         android:layout_toEndOf="@+id/textViewLocationText"
-        android:layout_marginLeft="17dp"
-        android:layout_marginStart="17dp" />
+        android:layout_below="@+id/imageViewPicture"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:text="Opis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewLocation"
+        android:layout_below="@+id/editTextSubject"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/textViewDescription"
-        tools:textColor="@android:color/black"/>
+        tools:textColor="@android:color/black"
+        android:layout_marginTop="10dp"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -53,7 +52,8 @@
         android:layout_alignParentStart="true"
         android:id="@+id/editTextDesctiption"
         tools:textColor="@android:color/black"
-        />
+        android:hint="Opis"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:text="Zdjęcie:"
@@ -62,7 +62,8 @@
         android:layout_below="@+id/editTextDesctiption"
         android:layout_alignRight="@+id/textView"
         android:id="@+id/textViewPicture"
-        tools:textColor="@android:color/black"/>
+        tools:textColor="@android:color/black"
+        android:layout_marginTop="10dp"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -71,15 +72,57 @@
         android:layout_below="@+id/textViewPicture"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/imageView" />
+        android:id="@+id/imageViewPicture"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:text="Autor:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewDate"
+        android:layout_alignRight="@+id/textView"
+        android:id="@+id/textViewAuthor"
+        tools:textColor="@android:color/black"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:text="Data:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewLocation"
+        android:layout_alignRight="@+id/textView"
+        android:id="@+id/textViewDate"
+        tools:textColor="@android:color/black"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:text="Temat:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textView"
+        android:id="@+id/textViewSubject"
+        tools:textColor="@android:color/black"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:layout_below="@+id/textViewSubject"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/editTextSubject"
+        tools:textColor="@android:color/black"
+        android:hint="Temat"
+        android:layout_marginTop="10dp"/>
 
     <Button
-        android:text="Add"
+        android:text="Dodaj projekt!"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/buttonAddProjectFinal" />
-
+        android:id="@+id/buttonAddProjectFinal"
+        android:onClick="onAddProjectButtonClick"/>
 
 </RelativeLayout>

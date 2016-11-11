@@ -13,7 +13,7 @@
     tools:context="com.civicproject.civicproject.WelcomeActivity">
 
     <TextView
-        android:text="Welcome to CivicProject!"
+        android:text="Aplikacja projekt obywatelski!"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

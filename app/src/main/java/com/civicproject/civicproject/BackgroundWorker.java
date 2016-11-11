@@ -1,6 +1,7 @@
 package com.civicproject.civicproject;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 
 import java.io.BufferedReader;
@@ -24,10 +25,13 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
     @Override
     protected String doInBackground(String... params) {
         String type = params[0];
-        //String login_url = "http://examplecivicproject.net23.net/login.php";
-        String login_url = "http://192.168.0.103/login.php";
-        String register_url = "http://192.168.0.103/register.php";
-        //String login_url = "http://civicproject.3eeweb.com/login.php";
+//        String login_url = "http://examplecivicproject.net23.net/login.php";
+//        String login_url = "http://192.168.0.103/login.php";
+//        String register_url = "http://192.168.0.103/register.php";
+//        String login_url = "http://civicproject.3eeweb.com/login.php";
+        String login_url = "http://192.168.1.109/login.php";
+        String register_url = "http://192.168.1.109/register.php";
+        String addProject_url = "http://192.168.1.109/addProject.php";
         if(type.equals("login")) {
             try {
                 String user_name = params[1];
@@ -102,6 +106,46 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else if(type.equals("addProject")) {
+            try {
+                String author = params[1];
+                String subject = params[2];
+                String description = params[3];
+                String location = params[4];
+                String date = params[5];
+                URL url = new URL(addProject_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("author", "UTF-8") + "=" + URLEncoder.encode(author, "UTF-8") + "&"
+                        + URLEncoder.encode("subject", "UTF-8") + "=" + URLEncoder.encode(subject, "UTF-8") + "&"
+                        + URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode(description, "UTF-8") + "&"
+                        + URLEncoder.encode("location", "UTF-8") + "=" + URLEncoder.encode(location, "UTF-8") + "&"
+                        + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String result = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                System.out.println(result);
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
@@ -114,12 +158,20 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String result) {
-        alertDialog.setMessage(result);
-        alertDialog.show();
+        String temp = "Login success. Welcome!";
+        if(result.equals(temp)){
+            Intent intent = new Intent(context, ProjectsActivity.class);
+            context.startActivity(intent);
+        } else {
+            alertDialog.setMessage(result);
+            alertDialog.show();
+        }
     }
 
     @Override
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
     }
+
+
 }

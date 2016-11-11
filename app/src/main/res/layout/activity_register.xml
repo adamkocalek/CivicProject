@@ -15,7 +15,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:hint="Name" />
+        android:hint="Imię" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:hint="Surname" />
+        android:hint="Nazwisko" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:hint="Username" />
+        android:hint="Login" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -50,12 +50,12 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:hint="Password" />
+        android:hint="Hasło" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:text="Zarejestruj"
         android:id="@+id/bRegister"
         android:layout_below="@+id/etRegisterAge"
         android:layout_alignParentLeft="true"
@@ -75,5 +75,5 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:hint="Age" />
+        android:hint="Wiek" />
 </RelativeLayout>

@@ -11,7 +11,7 @@
     tools:context="com.civicproject.civicproject.ProjectsActivity">
 
     <Button
-        android:text="Add project"
+        android:text="Dodaj projekt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -20,7 +20,7 @@
         android:id="@+id/buttonAddProject" />
 
     <Button
-        android:text="Settings"
+        android:text="Panel użytkownika"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

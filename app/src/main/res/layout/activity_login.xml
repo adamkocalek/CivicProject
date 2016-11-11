@@ -19,7 +19,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:ems="10"
-        android:hint="Username" />
+        android:hint="Login" />
 
     <EditText
         android:id="@+id/etLoginPassword"
@@ -31,7 +31,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/etLoginUsername"
         android:ems="10"
-        android:hint="Password"
+        android:hint="Hasło"
         android:inputType="textPassword" />
 
     <Button
@@ -43,14 +43,14 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/etLoginPassword"
-        android:text="Sign In"
+        android:text="Zaloguj"
         android:onClick="onLogin"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Register Here"
+        android:text="Załóż konto!"
         android:id="@+id/tvRegisterLink"
         android:layout_below="@+id/bSignIn"
         android:layout_centerHorizontal="true" />

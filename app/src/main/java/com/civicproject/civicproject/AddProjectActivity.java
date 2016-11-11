@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.Image;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -14,21 +15,39 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class AddProjectActivity extends AppCompatActivity implements View.OnClickListener {
     Button buttonAddProjectFinal;
-    TextView textViewLocation;
+    TextView textViewLocation, textViewDate, textViewAuthor;
     LocationManager locationManager;
     LocationListener locationListener;
-
+    EditText editTextSubject, editTextDesctiption;
+    ImageView imageViewPicture;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_project);
+
         buttonAddProjectFinal = (Button) findViewById(R.id.buttonAddProjectFinal);
         textViewLocation = (TextView) findViewById(R.id.textViewLocation);
+        textViewDate = (TextView) findViewById(R.id.textViewDate);
+        textViewAuthor = (TextView) findViewById(R.id.textViewAuthor);
+        editTextSubject = (EditText) findViewById(R.id.editTextSubject);
+        editTextDesctiption = (EditText) findViewById(R.id.editTextDesctiption);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        imageViewPicture = (ImageView) findViewById(R.id.imageViewPicture);
+
+        DateFormat df = new SimpleDateFormat("EEE d-MMM-yyyy, HH:mm");
+        textViewDate.setText(df.format(Calendar.getInstance().getTime()));
+        textViewAuthor.setText("Adam Kocalek");
+
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
@@ -60,14 +79,6 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
         } else {
             configureButton();
         }
-
-
-        buttonAddProjectFinal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     @Override
@@ -93,6 +104,18 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
             return;
         }
         locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
+    }
+
+    public void onAddProjectButtonClick(View view) {
+        System.out.println("DDDDDDDDDDDDDDDDUUUUUUUUUUUUUUUPAAAAAAAA");
+        String subject = editTextSubject.getText().toString();
+        String description = editTextDesctiption.getText().toString();
+        String author = textViewAuthor.getText().toString();
+        String date = textViewDate.getText().toString();
+        String location = textViewLocation.getText().toString();
+        String type = "addProject";
+        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+        backgroundWorker.execute(type, author, subject, description, location, date);
     }
 
     @Override
