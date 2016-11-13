@@ -7,25 +7,21 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class UserAreaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_area);
 
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
-        String username = intent.getStringExtra("username");
-        int age = intent.getIntExtra("age", -1);
+        TextView textViewUserArea = (TextView) findViewById(R.id.textViewUserArea);
+        EditText editTextName = (EditText) findViewById(R.id.editTextName);
+        EditText editTextrSurname = (EditText) findViewById(R.id.editTextrSurname);
+        EditText editTextUsername = (EditText) findViewById(R.id.editTextUsername);
+        EditText editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+        EditText editTextAge = (EditText) findViewById(R.id.editTextAge);
 
-        TextView tvWelcomeMsg = (TextView) findViewById(R.id.tvWelcomeMsg);
-        EditText etUsername = (EditText) findViewById(R.id.etUsername);
-        EditText etAge = (EditText) findViewById(R.id.etAge);
 
-        // Display user details
-        String message = name + " welcome to your user area";
-        tvWelcomeMsg.setText(message);
-        etUsername.setText(username);
-        etAge.setText(age + "");
     }
 }

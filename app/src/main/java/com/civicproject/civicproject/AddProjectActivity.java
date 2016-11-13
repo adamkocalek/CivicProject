@@ -107,7 +107,6 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
     }
 
     public void onAddProjectButtonClick(View view) {
-        System.out.println("DDDDDDDDDDDDDDDDUUUUUUUUUUUUUUUPAAAAAAAA");
         String subject = editTextSubject.getText().toString();
         String description = editTextDesctiption.getText().toString();
         String author = textViewAuthor.getText().toString();
@@ -116,6 +115,8 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
         String type = "addProject";
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         backgroundWorker.execute(type, author, subject, description, location, date);
+        editTextSubject.setText("");
+        editTextDesctiption.setText("");
     }
 
     @Override

@@ -159,6 +159,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
     @Override
     protected void onPostExecute(String result) {
         String temp = "Login success. Welcome!";
+
         if(result.equals(temp)){
             Intent intent = new Intent(context, ProjectsActivity.class);
             context.startActivity(intent);

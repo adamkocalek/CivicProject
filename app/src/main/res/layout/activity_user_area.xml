@@ -6,65 +6,84 @@
     android:padding="@dimen/activity_horizontal_margin">
 
     <TextView
-        android:id="@+id/tvWelcomeMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="hello world"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        tools:textColor="@android:color/black" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/tvWelcomeMsg"
-        android:text="Username"
-        tools:textColor="@android:color/black"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="Panel użytkownika"
+        android:textStyle="italic"
+        android:textSize="30dp"
+        android:id="@+id/textViewUserArea"
+        android:layout_centerHorizontal="true" />
 
     <EditText
-        android:id="@+id/etUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextName"
+        android:layout_below="@+id/textViewUserArea"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView"
-        android:editable="false" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/etUsername"
-        android:text="Age"
-        tools:textColor="@android:color/black"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_alignParentEnd="true"
+        android:hint="Imię" />
 
     <EditText
-        android:id="@+id/etAge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:id="@+id/editTextrSurname"
+        android:layout_below="@+id/editTextName"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView2" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:hint="Nazwisko" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextUsername"
+        android:layout_below="@+id/editTextrSurname"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:hint="Login" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editTextPassword"
+        android:layout_below="@+id/editTextUsername"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:hint="Hasło" />
 
     <Button
-        android:text="Projects"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/buttonProjects" />
+        android:text="Edytuj"
+        android:id="@+id/buttonEdit"
+        android:layout_below="@+id/editTextAge"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/editTextAge"
+        android:layout_alignEnd="@+id/editTextAge" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editTextAge"
+        android:layout_below="@+id/editTextPassword"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:hint="Wiek" />
 
 </RelativeLayout>
