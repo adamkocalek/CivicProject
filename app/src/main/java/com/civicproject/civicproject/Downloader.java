@@ -54,14 +54,14 @@ public class Downloader extends AsyncTask<Void,Integer,String> {
     private String downloadData()
     {
         //connect and get a stream
-        InputStream is=null;
-        String line =null;
+        InputStream is = null;
+        String line = null;
         try {
-            URL url=new URL(address);
-            HttpURLConnection con= (HttpURLConnection) url.openConnection();
+            URL url = new URL(address);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
             is=new BufferedInputStream(con.getInputStream());
-            BufferedReader br=new BufferedReader(new InputStreamReader(is));
-            StringBuffer sb=new StringBuffer();
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            StringBuffer sb = new StringBuffer();
             if(br != null) {
                 while ((line=br.readLine()) != null) {
                     sb.append(line+"n");

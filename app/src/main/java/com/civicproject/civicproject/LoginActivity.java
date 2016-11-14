@@ -1,6 +1,7 @@
 package com.civicproject.civicproject;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -38,6 +39,10 @@ public class LoginActivity extends AppCompatActivity {
         String password = etLoginPassword.getText().toString();
         String type = "login";
 
+        SharedPreferences myprefs = this.getSharedPreferences("user", MODE_WORLD_READABLE);
+        myprefs.edit().putString("username", username).commit();
+        myprefs.edit().putString("password", password).commit();
+//        myprefs.edit().commit();
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         backgroundWorker.execute(type, username, password);
 

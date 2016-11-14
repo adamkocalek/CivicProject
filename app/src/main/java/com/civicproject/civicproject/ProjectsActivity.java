@@ -11,7 +11,8 @@ import android.widget.ListView;
 public class ProjectsActivity extends AppCompatActivity implements View.OnClickListener {
     Button buttonAddProject, buttonSettings;
 
-    String url = "http://192.168.1.109/projects.php";
+//    String url = "http://192.168.1.109/projects.php";
+    String url = "http://192.168.0.102/projects.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,10 +20,9 @@ public class ProjectsActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_projects);
         buttonAddProject = (Button)findViewById(R.id.buttonAddProject);
         buttonSettings = (Button)findViewById(R.id.buttonSettings);
-
         final ListView listView = (ListView) findViewById(R.id.listView);
-        final Downloader downloader = new Downloader(this,url,listView);
 
+        final Downloader downloader = new Downloader(this,url,listView);
         downloader.execute();
 
         buttonAddProject.setOnClickListener(new View.OnClickListener() {

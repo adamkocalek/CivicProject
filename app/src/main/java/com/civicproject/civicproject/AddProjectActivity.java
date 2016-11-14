@@ -2,6 +2,7 @@ package com.civicproject.civicproject;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -46,7 +47,11 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
 
         DateFormat df = new SimpleDateFormat("EEE d-MMM-yyyy, HH:mm");
         textViewDate.setText(df.format(Calendar.getInstance().getTime()));
-        textViewAuthor.setText("Adam Kocalek");
+
+
+        SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
+        String username = myprefs.getString("username", null);
+        textViewAuthor.setText("Autor: " + username);
 
         locationListener = new LocationListener() {
             @Override

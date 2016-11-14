@@ -18,7 +18,7 @@ public class Parser extends AsyncTask<Void,Integer,Integer> {
     Context context;
     ListView listView;
     String data;
-    ArrayList<String> players=new ArrayList<>();
+    ArrayList<String> projects = new ArrayList<>();
     ProgressDialog progressDialog;
     public Parser(Context context, String data, ListView listView) {
         this.context = context;
@@ -43,7 +43,7 @@ public class Parser extends AsyncTask<Void,Integer,Integer> {
         if(integer == 1)
         {
             //ADAPTER
-            ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,players);
+            ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,projects);
             //ADAPT TO LISTVIEW
             listView.setAdapter(adapter);
             //LISTENET
@@ -69,7 +69,7 @@ public class Parser extends AsyncTask<Void,Integer,Integer> {
             JSONArray ja=new JSONArray(data);
             //CREATE JO OBJ TO HOLD A SINGLE ITEM
             JSONObject jo=null;
-            players.clear();
+            projects.clear();
             //LOOP THRU ARRAY
             for(int i=0;i<ja.length();i++)
             {
@@ -77,7 +77,7 @@ public class Parser extends AsyncTask<Void,Integer,Integer> {
                 //RETRIOEVE NAME
                 String subject = jo.getString("subject");
                 //ADD IT TO OUR ARRAYLIST
-                players.add(subject);
+                projects.add(subject);
             }
             return 1;
         } catch (JSONException e) {
