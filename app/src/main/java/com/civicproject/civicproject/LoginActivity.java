@@ -41,8 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
         SharedPreferences myprefs = this.getSharedPreferences("user", MODE_WORLD_READABLE);
         myprefs.edit().putString("username", username).commit();
-        myprefs.edit().putString("password", password).commit();
-//        myprefs.edit().commit();
+
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         backgroundWorker.execute(type, username, password);
 

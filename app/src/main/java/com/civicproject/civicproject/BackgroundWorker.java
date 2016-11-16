@@ -7,6 +7,10 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -22,10 +26,13 @@ import java.net.URLEncoder;
 public class BackgroundWorker extends AsyncTask<String, Void, String> {
     Context context;
     AlertDialog alertDialog;
+    BackgroundWorker() {
+    }
     BackgroundWorker(Context ctx) {
         context = ctx;
     }
-
+    String tempJSON;
+    String tempAuthor;
     @Override
     protected String doInBackground(String... params) {
         String type = params[0];
@@ -157,7 +164,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         } else if (type.equals("getUser")) {
             try {
                 String user_name = params[1];
-//                String password = params[2];
                 URL url = new URL(getUser_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -165,8 +171,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-//                String post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8") + "&"
-//                        + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
                 String post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
@@ -183,6 +187,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 inputStream.close();
                 httpURLConnection.disconnect();
                 System.out.println(result);
+                tempJSON = result;
                 return result;
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -204,6 +209,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         String temp = "Login success. Welcome!";
 
         if (result.equals(temp)) {
+
             Intent intent = new Intent(context, ProjectsActivity.class);
             context.startActivity(intent);
         } else if (result.contains("[{")) {

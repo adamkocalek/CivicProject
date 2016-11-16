@@ -33,6 +33,11 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
     ImageView imageViewPicture;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_project);
 
@@ -50,8 +55,9 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
 
 
         SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
-        String username = myprefs.getString("username", null);
-        textViewAuthor.setText("Autor: " + username);
+        String name = myprefs.getString("name", null);
+        String surname = myprefs.getString("surname", null);
+        textViewAuthor.setText("Autor: " + name + " " + surname);
 
         locationListener = new LocationListener() {
             @Override
@@ -112,6 +118,7 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
     }
 
     public void onAddProjectButtonClick(View view) {
+
         String subject = editTextSubject.getText().toString();
         String description = editTextDesctiption.getText().toString();
         String author = textViewAuthor.getText().toString();
