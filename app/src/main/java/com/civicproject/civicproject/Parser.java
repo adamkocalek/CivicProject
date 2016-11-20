@@ -3,6 +3,7 @@ package com.civicproject.civicproject;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +21,9 @@ public class Parser extends AsyncTask<Void,Integer,Integer> {
     String data;
     ArrayList<String> projects = new ArrayList<>();
     ProgressDialog progressDialog;
+    public Parser(){
+
+    }
     public Parser(Context context, String data, ListView listView) {
         this.context = context;
         this.data = data;

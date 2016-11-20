@@ -3,6 +3,7 @@ package com.civicproject.civicproject;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.widget.ListView;
 import android.widget.Toast;
 import java.io.BufferedInputStream;
@@ -51,7 +52,7 @@ public class Downloader extends AsyncTask<Void,Integer,String> {
             Toast.makeText(context,"Unable to download data",Toast.LENGTH_SHORT).show();
         }
     }
-    private String downloadData()
+    public String downloadData()
     {
         //connect and get a stream
         InputStream is = null;

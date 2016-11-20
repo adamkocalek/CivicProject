@@ -51,10 +51,10 @@ public class ProjectsActivity extends AppCompatActivity implements View.OnClickL
                 String surname = jo1.getString("surname");
                 String age = jo1.getString("age");
                 String password = jo1.getString("password");
-                sharedPreferences.edit().putString("name", name).commit();
-                sharedPreferences.edit().putString("surname", surname).commit();
-                sharedPreferences.edit().putString("age", age).commit();
-                sharedPreferences.edit().putString("password", password).commit();
+                sharedPreferences.edit().putString("name", name).apply();
+                sharedPreferences.edit().putString("surname", surname).apply();
+                sharedPreferences.edit().putString("age", age).apply();
+                sharedPreferences.edit().putString("password", password).apply();
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -62,7 +62,6 @@ public class ProjectsActivity extends AppCompatActivity implements View.OnClickL
 
         final Downloader downloader = new Downloader(this,url,listView);
         downloader.execute();
-
         buttonAddProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
