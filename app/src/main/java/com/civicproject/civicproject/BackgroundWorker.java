@@ -36,16 +36,10 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params) {
         String type = params[0];
-//        String login_url = "http://examplecivicproject.net23.net/login.php";
-//        String login_url = "http://civicproject.3eeweb.com/login.php";
-
-        String login_url = "http://192.168.0.102/login.php";
-        String register_url = "http://192.168.0.102/register.php";
-        String addProject_url = "http://192.168.0.102/addProject.php";
-        String getUser_url = "http://192.168.0.102/getUser.php";
-//        String login_url = "http://192.168.1.109/login.php";
-//        String register_url = "http://192.168.1.109/register.php";
-//        String addProject_url = "http://192.168.1.109/addProject.php";
+        String login_url = "http://188.128.220.60/login.php";
+        String register_url = "http://188.128.220.60/register.php";
+        String addProject_url = "http://188.128.220.60/addProject.php";
+        String getUser_url = "http://188.128.220.60/getUser.php";
 
         if (type.equals("login")) {
             try {
@@ -128,6 +122,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String description = params[3];
                 String location = params[4];
                 String date = params[5];
+                String author_key = params[6];
                 URL url = new URL(addProject_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -139,7 +134,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                         + URLEncoder.encode("subject", "UTF-8") + "=" + URLEncoder.encode(subject, "UTF-8") + "&"
                         + URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode(description, "UTF-8") + "&"
                         + URLEncoder.encode("location", "UTF-8") + "=" + URLEncoder.encode(location, "UTF-8") + "&"
-                        + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8");
+                        + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&"
+                        + URLEncoder.encode("author_key", "UTF-8") + "=" + URLEncoder.encode(author_key, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();

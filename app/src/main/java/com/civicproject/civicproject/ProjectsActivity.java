@@ -15,10 +15,7 @@ import org.json.JSONObject;
 
 public class ProjectsActivity extends AppCompatActivity implements View.OnClickListener {
     Button buttonAddProject, buttonSettings;
-
-//    String url = "http://192.168.1.109/projects.php";
-    String url = "http://192.168.0.102/projects.php";
-
+    String url = "http://188.128.220.60/projects.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,10 +48,12 @@ public class ProjectsActivity extends AppCompatActivity implements View.OnClickL
                 String surname = jo1.getString("surname");
                 String age = jo1.getString("age");
                 String password = jo1.getString("password");
+                String author_key = jo1.getString("id");
                 sharedPreferences.edit().putString("name", name).apply();
                 sharedPreferences.edit().putString("surname", surname).apply();
                 sharedPreferences.edit().putString("age", age).apply();
                 sharedPreferences.edit().putString("password", password).apply();
+                sharedPreferences.edit().putString("author_key", author_key).apply();
             }
         } catch (JSONException e) {
             e.printStackTrace();
