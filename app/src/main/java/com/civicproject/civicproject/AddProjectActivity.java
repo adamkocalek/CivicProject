@@ -31,7 +31,6 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
     LocationListener locationListener;
     EditText editTextSubject, editTextDesctiption;
     ImageView imageViewPicture;
-    String tempAuthorKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
@@ -58,13 +57,12 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
         SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
         String name = myprefs.getString("name", null);
         String surname = myprefs.getString("surname", null);
-        tempAuthorKey = myprefs.getString("author_key", null);
-        textViewAuthor.setText(name + " " + surname);
+        textViewAuthor.setText("Autor: " + name + " " + surname);
 
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                textViewLocation.setText(location.getLatitude() + "      " + location.getLongitude());
+                textViewLocation.setText( location.getLatitude() + "      " + location.getLongitude());
             }
 
             @Override
@@ -128,7 +126,7 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
         String location = textViewLocation.getText().toString();
         String type = "addProject";
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey);
+        backgroundWorker.execute(type, author, subject, description, location, date);
         editTextSubject.setText("");
         editTextDesctiption.setText("");
     }
