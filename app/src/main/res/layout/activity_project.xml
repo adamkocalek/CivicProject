@@ -11,118 +11,172 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.civicproject.civicproject.AddProjectActivity">
 
-    <TextView
-        android:text="Lokalizacja: "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewLocationText"
-        tools:textColor="@android:color/black"
-        android:layout_below="@+id/imageViewPicture"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
-        android:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewLocation"
-        tools:textColor="@android:color/black"
-        android:layout_toRightOf="@+id/textViewLocationText"
-        android:layout_toEndOf="@+id/textViewLocationText"
-        android:layout_below="@+id/imageViewPicture"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
-        android:text="Opis"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextSubject"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/textViewDescription"
-        tools:textColor="@android:color/black"
-        android:layout_marginTop="10dp"/>
+        android:layout_alignParentStart="true">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:layout_below="@+id/textViewDescription"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/editTextDesctiption"
-        tools:textColor="@android:color/black"
-        android:hint="Opis"
-        android:layout_marginTop="10dp"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:text="Zdjęcie:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextDesctiption"
-        android:layout_alignRight="@+id/textView"
-        android:id="@+id/textViewPicture"
-        tools:textColor="@android:color/black"
-        android:layout_marginTop="10dp"/>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/btn_star_big_on"
-        android:layout_below="@+id/textViewPicture"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/imageViewPicture"
-        android:layout_marginTop="10dp"/>
+                <TextView
+                    android:text="Temat:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewSubject"
+                    tools:textColor="@android:color/black"/>
 
-    <TextView
-        android:text="Autor:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewDate"
-        android:layout_alignRight="@+id/textView"
-        android:id="@+id/textViewAuthor"
-        tools:textColor="@android:color/black"
-        android:layout_marginTop="10dp"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/editTextSubject"
+                    tools:textColor="@android:color/black"
+                    android:hint="Temat"
+                    android:layout_marginTop="10dp"/>
 
-    <TextView
-        android:text="Data:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewLocation"
-        android:layout_alignRight="@+id/textView"
-        android:id="@+id/textViewDate"
-        tools:textColor="@android:color/black"
-        android:layout_marginTop="10dp"/>
+            </LinearLayout>
+        </LinearLayout>
 
-    <TextView
-        android:text="Temat:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView"
-        android:id="@+id/textViewSubject"
-        tools:textColor="@android:color/black"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:layout_below="@+id/textViewSubject"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/editTextSubject"
-        tools:textColor="@android:color/black"
-        android:hint="Temat"
-        android:layout_marginTop="10dp"/>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <Button
-        android:text="Edytuj projekt!"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/buttonEditProject"
-        android:onClick="onEditProjectButtonClick"/>
+                <TextView
+                    android:text="Opis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewDescription"
+                    tools:textColor="@android:color/black"
+                    android:layout_marginTop="10dp"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/editTextDesctiption"
+                    tools:textColor="@android:color/black"
+                    android:hint="Opis"
+                    android:layout_marginTop="10dp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Lokalizacja: "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewLocationText"
+                tools:textColor="@android:color/black"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:text=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewLocation"
+                tools:textColor="@android:color/black"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Data:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewDate"
+                tools:textColor="@android:color/black"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Autor:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewAuthor"
+                tools:textColor="@android:color/black"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="1">
+
+                <TextView
+                    android:text="Zdjęcie:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewPicture"
+                    tools:textColor="@android:color/black"
+                    android:layout_marginTop="10dp" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@android:drawable/btn_star_big_on"
+                    android:id="@+id/imageViewPicture"
+                    android:layout_weight="20.40" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center|bottom">
+
+            <Button
+                android:text="Edytuj projekt!"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonEditProject"
+                android:onClick="onEditProjectButtonClick"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

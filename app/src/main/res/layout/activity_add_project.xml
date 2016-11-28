@@ -11,129 +11,186 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.civicproject.civicproject.AddProjectActivity">
 
-    <TextView
-        android:text="Lokalizacja: "
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewLocationText"
-        tools:textColor="@android:color/black"
-        android:layout_below="@+id/imageViewPicture"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
-        android:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewLocation"
-        tools:textColor="@android:color/black"
-        android:layout_toRightOf="@+id/textViewLocationText"
-        android:layout_toEndOf="@+id/textViewLocationText"
-        android:layout_below="@+id/imageViewPicture"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
-        android:text="Opis"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextSubject"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/textViewDescription"
-        tools:textColor="@android:color/black"
-        android:layout_marginTop="10dp"/>
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:layout_below="@+id/textViewDescription"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/editTextDesctiption"
-        tools:textColor="@android:color/black"
-        android:hint="Opis"
-        android:layout_marginTop="10dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <TextView
-        android:text="Zdjęcie:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextDesctiption"
-        android:layout_alignRight="@+id/textView"
-        android:id="@+id/textViewPicture"
-        tools:textColor="@android:color/black"
-        android:layout_marginTop="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/btn_star_big_on"
-        android:layout_below="@+id/textViewPicture"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/imageViewPicture"
-        android:layout_marginTop="10dp"/>
+                <TextView
+                    android:id="@+id/textViewSubject"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Temat:"
+                    tools:textColor="@android:color/black" />
 
-    <TextView
-        android:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+                <EditText
+                    android:id="@+id/editTextSubject"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="Temat"
+                    android:inputType="textMultiLine"
+                    tools:textColor="@android:color/black" />
 
-        android:id="@+id/textViewAuthor"
-        tools:textColor="@android:color/black"
-        android:layout_alignTop="@+id/textViewAuthorFinal"
-        android:layout_toRightOf="@+id/textViewPicture"
-        android:layout_toEndOf="@+id/textViewPicture" />
+            </LinearLayout>
+        </LinearLayout>
 
-    <TextView
-        android:text="Autor:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewDate"
-        android:layout_alignRight="@+id/textView"
-        android:id="@+id/textViewAuthorFinal"
-        tools:textColor="@android:color/black"
-        android:layout_marginTop="10dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <TextView
-        android:text="Data:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewLocation"
-        android:layout_alignRight="@+id/textView"
-        android:id="@+id/textViewDate"
-        tools:textColor="@android:color/black"
-        android:layout_marginTop="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    <TextView
-        android:text="Temat:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView"
-        android:id="@+id/textViewSubject"
-        tools:textColor="@android:color/black"/>
+                <TextView
+                    android:id="@+id/textViewDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Opis"
+                    tools:textColor="@android:color/black" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:layout_below="@+id/textViewSubject"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/editTextSubject"
-        tools:textColor="@android:color/black"
-        android:hint="Temat"
-        android:layout_marginTop="10dp"/>
+                <EditText
+                    android:id="@+id/editTextDesctiption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="Opis"
+                    android:inputType="textMultiLine"
+                    tools:textColor="@android:color/black" />
 
-    <Button
-        android:text="Dodaj projekt!"
-        android:layout_width="wrap_content"
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewLocationText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="Lokalizacja: "
+                tools:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/textViewLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text=""
+                tools:textColor="@android:color/black" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="Data:"
+                tools:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="Autor:"
+                tools:textColor="@android:color/black" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewPicture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="Zdjęcie:"
+                tools:textColor="@android:color/black" />
+
+            <ImageButton
+                android:id="@+id/buttonCamera"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:onClick="onAddProjectButtonClick"
+                app:srcCompat="@android:drawable/ic_menu_camera" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageViewPicture"
+                android:layout_width="fill_parent"
+                android:layout_height="324dp"
+                android:minHeight="324dp"
+                android:scaleType="centerCrop" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/buttonAddProjectFinal"
-        android:onClick="onAddProjectButtonClick"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonAddProjectFinal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onAddProjectButtonClick"
+            android:text="Dodaj projekt!" />
+    </LinearLayout>
 
 </RelativeLayout>

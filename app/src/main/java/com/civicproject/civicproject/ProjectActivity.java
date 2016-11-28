@@ -23,7 +23,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class ProjectActivity extends AppCompatActivity implements View.OnClickListener{
+public class ProjectActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button buttonEditProject;
     TextView textViewLocation, textViewDate, textViewAuthor;
@@ -45,8 +45,16 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         imageViewPicture = (ImageView) findViewById(R.id.imageViewPicture);
         buttonEditProject = (Button) findViewById(R.id.buttonEditProject);
-        DateFormat df = new SimpleDateFormat("EEE d-MMM-yyyy, HH:mm");
-        textViewDate.setText(df.format(Calendar.getInstance().getTime()));
+
+        //DateFormat df = new SimpleDateFormat("EEE d-MMM-yyyy, HH:mm");
+        //textViewDate.setText(df.format(Calendar.getInstance().getTime()));
+
+        Intent intent = getIntent();
+        editTextSubject.setText(intent.getStringExtra("subject"));
+        editTextDesctiption.setText(intent.getStringExtra("description"));
+        textViewLocation.setText(intent.getStringExtra("location"));
+        textViewDate.setText("Data: " + intent.getStringExtra("date"));
+        textViewAuthor.setText("Autor: " + intent.getStringExtra("author"));
 
 
         SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
@@ -111,6 +119,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         }
         locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
     }
+
     public void onEditProjectButtonClick(View view) {
 
     }

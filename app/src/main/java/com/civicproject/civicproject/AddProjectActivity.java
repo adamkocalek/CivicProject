@@ -4,11 +4,13 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.Image;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -17,6 +19,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,11 +29,14 @@ import java.util.Calendar;
 
 public class AddProjectActivity extends AppCompatActivity implements View.OnClickListener {
     Button buttonAddProjectFinal;
+    ImageButton buttonCamera;
     TextView textViewLocation, textViewDate, textViewAuthor;
     LocationManager locationManager;
     LocationListener locationListener;
     EditText editTextSubject, editTextDesctiption;
     ImageView imageViewPicture;
+    String tempAuthorKey;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
@@ -42,6 +48,10 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_add_project);
 
         buttonAddProjectFinal = (Button) findViewById(R.id.buttonAddProjectFinal);
+
+        buttonCamera = (ImageButton) findViewById(R.id.buttonCamera);
+        events();
+
         textViewLocation = (TextView) findViewById(R.id.textViewLocation);
         textViewDate = (TextView) findViewById(R.id.textViewDate);
         textViewAuthor = (TextView) findViewById(R.id.textViewAuthor);
@@ -57,12 +67,13 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
         SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
         String name = myprefs.getString("name", null);
         String surname = myprefs.getString("surname", null);
-        textViewAuthor.setText("Autor: " + name + " " + surname);
+        tempAuthorKey = myprefs.getString("author_key", null);
+        textViewAuthor.setText(name + " " + surname);
 
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                textViewLocation.setText( location.getLatitude() + "      " + location.getLongitude());
+                textViewLocation.setText(location.getLatitude() + "      " + location.getLongitude());
             }
 
             @Override
@@ -126,11 +137,38 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
         String location = textViewLocation.getText().toString();
         String type = "addProject";
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute(type, author, subject, description, location, date);
+        backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey);
         editTextSubject.setText("");
         editTextDesctiption.setText("");
     }
 
+    // --------------------- CAMERA ---------------------------
+    public void events(){
+        buttonCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dispatchTakePictureIntent();
+            }
+        });
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageViewPicture.setImageBitmap(imageBitmap);
+        }
+    }
+
+    // --------------------------------------------------------
     @Override
     public void onClick(View v) {
 

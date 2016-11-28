@@ -8,12 +8,11 @@ import android.os.Looper;
 import org.json.*;
 
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
 public class UserAreaActivity extends AppCompatActivity {
-
-    String getUser_url = "http://192.168.0.102/getUser.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +28,37 @@ public class UserAreaActivity extends AppCompatActivity {
         EditText editTextAge = (EditText) findViewById(R.id.editTextAge);
 
         SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
-        String name = myprefs.getString("name", null);
-        String surname = myprefs.getString("surname", null);
         String username = myprefs.getString("username", null);
-        String age = myprefs.getString("age", null);
-        String password = myprefs.getString("password", null);
+        System.out.println(username);
+        editTextUsername.setText(username + "");
+        Log.d("h", username);
+        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+        backgroundWorker.execute("getUser", username);
+        String json = backgroundWorker.tempAuthor;
+        editTextName.setText(json);
+        try {
+            Thread.sleep(1000);
+            //ADD THAT DATA TO JSON ARRAY FIRST
+            JSONArray ja = new JSONArray(json);
+            //CREATE JO OBJ TO HOLD A SINGLE ITEM
+            JSONObject jo = null;
+            jo = ja.getJSONObject(0);
+            //RETRIOEVE DATA
+            String name = jo.getString("name");
+            String surname = jo.getString("surname");
+            String age = jo.getString("age");
+            String password = jo.getString("password");
 
-        editTextName.setText(name);
-        editTextSurname.setText(surname);
-        editTextUsername.setText(username);
-        editTextAge.setText(age);
-        editTextPassword.setText(password);
+            editTextAge.setText(age + "");
+            editTextName.setText(name + "");
+            editTextSurname.setText(surname + "");
+            editTextPassword.setText(password + "");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 }
