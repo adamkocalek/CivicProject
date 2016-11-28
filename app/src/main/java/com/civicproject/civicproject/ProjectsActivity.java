@@ -14,7 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ProjectsActivity extends AppCompatActivity implements View.OnClickListener {
-    Button buttonAddProject, buttonSettings;
+    Button buttonAddProject, buttonSettings, buttonMap;
     String url = "http://188.128.220.60/projects.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,7 @@ public class ProjectsActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_projects);
         buttonAddProject = (Button)findViewById(R.id.buttonAddProject);
         buttonSettings = (Button)findViewById(R.id.buttonSettings);
+        buttonMap = (Button)findViewById(R.id.buttonMap);
         final ListView listView = (ListView) findViewById(R.id.listView);
 
 
@@ -73,6 +74,13 @@ public class ProjectsActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), UserAreaActivity.class));
+            }
+        });
+
+        buttonMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Map.class));
             }
         });
     }
