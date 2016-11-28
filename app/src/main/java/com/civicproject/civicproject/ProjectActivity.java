@@ -46,26 +46,20 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         imageViewPicture = (ImageView) findViewById(R.id.imageViewPicture);
         buttonEditProject = (Button) findViewById(R.id.buttonEditProject);
 
-        //DateFormat df = new SimpleDateFormat("EEE d-MMM-yyyy, HH:mm");
-        //textViewDate.setText(df.format(Calendar.getInstance().getTime()));
+//        DateFormat df = new SimpleDateFormat("EEE d-MMM-yyyy, HH:mm");
+//        textViewDate.setText(df.format(Calendar.getInstance().getTime()));
 
         Intent intent = getIntent();
         editTextSubject.setText(intent.getStringExtra("subject"));
         editTextDesctiption.setText(intent.getStringExtra("description"));
         textViewLocation.setText(intent.getStringExtra("location"));
         textViewDate.setText("Data: " + intent.getStringExtra("date"));
-        textViewAuthor.setText("Autor: " + intent.getStringExtra("author"));
-
-
-        SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
-        String name = myprefs.getString("name", null);
-        String surname = myprefs.getString("surname", null);
-        textViewAuthor.setText("Autor: " + name + " " + surname);
+        textViewAuthor.setText(intent.getStringExtra("author"));
 
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                textViewLocation.setText(location.getLongitude() + "      " + location.getLatitude());
+//                textViewLocation.setText(location.getLatitude() + "      " + location.getLongitude());
             }
 
             @Override

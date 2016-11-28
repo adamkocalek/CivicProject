@@ -10,9 +10,5 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-<<<<<<< HEAD
-//TEST PUSH - SZPZ
-//TEST PUSH - PSZ
-=======
->>>>>>> origin/master
+
 }

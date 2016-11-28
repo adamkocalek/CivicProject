@@ -49,6 +49,7 @@ public class ProjectsActivity extends AppCompatActivity implements View.OnClickL
                 String age = jo1.getString("age");
                 String password = jo1.getString("password");
                 String author_key = jo1.getString("id");
+
                 sharedPreferences.edit().putString("name", name).apply();
                 sharedPreferences.edit().putString("surname", surname).apply();
                 sharedPreferences.edit().putString("age", age).apply();
