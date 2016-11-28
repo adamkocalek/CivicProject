@@ -55,6 +55,14 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         textViewLocation.setText(intent.getStringExtra("location"));
         textViewDate.setText("Data: " + intent.getStringExtra("date"));
         textViewAuthor.setText(intent.getStringExtra("author"));
+        String author_key = intent.getStringExtra("author_key");
+        SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
+        String author_id = myprefs.getString("author_key", null);
+        if(Integer.parseInt(author_id) != Integer.parseInt(author_key)){
+            buttonEditProject.setVisibility(View.INVISIBLE);
+        } else {
+            buttonEditProject.setVisibility(View.VISIBLE);
+        }
 
         locationListener = new LocationListener() {
             @Override

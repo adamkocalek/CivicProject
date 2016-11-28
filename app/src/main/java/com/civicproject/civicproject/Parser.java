@@ -24,7 +24,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
     ListView listView;
     String data;
     ArrayList<String> projects = new ArrayList<>(), subjects = new ArrayList<>(), descriptions = new ArrayList<>(),
-            locations = new ArrayList<>(), dates = new ArrayList<>(), authors = new ArrayList<>();
+            locations = new ArrayList<>(), dates = new ArrayList<>(), authors = new ArrayList<>(), authots_keys = new ArrayList<>();
     ProgressDialog progressDialog;
 
     public Parser() {
@@ -79,6 +79,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
                         intent.putExtra("location", locations.get(position));
                         intent.putExtra("date", dates.get(position));
                         intent.putExtra("author", authors.get(position));
+                        intent.putExtra("author_key", authots_keys.get(position));
                         //intent.putExtra("photo", "");
                         context.startActivity(intent);
                     }
@@ -108,6 +109,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
                 String location = jo.getString("location");
                 String date = jo.getString("date");
                 String author = jo.getString("author");
+                String author_key = jo.getString("author_key");
                 //ADD IT TO OUR ARRAYLIST
                 projects.add(subject);
                 subjects.add(subject);
@@ -115,6 +117,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
                 locations.add(location);
                 dates.add(date);
                 authors.add(author);
+                authots_keys.add(author_key);
             }
             return 1;
         } catch (JSONException e) {
