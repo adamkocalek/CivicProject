@@ -117,6 +117,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String location = params[4];
                 String date = params[5];
                 String author_key = params[6];
+                String image = params[7];
                 URL url = new URL(addProject_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -129,7 +130,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                         + URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode(description, "UTF-8") + "&"
                         + URLEncoder.encode("location", "UTF-8") + "=" + URLEncoder.encode(location, "UTF-8") + "&"
                         + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&"
-                        + URLEncoder.encode("author_key", "UTF-8") + "=" + URLEncoder.encode(author_key, "UTF-8");
+                        + URLEncoder.encode("author_key", "UTF-8") + "=" + URLEncoder.encode(author_key, "UTF-8") + "&"
+                        + URLEncoder.encode("image", "UTF-8") + "=" + URLEncoder.encode(image, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -204,6 +206,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         } else if (result.contains("[{")) {
 
         } else {
+            result = result.replaceAll("<","");
             alertDialog.setMessage(result);
             alertDialog.show();
         }
