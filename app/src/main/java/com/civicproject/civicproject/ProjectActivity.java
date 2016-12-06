@@ -4,8 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -15,7 +13,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,7 +43,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         editTextSubject = (EditText) findViewById(R.id.editTextSubject);
         editTextDesctiption = (EditText) findViewById(R.id.editTextDesctiption);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        imageViewPicture = (ImageView) findViewById(R.id.imageViewPictureExist);
+        imageViewPicture = (ImageView) findViewById(R.id.imageViewPicture);
         buttonEditProject = (Button) findViewById(R.id.buttonEditProject);
 
 //        DateFormat df = new SimpleDateFormat("EEE d-MMM-yyyy, HH:mm");
@@ -59,9 +56,6 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         textViewDate.setText("Data: " + intent.getStringExtra("date"));
         textViewAuthor.setText(intent.getStringExtra("author"));
         String author_key = intent.getStringExtra("author_key");
-        String image = intent.getStringExtra("image").replaceAll("\\s","");
-        imageViewPicture.setImageBitmap(convertStringToBitMap(image));
-
         SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
         String author_id = myprefs.getString("author_key", null);
         if(Integer.parseInt(author_id) != Integer.parseInt(author_key)){
@@ -130,17 +124,6 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
 
     public void onEditProjectButtonClick(View view) {
 
-    }
-
-    public Bitmap convertStringToBitMap(String encodedString) {
-        try {
-            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        } catch (Exception e) {
-            e.getMessage();
-            return null;
-        }
     }
 
     @Override
