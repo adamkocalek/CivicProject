@@ -139,12 +139,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="1">
-
                 <TextView
                     android:text="Zdjęcie:"
                     android:layout_width="match_parent"
@@ -153,13 +147,20 @@
                     tools:textColor="@android:color/black"
                     android:layout_marginTop="10dp" />
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/btn_star_big_on"
-                    android:id="@+id/imageViewPicture"
-                    android:layout_weight="20.40" />
-            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageViewPictureExist"
+                android:layout_width="fill_parent"
+                android:layout_height="324dp"
+                android:minHeight="324dp"
+                android:scaleType="centerCrop" />
+
         </LinearLayout>
 
         <LinearLayout

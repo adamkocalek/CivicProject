@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -16,6 +17,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -37,6 +40,8 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
     ImageView imageViewPicture;
     String tempAuthorKey;
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    Bitmap imageBitmap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
@@ -136,14 +141,16 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
         String date = textViewDate.getText().toString();
         String location = textViewLocation.getText().toString();
         String type = "addProject";
+        String image = convertBitMapToString(imageBitmap);
+        //String image = "test";
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey);
+        backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey, image);
         editTextSubject.setText("");
         editTextDesctiption.setText("");
     }
 
     // --------------------- CAMERA ---------------------------
-    public void events(){
+    public void events() {
         buttonCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,12 +170,30 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageBitmap = (Bitmap) extras.get("data");
             imageViewPicture.setImageBitmap(imageBitmap);
         }
     }
 
+
+    public static byte[] getBytesFromBitmap(Bitmap bitmap) {
+        if (bitmap != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+            return stream.toByteArray();
+        }
+        return null;
+    }
+
+    public String convertBitMapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String temp = Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
     // --------------------------------------------------------
+
     @Override
     public void onClick(View v) {
 
