@@ -1,48 +1,98 @@
 package com.civicproject.civicproject;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+public class WelcomeActivity extends Activity {
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        Window window = getWindow();
+        window.setFormat(PixelFormat.RGBA_8888);
+    }
+    Thread splashTread;
+    Thread textThread;
 
-public class WelcomeActivity extends AppCompatActivity {
-    ImageView imageViewWelcome;
-    TextView textViewWelcome;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        StartAnimations();
+    }
 
-        imageViewWelcome = (ImageView)findViewById(R.id.imageViewWelcome);
-        textViewWelcome = (TextView)findViewById(R.id.textViewWelcome);
-        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.welcome_animation);
-        imageViewWelcome.setAnimation(animation);
+    private void StartAnimations() {
+        ImageView iv = (ImageView) findViewById(R.id.splash);
+        final ProgressBar bar = (ProgressBar) findViewById(R.id.loading);
+        Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
+        anim.reset();
+        LinearLayout l = (LinearLayout) findViewById(R.id.lin_lay);
+        l.clearAnimation();
+        l.startAnimation(anim);
+        iv.clearAnimation();
+        iv.startAnimation(anim);
 
-        animation.setAnimationListener(new Animation.AnimationListener(){
+        anim = AnimationUtils.loadAnimation(this, R.anim.translate);
+        anim.reset();
 
+        bar.setVisibility(View.GONE);
+        //iv.clearAnimation();
+        iv.startAnimation(anim);
+
+        splashTread = new Thread() {
             @Override
-            public void onAnimationStart(Animation animation) {
+            public void run() {
+                try {
+                    int waited1 = 0;
+                    while (waited1 < 5000) {
+                        sleep(100);
+                        waited1 += 100;
+                    }
+                    Intent intent = new Intent(WelcomeActivity.this,
+                            LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
+                    WelcomeActivity.this.finish();
+                } catch (InterruptedException e) {
+                    System.out.println(e);
+                } finally {
+                    WelcomeActivity.this.finish();
+                }
 
             }
+        };
 
+        textThread = new Thread() {
             @Override
-            public void onAnimationEnd(Animation animation) {
-                finish();
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            public void run() {
+                try {
+                    int waited1 = 0;
+                    while (waited1 < 2500) {
+                        sleep(100);
+                        waited1 += 100;
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            bar.setVisibility(View.VISIBLE);
+                        }
+                    });
+
+                } catch (InterruptedException e) {
+                    System.out.println(e);
+                }
             }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
+        };
+        splashTread.start();
+        textThread.start();
     }
 }

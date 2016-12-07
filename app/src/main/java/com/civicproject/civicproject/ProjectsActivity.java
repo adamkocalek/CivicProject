@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,9 +25,22 @@ public class ProjectsActivity extends AppCompatActivity implements View.OnClickL
         buttonSettings = (Button)findViewById(R.id.buttonSettings);
         buttonMap = (Button)findViewById(R.id.buttonMap);
         final ListView listView = (ListView) findViewById(R.id.listView);
+        TextView mainTextView = (TextView) findViewById(R.id.textViewNotification);
 
+        DateParser dateParser = new DateParser();
+        String dateNotifications = dateParser.dateNotification();
 
-        SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
+        if (dateNotifications.equals("hidden")) {
+            mainTextView.setText("");
+        } else if (dateNotifications.equals("null")) {
+            mainTextView.setText("Wystąpił błąd przy przetwarzaniu daty, przepraszamy.");
+        } else {
+            mainTextView.setText(dateParser.dateNotification() + "");
+        }
+
+        SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
+        //SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
+
         String username = myprefs.getString("username", null);
         String type = "getUser";
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
@@ -42,7 +56,7 @@ public class ProjectsActivity extends AppCompatActivity implements View.OnClickL
             JSONObject jo1 = null;
             for(int i = 0; i < ja.length(); i++)
             {
-                SharedPreferences sharedPreferences = this.getSharedPreferences("user", MODE_WORLD_READABLE);
+                SharedPreferences sharedPreferences = this.getSharedPreferences("user", MODE_PRIVATE );
 
                 jo1 = ja.getJSONObject(i);
                 String name = jo1.getString("name");

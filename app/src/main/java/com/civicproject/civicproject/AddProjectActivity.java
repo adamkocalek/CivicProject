@@ -69,7 +69,9 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
         textViewDate.setText(df.format(Calendar.getInstance().getTime()));
 
 
-        SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
+        //SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
+        SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
+
         String name = myprefs.getString("name", null);
         String surname = myprefs.getString("surname", null);
         tempAuthorKey = myprefs.getString("author_key", null);

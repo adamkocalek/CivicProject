@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = etLoginPassword.getText().toString();
         String type = "login";
 
-        SharedPreferences myprefs = this.getSharedPreferences("user", MODE_WORLD_READABLE);
+        SharedPreferences myprefs = this.getSharedPreferences("user", MODE_PRIVATE);
         myprefs.edit().putString("username", username).commit();
 
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);

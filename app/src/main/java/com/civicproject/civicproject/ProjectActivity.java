@@ -62,7 +62,9 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         String image = intent.getStringExtra("image").replaceAll("\\s","");
         imageViewPicture.setImageBitmap(convertStringToBitMap(image));
 
-        SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
+        //SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
+        SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
+
         String author_id = myprefs.getString("author_key", null);
         if(Integer.parseInt(author_id) != Integer.parseInt(author_key)){
             buttonEditProject.setVisibility(View.INVISIBLE);

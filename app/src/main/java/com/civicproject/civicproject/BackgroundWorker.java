@@ -1,5 +1,6 @@
 package com.civicproject.civicproject;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -216,6 +217,10 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
     }
+
+//    public String testIntent(){
+//        String nextIntent = "";
+//    }
 
 
 }

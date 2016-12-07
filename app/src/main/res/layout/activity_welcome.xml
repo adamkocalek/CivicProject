@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_welcome"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@android:color/holo_red_dark"
-    tools:context="com.civicproject.civicproject.WelcomeActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background"
+    android:layout_gravity="center"
+    android:id="@+id/lin_lay"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:weightSum="1">
 
-    <TextView
-        android:text="Aplikacja projekt obywatelski!"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="201dp"
-        android:textSize="40dp"
-        android:textColor="@android:color/background_dark"
-        android:textAlignment="center"
-        android:id="@+id/textViewWelcome" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_launcher"
-        android:layout_marginBottom="81dp"
-        android:id="@+id/imageViewWelcome"
-        android:layout_above="@+id/textViewWelcome"
-        android:layout_centerHorizontal="true" />
-</RelativeLayout>
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:id="@+id/splash"
+            android:background="@drawable/app_logo"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:id="@+id/loading"
+            android:layout_weight="0.04"
+            android:layout_marginTop="17dp"
+            android:layout_below="@+id/splash"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:indeterminateTint="@color/colorAccent" />
+    </RelativeLayout>
+
+</LinearLayout>
