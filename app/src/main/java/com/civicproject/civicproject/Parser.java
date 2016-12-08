@@ -73,7 +73,6 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
                     } else {
                         position = -1;
                     }
-
                     if (position != -1) {
                         intent.putExtra("subject", subjects.get(position));
                         intent.putExtra("description", descriptions.get(position));
@@ -82,6 +81,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
                         intent.putExtra("author", authors.get(position));
                         intent.putExtra("author_key", authors_keys.get(position));
                         intent.putExtra("image", images.get(position));
+
                         context.startActivity(intent);
                     }
                 }
