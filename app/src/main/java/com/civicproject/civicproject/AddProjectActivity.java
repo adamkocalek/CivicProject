@@ -24,11 +24,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import static android.R.attr.duration;
 
 public class AddProjectActivity extends AppCompatActivity implements View.OnClickListener {
     Button buttonAddProjectFinal;
@@ -80,7 +83,7 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                textViewLocation.setText(location.getLatitude() + "      " + location.getLongitude());
+                textViewLocation.setText(location.getLatitude() + " " + location.getLongitude());
             }
 
             @Override
@@ -149,6 +152,10 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
         backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey, image);
         editTextSubject.setText("");
         editTextDesctiption.setText("");
+        if(textViewLocation == null) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Twoj projekt został dodany bez lokalizacji, nie wyświetli się na mapie...", Toast.LENGTH_LONG);
+            toast.show();
+        }
     }
 
     // --------------------- CAMERA ---------------------------

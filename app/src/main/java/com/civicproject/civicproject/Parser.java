@@ -23,8 +23,8 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
     Context context;
     ListView listView;
     String data;
-    ArrayList<String> projects = new ArrayList<>(), subjects = new ArrayList<>(), descriptions = new ArrayList<>(),
-            locations = new ArrayList<>(), dates = new ArrayList<>(), authors = new ArrayList<>(), authors_keys = new ArrayList<>(),
+    public static ArrayList<String> locations = new ArrayList<>(), descriptions = new ArrayList<>(), subjects = new ArrayList<>();
+    ArrayList<String> projects = new ArrayList<>(), dates = new ArrayList<>(), authors = new ArrayList<>(), authors_keys = new ArrayList<>(),
             images = new ArrayList<>();
     ProgressDialog progressDialog;
 

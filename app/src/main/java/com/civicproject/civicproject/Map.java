@@ -1,9 +1,11 @@
 package com.civicproject.civicproject;
 
 import android.content.Intent;
+import android.renderscript.Double2;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -14,9 +16,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class Map extends FragmentActivity implements OnMapReadyCallback {
-    String[] tab;
+import java.util.Random;
 
+import static android.R.attr.x;
+import static android.R.attr.y;
+import static com.civicproject.civicproject.Parser.locations;
+import static com.civicproject.civicproject.R.id.map;
+import static com.google.android.gms.analytics.internal.zzy.i;
+
+public class Map extends FragmentActivity implements OnMapReadyCallback{
+
+    Parser parser = new Parser();
     private GoogleMap mMap;
 
     @Override
@@ -25,19 +35,26 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
         setContentView(R.layout.activity_map);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+                .findFragmentById(map);
 
+        mapFragment.getMapAsync(this);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        Random random = new Random();
+        mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(51.75883047028454, 19.456186294555664), 12.0f) );
+        for (int i = 0; i < locations.size(); i++) {
+            String location = parser.locations.get(i);
 
-        // Add a marker in Sydney and move the camera
-        LatLng lodz = new LatLng(51.76383547947713 , 19.46133691578513);
-        mMap.addMarker(new MarkerOptions().position(lodz).title("Marker in Lodz"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(lodz));
+            String[] splited = location.split("\\s+");
+            if(splited.length > 1) {
+                LatLng xy = new LatLng(Double.parseDouble(splited[0]), Double.parseDouble(splited[1]));
+                int color = random.nextInt(360 - 0 + 1) + 0;
+                mMap.addMarker(new MarkerOptions().position(xy).title(parser.subjects.get(i)).icon(BitmapDescriptorFactory.defaultMarker(color)));
+            }
+        }
     }
 
     /**

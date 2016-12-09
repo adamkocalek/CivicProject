@@ -27,7 +27,7 @@ public class UserAreaActivity extends AppCompatActivity {
         EditText editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         EditText editTextAge = (EditText) findViewById(R.id.editTextAge);
 
-        SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
+        SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
         String username = myprefs.getString("username", null);
         String name = myprefs.getString("name", null);
         String surname = myprefs.getString("surname", null);

@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorWhite"
     tools:context="com.civicproject.civicproject.AddProjectActivity">
 
     <LinearLayout
@@ -34,7 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/textViewSubject"
-                    tools:textColor="@android:color/black"/>
+                    android:textColor="@color/colorAccent"/>
 
                 <EditText
                     android:layout_width="match_parent"
@@ -42,7 +43,7 @@
                     android:inputType="textMultiLine"
                     android:ems="10"
                     android:id="@+id/editTextSubject"
-                    tools:textColor="@android:color/black"
+                    android:textColorHint="@color/colorAccent"
                     android:hint="Temat"
                     android:layout_marginTop="10dp"/>
 
@@ -64,7 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/textViewDescription"
-                    tools:textColor="@android:color/black"
+                    android:textColor="@color/colorAccent"
                     android:layout_marginTop="10dp"/>
 
                 <EditText
@@ -73,7 +74,7 @@
                     android:inputType="textMultiLine"
                     android:ems="10"
                     android:id="@+id/editTextDesctiption"
-                    tools:textColor="@android:color/black"
+                    android:textColorHint="@color/colorAccent"
                     android:hint="Opis"
                     android:layout_marginTop="10dp"/>
 
@@ -90,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewLocationText"
-                tools:textColor="@android:color/black"
+                android:textColor="@color/colorAccent"
                 android:layout_marginTop="10dp" />
 
             <TextView
@@ -98,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewLocation"
-                tools:textColor="@android:color/black"
+                android:textColor="@color/colorAccent"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1" />
 
@@ -114,7 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewDate"
-                tools:textColor="@android:color/black"
+                android:textColor="@color/colorAccent"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1" />
         </LinearLayout>
@@ -129,7 +130,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewAuthor"
-                tools:textColor="@android:color/black"
+                android:textColor="@color/colorAccent"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1" />
         </LinearLayout>
@@ -144,7 +145,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/textViewPicture"
-                    tools:textColor="@android:color/black"
+                    android:textColor="@color/colorAccent"
                     android:layout_marginTop="10dp" />
 
         </LinearLayout>

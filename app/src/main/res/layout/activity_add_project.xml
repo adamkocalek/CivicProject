@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorWhite"
     tools:context="com.civicproject.civicproject.AddProjectActivity">
 
     <LinearLayout
@@ -34,7 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Temat:"
-                    tools:textColor="@android:color/black" />
+                    android:textColor="@color/colorAccent" />
 
                 <EditText
                     android:id="@+id/editTextSubject"
@@ -44,6 +45,7 @@
                     android:ems="10"
                     android:hint="Temat"
                     android:inputType="textMultiLine"
+                    android:textColorHint="@color/colorAccent"
                     tools:textColor="@android:color/black" />
 
             </LinearLayout>
@@ -65,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="Opis"
-                    tools:textColor="@android:color/black" />
+                    android:textColor="@color/colorAccent" />
 
                 <EditText
                     android:id="@+id/editTextDesctiption"
@@ -73,6 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:ems="10"
+                    android:textColorHint="@color/colorAccent"
                     android:hint="Opis"
                     android:inputType="textMultiLine"
                     tools:textColor="@android:color/black" />
@@ -91,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Lokalizacja: "
-                tools:textColor="@android:color/black" />
+                android:textColor="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/textViewLocation"
@@ -100,7 +103,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:text=""
-                tools:textColor="@android:color/black" />
+                android:textColor="@color/colorAccent" />
 
         </LinearLayout>
 
@@ -116,7 +119,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:text="Data:"
-                tools:textColor="@android:color/black" />
+                android:textColor="@color/colorAccent"/>
         </LinearLayout>
 
         <LinearLayout
@@ -131,7 +134,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:text="Autor:"
-                tools:textColor="@android:color/black" />
+                android:textColor="@color/colorAccent" />
 
         </LinearLayout>
 
@@ -147,7 +150,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:text="Zdjęcie:"
-                tools:textColor="@android:color/black" />
+                android:textColor="@color/colorAccent" />
 
             <ImageButton
                 android:id="@+id/buttonCamera"
