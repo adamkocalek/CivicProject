@@ -64,6 +64,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         String author_key = intent.getStringExtra("author_key");
         String image = intent.getStringExtra("image").replaceAll("\\s","");
         imageViewPicture.setImageBitmap(convertStringToBitMap(image));
+        //imageViewPicture.setRotation(90);
         String location = intent.getStringExtra("location");
         String[] splited = location.split("\\s+");
         if(splited.length > 1) {
