@@ -5,81 +5,63 @@
     android:background="@color/colorWhite"
     android:padding="@dimen/activity_horizontal_margin">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/etRegisterName"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textColorHint="@color/colorAccent"
-        android:hint="Imię" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/etRegisterSurname"
-        android:layout_below="@+id/etRegisterName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textColorHint="@color/colorAccent"
-        android:hint="Nazwisko" />
+        <EditText
+            android:id="@+id/etRegisterName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Imię"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/colorAccent" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/etRegisterUsername"
-        android:layout_below="@+id/etRegisterSurname"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:textColorHint="@color/colorAccent"
-        android:layout_alignParentEnd="true"
-        android:hint="Login" />
+        <EditText
+            android:id="@+id/etRegisterSurname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nazwisko"
+            android:textColorHint="@color/colorAccent" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/etRegisterPassword"
-        android:layout_below="@+id/etRegisterUsername"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:textColorHint="@color/colorAccent"
-        android:layout_alignParentEnd="true"
-        android:hint="Hasło" />
+        <EditText
+            android:id="@+id/etRegisterUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Login"
+            android:textColorHint="@color/colorAccent" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Zarejestruj"
-        android:id="@+id/bRegister"
-        android:layout_below="@+id/etRegisterAge"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/etRegisterAge"
-        android:layout_alignEnd="@+id/etRegisterAge"
-        android:onClick="onRegisterButtonClick"/>
+        <EditText
+            android:id="@+id/etRegisterPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Hasło"
+            android:inputType="textPassword"
+            android:textColorHint="@color/colorAccent" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/etRegisterAge"
-        android:layout_below="@+id/etRegisterPassword"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textColorHint="@color/colorAccent"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:hint="Wiek" />
+        <EditText
+            android:id="@+id/etRegisterAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Wiek"
+            android:inputType="number"
+            android:textColorHint="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/bRegister"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_primary"
+            android:onClick="onRegisterButtonClick"
+            android:text="Zarejestruj"
+            android:textColor="#878787"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
 </RelativeLayout>

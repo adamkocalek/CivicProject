@@ -17,6 +17,12 @@ import org.json.JSONObject;
 public class ProjectsActivity extends AppCompatActivity implements View.OnClickListener {
     Button buttonAddProject, buttonSettings, buttonMap;
     String url = "http://188.128.220.60/projects.php";
+
+    @Override
+    public void onBackPressed() {
+        return;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

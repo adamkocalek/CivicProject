@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+        <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+                <item name="colorPrimary">@color/colorPrimary</item>
+                <item name="colorPrimaryDark">@android:color/darker_gray</item>
+                <item name="colorAccent">@android:color/darker_gray</item>
+                <item name="android:colorBackground">@android:color/background_light</item>
+                <item name="android:textColorPrimary">@android:color/black</item>
+                <item name="android:colorForeground">?attr/editTextColor</item>
+                <item name="android:navigationBarColor">@android:color/darker_gray</item>
+                <item name="android:statusBarColor">@android:color/darker_gray</item>
+                <item name="android:textColorSecondary">@color/secondary_text_material_dark</item>
+                <item name="android:textColorPrimaryInverse">@android:color/holo_red_dark</item>
+        </style>
+</resources>
