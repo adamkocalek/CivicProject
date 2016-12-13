@@ -92,6 +92,8 @@
             android:layout_height="wrap_content"
             android:text="Edytuj"
             android:id="@+id/buttonEdit"
+            android:background="@drawable/button_primary"
+            android:textColor="#878787"
             android:layout_below="@+id/editTextAge"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"

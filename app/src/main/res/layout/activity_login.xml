@@ -53,8 +53,8 @@
             android:layout_height="36dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/button_primary"
-            android:text="Zaloguj się"
             android:textColor="#878787"
+            android:text="Zaloguj się"
             android:textSize="12sp" />
 
         <TextView
