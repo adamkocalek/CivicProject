@@ -23,7 +23,7 @@ public class AboutActivity extends AppCompatActivity {
                 "Te zadania, które uzyskały największą liczbę głosów i zmieściły się w limicie środków przeznaczonych na budżet obywatelski, będą  zrealizowane w 2017 r.\n" +
                 "\n" +
                 "W ten sposób mieszkańcy Łodzi mogą bezpośrednio wpływać na to, jak są wydawane środki z budżetu miasta.";
-        String textAboutUs = "Pozdrawiamy, wybitni programiści PPAP";
+        String textAboutUs = "Pozdrawiamy, zespół CivicProject";
         tvAboutText.setText(textAbout);
         tvAboutUsText.setText(textAboutUs);
     }
