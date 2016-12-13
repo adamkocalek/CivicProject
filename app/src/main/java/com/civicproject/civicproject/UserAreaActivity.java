@@ -17,7 +17,7 @@ import android.widget.TextView;
 public class UserAreaActivity extends AppCompatActivity {
 
     Button buttonEdit;
-    TextView textViewUserArea;
+    TextView textViewUserArea, textViewUsername;
     EditText editTextName, editTextSurname, editTextUsername, editTextPassword, editTextAge;
 
     @Override
@@ -41,6 +41,7 @@ public class UserAreaActivity extends AppCompatActivity {
         editTextName.setText(name + "");
         editTextSurname.setText(surname + "");
         editTextPassword.setText(password + "");
+        textViewUsername.setText(username);
 
 
     }
@@ -48,6 +49,7 @@ public class UserAreaActivity extends AppCompatActivity {
     public void init() {
         buttonEdit = (Button) findViewById(R.id.buttonEdit);
         textViewUserArea = (TextView) findViewById(R.id.textViewUserArea);
+        textViewUsername = (TextView) findViewById(R.id.textViewUsername);
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextSurname = (EditText) findViewById(R.id.editTextrSurname);
         editTextUsername = (EditText) findViewById(R.id.editTextUsername);

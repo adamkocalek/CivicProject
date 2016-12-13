@@ -16,9 +16,21 @@
             android:layout_height="wrap_content"
             android:text="Panel użytkownika"
             android:textStyle="italic"
+            android:gravity="center"
             android:textSize="30dp"
             android:textColor="@color/colorAccent"
             android:id="@+id/textViewUserArea"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:gravity="center"
+            android:textStyle="italic"
+            android:textSize="28dp"
+            android:textColor="@color/colorAccent"
+            android:id="@+id/textViewUsername"
             android:layout_centerHorizontal="true" />
 
         <EditText
