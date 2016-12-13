@@ -41,7 +41,6 @@
                     android:id="@+id/editTextSubject"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:ems="10"
                     android:hint="Temat"
                     android:inputType="textMultiLine"
@@ -65,7 +64,6 @@
                     android:id="@+id/textViewDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:text="Opis"
                     android:textColor="@color/colorAccent" />
 
@@ -73,7 +71,6 @@
                     android:id="@+id/editTextDesctiption"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:ems="10"
                     android:textColorHint="@color/colorAccent"
                     android:hint="Opis"
@@ -113,21 +110,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textViewDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:text="Data:"
-                android:textColor="@color/colorAccent"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
                 android:id="@+id/textViewAuthor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -136,6 +118,14 @@
                 android:text="Autor:"
                 android:textColor="@color/colorAccent" />
 
+            <TextView
+                android:id="@+id/textViewDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="Data:"
+                android:textColor="@color/colorAccent"/>
         </LinearLayout>
 
         <LinearLayout

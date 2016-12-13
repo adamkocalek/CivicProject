@@ -37,12 +37,13 @@ import java.util.Locale;
 
 import static android.R.attr.id;
 import static com.civicproject.civicproject.R.id.buttonCamera;
+import static com.civicproject.civicproject.R.id.textViewLike;
 import static com.google.android.gms.analytics.internal.zzy.C;
 import static com.google.android.gms.analytics.internal.zzy.i;
 
 public class ProjectActivity extends AppCompatActivity implements View.OnClickListener {
-    Button buttonEditProject;
-    TextView textViewLocation, textViewDate, textViewAuthor;
+    Button buttonEditProject, buttonLikeProject;
+    TextView textViewLocation, textViewDate, textViewAuthor, textViewLike;
     LocationManager locationManager;
     LocationListener locationListener;
     EditText editTextSubject, editTextDesctiption;
@@ -55,6 +56,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project);
 
+        textViewLike = (TextView) findViewById(R.id.textViewLike);
         textViewLocation = (TextView) findViewById(R.id.textViewLocation);
         textViewAuthor = (TextView) findViewById(R.id.textViewAuthor);
         editTextSubject = (EditText) findViewById(R.id.editTextSubject);
@@ -62,6 +64,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         imageViewPicture = (ImageView) findViewById(R.id.imageViewPictureExist);
         buttonEditProject = (Button) findViewById(R.id.buttonEditProject);
+        buttonLikeProject = (Button) findViewById(R.id.buttonLikeProject);
         textViewDate = (TextView) findViewById(R.id.textViewDate);
 
         Intent intent = getIntent();
@@ -69,6 +72,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         editTextSubject.setText(intent.getStringExtra("subject"));
         editTextDesctiption.setText(intent.getStringExtra("description"));
         textViewAuthor.setText(intent.getStringExtra("author"));
+        textViewLike.setText(intent.getStringExtra("likes"));
         author_key = intent.getStringExtra("author_key");
         image = intent.getStringExtra("image").replaceAll("\\s","");
         imageViewPicture.setImageBitmap(convertStringToBitMap(image));
@@ -100,6 +104,10 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
+    public void onLikeProjectButtonClick(View view) {
+        int x = Integer.parseInt((String)textViewLike.getText()) + 1;
+        textViewLike.setText(x + "");
+    }
 
     public void onEditProjectButtonClick(View view) {
         String subject = editTextSubject.getText().toString();
