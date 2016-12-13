@@ -46,7 +46,7 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
     String tempAuthorKey;
     Bitmap imageBitmap;
     Uri file;
-    Camera camera = new Camera(file);
+    Camera camera = new Camera();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,12 +99,13 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                buttonCamera.setEnabled(false);
                 requestPermissions(new String[]{
                                 Manifest.permission.ACCESS_COARSE_LOCATION,
                                 Manifest.permission.ACCESS_FINE_LOCATION,
-                                Manifest.permission.INTERNET, Manifest.permission.CAMERA,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        10);
+                                Manifest.permission.INTERNET,
+                                Manifest.permission.CAMERA,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE}, 10);
             }
             return;
         } else {
@@ -162,13 +163,20 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
-                //ivResult.setImageURI(file);
-                Bitmap bitmap = camera.decodeSampledBitmapFromFile(file.getPath(), 200, 100);
-                //imageOreintationValidator(bitmap, file.getPath());
+                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Civic Project/IMG_CP" + ".jpg");
+
+                imageViewPicture.setImageResource(0);
+
+                String path = file.toString();
+                String pathCompressed = camera.compressImage(path);
+                imageViewPicture.setImageURI(Uri.parse(pathCompressed));
+                imageBitmap = camera.bitmapFromPath(pathCompressed);
                 //rotateImage(bitmap, 90);
-                imageBitmap = bitmap;
-                imageViewPicture.setImageBitmap(bitmap);
-                imageViewPicture.setRotation(90);
+
+                //File image = new File(path);
+                //image.delete();
+                //File imageCompressed = new File(pathCompressed);
+                //imageCompressed.delete();
             }
         }
     }
@@ -176,13 +184,8 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            case 0:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    buttonCamera.setEnabled(true);
-                }
-                break;
             case 10:
+                buttonCamera.setEnabled(true);
                 configureButton();
                 break;
             default:

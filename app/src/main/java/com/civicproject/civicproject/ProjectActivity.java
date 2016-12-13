@@ -41,17 +41,13 @@ import static com.google.android.gms.analytics.internal.zzy.C;
 import static com.google.android.gms.analytics.internal.zzy.i;
 
 public class ProjectActivity extends AppCompatActivity implements View.OnClickListener {
-    ImageButton buttonCamera;
     Button buttonEditProject;
     TextView textViewLocation, textViewDate, textViewAuthor;
     LocationManager locationManager;
     LocationListener locationListener;
     EditText editTextSubject, editTextDesctiption;
     ImageView imageViewPicture;
-    Bitmap imageBitmap;
-    Uri file;
     String id, author_key;
-    Camera camera = new Camera(file);
     String image;
 
     @Override
@@ -59,7 +55,6 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project);
 
-        buttonCamera = (ImageButton) findViewById(R.id.buttonCamera);
         textViewLocation = (TextView) findViewById(R.id.textViewLocation);
         textViewAuthor = (TextView) findViewById(R.id.textViewAuthor);
         editTextSubject = (EditText) findViewById(R.id.editTextSubject);
@@ -88,7 +83,6 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
 //        CZY JEST AUTOREM??
         if(Integer.parseInt(author_id) != Integer.parseInt(author_key)){
             buttonEditProject.setVisibility(View.INVISIBLE);
-            buttonCamera.setVisibility(View.INVISIBLE);
             String location = intent.getStringExtra("location");
             String[] splited = location.split("\\s+");
             if(splited.length > 1) {
@@ -99,22 +93,10 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
             textViewDate.setText("Data: " + intent.getStringExtra("date"));
         } else {
             buttonEditProject.setVisibility(View.VISIBLE);
-            buttonCamera.setVisibility(View.VISIBLE);
             String location = intent.getStringExtra("location");
             DateFormat df = new SimpleDateFormat("EEE d-MMM-yyyy, HH:mm");
             textViewDate.setText(df.format(Calendar.getInstance().getTime()));
         }
-
-        buttonCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                file = Uri.fromFile(camera.getOutputMediaFile());
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, file);
-                startActivityForResult(intent, 100);
-            }
-        });
-
     }
 
 
@@ -177,30 +159,10 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         }
         return strAdd;
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 100) {
-            if (resultCode == RESULT_OK) {
-                //ivResult.setImageURI(file);
-                Bitmap bitmap = camera.decodeSampledBitmapFromFile(file.getPath(), 200, 100);
-                //imageOreintationValidator(bitmap, file.getPath());
-                //rotateImage(bitmap, 90);
-                imageBitmap = bitmap;
-                imageViewPicture.setImageBitmap(bitmap);
-                imageViewPicture.setRotation(90);
-            }
-        }
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            case 0:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    buttonCamera.setEnabled(true);
-                }
-                break;
             case 10:
                 configureButton();
                 break;
