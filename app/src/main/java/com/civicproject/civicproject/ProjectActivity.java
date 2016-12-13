@@ -41,7 +41,7 @@ import static com.google.android.gms.analytics.internal.zzy.C;
 import static com.google.android.gms.analytics.internal.zzy.i;
 
 public class ProjectActivity extends AppCompatActivity implements View.OnClickListener {
-    ImageButton buttonCamera;
+
     Button buttonEditProject;
     TextView textViewLocation, textViewDate, textViewAuthor;
     LocationManager locationManager;
@@ -59,7 +59,6 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project);
 
-        buttonCamera = (ImageButton) findViewById(R.id.buttonCamera);
         textViewLocation = (TextView) findViewById(R.id.textViewLocation);
         textViewAuthor = (TextView) findViewById(R.id.textViewAuthor);
         editTextSubject = (EditText) findViewById(R.id.editTextSubject);
@@ -78,9 +77,16 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         image = intent.getStringExtra("image").replaceAll("\\s","");
         imageViewPicture.setImageBitmap(convertStringToBitMap(image));
         //imageViewPicture.setRotation(90);
+        String location = intent.getStringExtra("location");
+        String[] splited = location.split("\\s+");
+        if(splited.length > 1) {
+            textViewLocation.setText(getCompleteAddressString(Double.parseDouble(splited[0]), Double.parseDouble(splited[1])));
+        } else {
+            textViewLocation.setText("Brak lokalizacji.");
+        }
+        textViewDate.setText("Data: " + intent.getStringExtra("date"));
 
-
-        //SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
+//        SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
         SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
 
         String author_id = myprefs.getString("author_key", null);
@@ -88,53 +94,18 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
 //        CZY JEST AUTOREM??
         if(Integer.parseInt(author_id) != Integer.parseInt(author_key)){
             buttonEditProject.setVisibility(View.INVISIBLE);
-            buttonCamera.setVisibility(View.INVISIBLE);
-            String location = intent.getStringExtra("location");
-            String[] splited = location.split("\\s+");
-            if(splited.length > 1) {
-                textViewLocation.setText(getCompleteAddressString(Double.parseDouble(splited[0]), Double.parseDouble(splited[1])));
-            } else {
-                textViewLocation.setText("Brak lokalizacji.");
-            }
-            textViewDate.setText("Data: " + intent.getStringExtra("date"));
         } else {
             buttonEditProject.setVisibility(View.VISIBLE);
-            buttonCamera.setVisibility(View.VISIBLE);
-            String location = intent.getStringExtra("location");
-            DateFormat df = new SimpleDateFormat("EEE d-MMM-yyyy, HH:mm");
-            textViewDate.setText(df.format(Calendar.getInstance().getTime()));
         }
-
-        buttonCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                file = Uri.fromFile(camera.getOutputMediaFile());
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, file);
-                startActivityForResult(intent, 100);
-            }
-        });
-
     }
-
-
 
     public void onEditProjectButtonClick(View view) {
         String subject = editTextSubject.getText().toString();
         String description = editTextDesctiption.getText().toString();
-        String author = textViewAuthor.getText().toString();
-        String date = textViewDate.getText().toString();
-        String location = textViewLocation.getText().toString();
+        System.out.println(subject + "       " + description + "          " + id);
         String type = "updateProject";
-//        String image = camera.convertBitMapToString(imageBitmap);
         BackgroundWorker backgroundWorker = new BackgroundWorker(ProjectActivity.this);
-        backgroundWorker.execute(type, author, subject, description, location, date, author_key, image, id);
-        editTextSubject.setText("");
-        editTextDesctiption.setText("");
-        if (textViewLocation == null) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Twoj projekt został dodany bez lokalizacji, nie wyświetli się na mapie...", Toast.LENGTH_LONG);
-            toast.show();
-        }
+        backgroundWorker.execute(type, subject, description, id);
     }
 
     public Bitmap convertStringToBitMap(String encodedString) {
@@ -191,29 +162,4 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
     }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case 0:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    buttonCamera.setEnabled(true);
-                }
-                break;
-            case 10:
-                configureButton();
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void configureButton() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
-    }
-
 }
