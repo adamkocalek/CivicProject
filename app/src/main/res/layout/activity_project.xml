@@ -5,148 +5,103 @@
     android:id="@+id/activity_add_project"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/colorWhite"
     tools:context="com.civicproject.civicproject.AddProjectActivity">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <TextView
-                    android:text="Temat:"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:id="@+id/textViewSubject"
-                    android:textColor="@color/colorAccent"/>
-
-                <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:ems="10"
+                    android:text="Temat:"
+                    android:textColor="@color/colorAccent" />
+
+                <EditText
                     android:id="@+id/editTextSubject"
-                    android:textColorHint="@color/colorAccent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
                     android:hint="Temat"
-                    android:layout_marginTop="10dp"/>
+                    android:inputType="textMultiLine"
+                    android:textColorHint="@color/colorAccent" />
 
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <TextView
-                    android:text="Opis"
+                    android:id="@+id/textViewDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textViewDescription"
-                    android:textColor="@color/colorAccent"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    android:text="Opis"
+                    android:textColor="@color/colorAccent" />
 
                 <EditText
+                    android:id="@+id/editTextDesctiption"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
+                    android:layout_marginTop="10dp"
                     android:ems="10"
-                    android:id="@+id/editTextDesctiption"
-                    android:textColorHint="@color/colorAccent"
                     android:hint="Opis"
-                    android:layout_marginTop="10dp"/>
+                    android:inputType="textMultiLine"
+                    android:textColorHint="@color/colorAccent" />
 
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
-                android:text="Lokalizacja: "
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/textViewLocationText"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="10dp" />
-
-            <TextView
-                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Lokalizacja: "
+                android:textColor="@color/colorAccent" />
+
+            <TextView
                 android:id="@+id/textViewLocation"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:text="Data:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewDate"
-                android:textColor="@color/colorAccent"
                 android:layout_marginTop="10dp"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:text="Autor:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewAuthor"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-                <TextView
-                    android:text="Zdjęcie:"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textViewPicture"
-                    android:textColor="@color/colorAccent"
-                    android:layout_marginTop="10dp" />
+                android:layout_weight="1"
+                android:text=""
+                android:textColor="@color/colorAccent" />
 
         </LinearLayout>
 
@@ -155,29 +110,85 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/imageViewPictureExist"
-                android:layout_width="fill_parent"
-                android:layout_height="324dp"
-                android:minHeight="324dp"
-                android:scaleType="centerCrop" />
+            <TextView
+                android:id="@+id/textViewDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="Data:"
+                android:textColor="@color/colorAccent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="Autor:"
+                android:textColor="@color/colorAccent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewPicture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="Zdjęcie:"
+                android:textColor="@color/colorAccent" />
+
+            <ImageButton
+                android:id="@+id/buttonCamera"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:onClick="onAddProjectButtonClick"
+                app:srcCompat="@android:drawable/ic_menu_camera" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonEditProject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onEditProjectButtonClick"
+                android:text="Edytuj projekt!" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center|bottom">
+            android:gravity="center|bottom"
+            android:orientation="horizontal">
 
-            <Button
-                android:text="Edytuj projekt!"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonEditProject"
-                android:onClick="onEditProjectButtonClick"
-                android:layout_weight="1" />
+            <ImageView
+                android:id="@+id/imageViewPictureExist"
+                android:layout_width="fill_parent"
+                android:layout_height="224dp"
+                android:minHeight="224dp"
+                android:scaleType="centerCrop" />
+
         </LinearLayout>
     </LinearLayout>
 

@@ -36,6 +36,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         String addProject_url = "http://188.128.220.60/addProject.php";
         String getUser_url = "http://188.128.220.60/getUser.php";
         String update_url = "http://188.128.220.60/updateUser.php";
+        String updateProject_url = "http://188.128.220.60/updateProject.php";
 
         if (type.equals("login")) {
             try {
@@ -155,9 +156,53 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-
-        else if (type.equals("updateUser")) {
+        }else if (type.equals("updateProject")) {
+            try {
+                String author = params[1];
+                String subject = params[2];
+                String description = params[3];
+                String location = params[4];
+                String date = params[5];
+                String author_key = params[6];
+                String image = params[7];
+                String id = params[8];
+                URL url = new URL(updateProject_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("author", "UTF-8") + "=" + URLEncoder.encode(author, "UTF-8") + "&"
+                        + URLEncoder.encode("subject", "UTF-8") + "=" + URLEncoder.encode(subject, "UTF-8") + "&"
+                        + URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode(description, "UTF-8") + "&"
+                        + URLEncoder.encode("location", "UTF-8") + "=" + URLEncoder.encode(location, "UTF-8") + "&"
+                        + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&"
+                        + URLEncoder.encode("author_key", "UTF-8") + "=" + URLEncoder.encode(author_key, "UTF-8") + "&"
+                        + URLEncoder.encode("image", "UTF-8") + "=" + URLEncoder.encode(image, "UTF-8") + "&"
+                        + URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String result = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                System.out.println(result);
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (type.equals("updateUser")) {
             try {
                 String name = params[1];
                 String surname = params[2];
@@ -197,9 +242,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-
-        else if (type.equals("getUser")) {
+        } else if (type.equals("getUser")) {
             try {
                 String user_name = params[1];
                 URL url = new URL(getUser_url);
