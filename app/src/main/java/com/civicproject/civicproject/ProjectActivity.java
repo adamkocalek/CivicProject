@@ -13,6 +13,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -53,6 +54,10 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
     EditText editTextSubject, editTextDesctiption;
     ImageView imageViewPicture;
     String id, author_key, image, likesidss, author_id;
+    Bitmap imageBitmap;
+    private Camera camera = null;
+    private MyFTPClientFunctions ftpclient = null;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +74,9 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         buttonEditProject = (Button) findViewById(R.id.buttonEditProject);
         buttonLikeProject = (Button) findViewById(R.id.buttonLikeProject);
         textViewDate = (TextView) findViewById(R.id.textViewDate);
+
+        camera = new Camera();
+        ftpclient = new MyFTPClientFunctions();
 
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
@@ -199,4 +207,41 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
     }
 
+    public String ftpDownloadImage(final String srcFilePath) {
+        final String desFilePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Civic Project/" + srcFilePath;
+        new Thread(new Runnable() {
+            public void run() {
+                boolean status = false;
+                // host – your FTP address
+                // username & password – for your secured login
+                // 21 default gateway for FTP
+                status = ftpclient.ftpConnect("serwer1633804.home.pl", "serwer1633804", "33murs0tKiby", 21);
+                if (status == true) {
+                    Log.d(TAG, "Połączenie udane");
+                } else {
+                    Log.d(TAG, "Połączenie nieudane");
+                }
+                ftpclient.ftpChangeDirectory("/images/");
+                //ftpclient.ftpDownload(srcFilePath, desFilePath);
+                imageBitmap = ftpclient.ftpDownloadBitmap(srcFilePath);
+                /*
+                try {
+                FileOutputStream out = null;
+                out = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Civic Project/" + "test.jpg");
+                imageBitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                */
+            }
+        }).start();
+
+        new Thread(new Runnable() {
+            public void run() {
+                ftpclient.ftpDisconnect();
+            }
+        }).start();
+
+        return desFilePath;
+    }
 }
