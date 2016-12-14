@@ -55,7 +55,6 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
     ImageView imageViewPicture;
     String id, author_key, image, likesidss, author_id;
     Bitmap imageBitmap;
-    private Camera camera = null;
     private MyFTPClientFunctions ftpclient = null;
     private static final String TAG = "MainActivity";
 
@@ -75,7 +74,6 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         buttonLikeProject = (Button) findViewById(R.id.buttonLikeProject);
         textViewDate = (TextView) findViewById(R.id.textViewDate);
 
-        camera = new Camera();
         ftpclient = new MyFTPClientFunctions();
 
         Intent intent = getIntent();
@@ -199,9 +197,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
     }
 
-    public String ftpDownloadImage(final String srcFilePath) {
-        final String desFilePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Civic Project/" + srcFilePath;
-        final int[] x = {0};
+    public void ftpDownloadImage(final String srcFilePath) {
         new Thread(new Runnable() {
             public void run() {
                 boolean status = false;
@@ -214,32 +210,24 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
                 } else {
                     Log.d(TAG, "Połączenie nieudane");
                 }
-                ftpclient.ftpChangeDirectory("/images/");
-                //ftpclient.ftpDownload(srcFilePath, desFilePath);
-                imageBitmap = ftpclient.ftpDownloadBitmap(srcFilePath);
-                imageViewPicture.setImageBitmap(imageBitmap);
-                x[0] = 1;
 
-                /*
-                try {
-                FileOutputStream out = null;
-                out = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Civic Project/" + "test.jpg");
-                imageBitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                ftpclient.ftpChangeDirectory("/images/");
+                imageBitmap = ftpclient.ftpDownloadBitmap(srcFilePath);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        imageViewPicture.setImageBitmap(imageBitmap);
+                    }
+                });
+
+                status = ftpclient.ftpDisconnect();
+                if (status == true) {
+                    Log.d(TAG, "Połączenie zakończone");
+                } else {
+                    Log.d(TAG, "Połączenie nie mogło zostać zakończone");
                 }
-                */
             }
         }).start();
-
-        if(x[0] == 1){
-            new Thread(new Runnable() {
-                public void run() {
-                    ftpclient.ftpDisconnect();
-                    x[0] = 2;
-                }
-            }).start();
-        }
-        return desFilePath;
     }
 }
