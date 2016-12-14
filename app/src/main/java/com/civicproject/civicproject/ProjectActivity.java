@@ -35,7 +35,11 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import static android.R.attr.author;
+import static android.R.attr.description;
 import static android.R.attr.id;
+import static android.R.attr.x;
+import static com.civicproject.civicproject.Parser.likesids;
 import static com.civicproject.civicproject.R.id.buttonCamera;
 import static com.civicproject.civicproject.R.id.textViewLike;
 import static com.google.android.gms.analytics.internal.zzy.C;
@@ -48,8 +52,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
     LocationListener locationListener;
     EditText editTextSubject, editTextDesctiption;
     ImageView imageViewPicture;
-    String id, author_key;
-    String image;
+    String id, author_key, image, likesidss, author_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         editTextDesctiption.setText(intent.getStringExtra("description"));
         textViewAuthor.setText(intent.getStringExtra("author"));
         textViewLike.setText(intent.getStringExtra("likes"));
+        likesidss = intent.getStringExtra("likesids");
         author_key = intent.getStringExtra("author_key");
         image = intent.getStringExtra("image").replaceAll("\\s","");
         imageViewPicture.setImageBitmap(convertStringToBitMap(image));
@@ -82,8 +86,12 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         //SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
         SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
 
-        String author_id = myprefs.getString("author_key", null);
-
+        author_id = myprefs.getString("author_key", null);
+        if(likesidss.contains(author_id)){
+            buttonLikeProject.setVisibility(View.INVISIBLE);
+        } else {
+            buttonLikeProject.setVisibility(View.VISIBLE);
+        }
 //        CZY JEST AUTOREM??
         if(Integer.parseInt(author_id) != Integer.parseInt(author_key)){
             buttonEditProject.setVisibility(View.INVISIBLE);
@@ -105,8 +113,13 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
 
 
     public void onLikeProjectButtonClick(View view) {
-        int x = Integer.parseInt((String)textViewLike.getText()) + 1;
-        textViewLike.setText(x + "");
+        int likes = Integer.parseInt((String)textViewLike.getText()) + 1;
+        textViewLike.setText(likes + "");
+        likesidss = likesidss + author_id + ",";
+        String type = "updateProjectLikes";
+        BackgroundWorker backgroundWorker = new BackgroundWorker(ProjectActivity.this);
+        backgroundWorker.execute(type, likesidss, likes + "", id);
+        buttonLikeProject.setVisibility(View.INVISIBLE);
     }
 
     public void onEditProjectButtonClick(View view) {

@@ -18,6 +18,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import static com.civicproject.civicproject.Parser.likes;
+
 public class BackgroundWorker extends AsyncTask<String, Void, String> {
     Context context;
     AlertDialog alertDialog;
@@ -37,6 +39,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         String getUser_url = "http://188.128.220.60/getUser.php";
         String update_url = "http://188.128.220.60/updateUser.php";
         String updateProject_url = "http://188.128.220.60/updateProject.php";
+        String updateLikes_url = "http://188.128.220.60/updateProjectLikes.php";
 
         if (type.equals("login")) {
             try {
@@ -192,6 +195,42 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else if (type.equals("updateProjectLikes")) {
+            try {
+                String likesids = params[1];
+                String likes = params[2];
+                String id = params[3];
+                URL url = new URL(updateLikes_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("likesids", "UTF-8") + "=" + URLEncoder.encode(likesids, "UTF-8") + "&"
+                        + URLEncoder.encode("likes", "UTF-8") + "=" + URLEncoder.encode(likes, "UTF-8") + "&"
+                        + URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String result = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                System.out.println(result);
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else if (type.equals("updateUser")) {
             try {
                 String name = params[1];
@@ -279,7 +318,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         String temp = "Login success. Welcome!";
 
         if (result.equals(temp)) {
-
             Intent intent = new Intent(context, ProjectsActivity.class);
             context.startActivity(intent);
         } else if (result.contains("[{")) {

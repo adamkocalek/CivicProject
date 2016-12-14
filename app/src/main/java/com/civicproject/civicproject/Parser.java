@@ -23,7 +23,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
     Context context;
     ListView listView;
     String data;
-    public static ArrayList<String> locations = new ArrayList<>(), likes = new ArrayList<>(), ids = new ArrayList<>(), descriptions = new ArrayList<>(), subjects = new ArrayList<>();
+    public static ArrayList<String> locations = new ArrayList<>(), likes = new ArrayList<>(), likesids = new ArrayList<>(), ids = new ArrayList<>(), descriptions = new ArrayList<>(), subjects = new ArrayList<>();
     ArrayList<String> projects = new ArrayList<>(), dates = new ArrayList<>(), authors = new ArrayList<>(), authors_keys = new ArrayList<>(),
             images = new ArrayList<>();
     ProgressDialog progressDialog;
@@ -83,6 +83,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
                         intent.putExtra("image", images.get(position));
                         intent.putExtra("id", ids.get(position));
                         intent.putExtra("likes", likes.get(position));
+                        intent.putExtra("likesids", likesids.get(position));
                         context.startActivity(intent);
                     }
                 }
@@ -115,6 +116,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
                 String image = jo.getString("image");
                 String id = jo.getString("id");
                 String like = jo.getString("likes");
+                String likeids = jo.getString("likesids");
                 //ADD IT TO OUR ARRAYLIST
                 projects.add(subject);
                 subjects.add(subject);
@@ -125,6 +127,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
                 authors_keys.add(author_key);
                 ids.add(id);
                 likes.add(like);
+                likesids.add(likeids);
                 images.add(image);
             }
             return 1;
