@@ -86,9 +86,12 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         textViewLike.setText(intent.getStringExtra("likes"));
         likesidss = intent.getStringExtra("likesids");
         author_key = intent.getStringExtra("author_key");
-        image = intent.getStringExtra("image").replaceAll("\\s","");
-        imageViewPicture.setImageBitmap(convertStringToBitMap(image));
-        //imageViewPicture.setRotation(90);
+        image = intent.getStringExtra("image");
+
+        ftpDownloadImage(image);
+
+        //imageViewPicture.setImageBitmap(imageBitmap);
+        //imageViewPicture.setImageURI(Uri.parse(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Civic Project/" + "test.jpg"));
 
 
         //SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
