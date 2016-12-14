@@ -28,6 +28,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.commons.net.ftp.FTPClient;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.DateFormat;
@@ -35,7 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddProjectActivity extends AppCompatActivity implements View.OnClickListener {
+public class AddProjectActivity extends AppCompatActivity {
     Button buttonAddProject;
     ImageButton buttonCamera;
     TextView textViewLocation, textViewDate, textViewAuthor;
@@ -44,9 +46,11 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
     EditText editTextSubject, editTextDesctiption;
     ImageView imageViewPicture;
     String tempAuthorKey;
-    Bitmap imageBitmap;
     Uri file;
-    Camera camera = new Camera();
+    private Camera camera = null;
+    private MyFTPClientFunctions ftpclient = null;
+    private static final String TAG = "MainActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +128,9 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
         editTextDesctiption = (EditText) findViewById(R.id.editTextDesctiption);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         imageViewPicture = (ImageView) findViewById(R.id.imageViewPicture);
+
+        camera = new Camera();
+        ftpclient = new MyFTPClientFunctions();
     }
 
     public void events() {
@@ -146,13 +153,13 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
                 String date = textViewDate.getText().toString();
                 String location = textViewLocation.getText().toString();
                 String type = "addProject";
-                String image = camera.convertBitMapToString(imageBitmap);
+                String image = ftpUploadImage();
                 BackgroundWorker backgroundWorker = new BackgroundWorker(AddProjectActivity.this);
                 backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey, image);
                 editTextSubject.setText("");
                 editTextDesctiption.setText("");
                 if (textViewLocation == null) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Twoj projekt został dodany bez lokalizacji, nie wyświetli się na mapie...", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Twój projekt został dodany bez lokalizacji, nie wyświetli się na mapie...", Toast.LENGTH_LONG);
                     toast.show();
                 }
             }
@@ -170,8 +177,6 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
                 String path = file.toString();
                 String pathCompressed = camera.compressImage(path);
                 imageViewPicture.setImageURI(Uri.parse(pathCompressed));
-                imageBitmap = camera.bitmapFromPath(pathCompressed);
-                //rotateImage(bitmap, 90);
 
                 //File image = new File(path);
                 //image.delete();
@@ -200,9 +205,34 @@ public class AddProjectActivity extends AppCompatActivity implements View.OnClic
         locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
     }
 
+    public String ftpUploadImage() {
+        final String desFileName = tempAuthorKey + "_" + textViewDate.getText() + ".jpg";
+        new Thread(new Runnable() {
+            public void run() {
+                boolean status = false;
+                // host – your FTP address
+                // username & password – for your secured login
+                // 21 default gateway for FTP
+                status = ftpclient.ftpConnect("serwer1633804.home.pl", "serwer1633804", "33murs0tKiby", 21);
+                if (status == true) {
+                    Log.d(TAG, "Połączenie udane");
+                } else {
+                    Log.d(TAG, "Połączenie nieudane");
+                }
+                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Civic Project/IMG_CP_COMPRESSED" + ".jpg");
+                String srcFilePath = file.toString();
+                ftpclient.ftpChangeDirectory("/images/");
+                ftpclient.ftpUpload(srcFilePath, desFileName);
+            }
+        }).start();
 
-    @Override
-    public void onClick(View v) {
+        new Thread(new Runnable() {
+            public void run() {
+                ftpclient.ftpDisconnect();
+            }
+        }).start();
 
+        return desFileName;
     }
+
 }

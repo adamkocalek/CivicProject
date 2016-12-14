@@ -32,7 +32,7 @@ public class Camera extends AppCompatActivity {
 
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
-                Log.d("Civic Project", "nie udało się utowrzyć foledru");
+                Log.d("Civic Project", "nie udało się utowrzyć folderu");
                 return null;
             }
         }
@@ -77,13 +77,23 @@ public class Camera extends AppCompatActivity {
         return BitmapFactory.decodeFile(path, options);
     }
 
-
     public String convertBitMapToString(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] b = baos.toByteArray();
         String temp = Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
+    }
+
+    public Bitmap convertStringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 
     // -------------------------------------- KOMPRESJA ZDJĘCIA -----------------------------------------------------------------
@@ -212,7 +222,7 @@ public class Camera extends AppCompatActivity {
 
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
-                Log.d("Civic Project", "nie udało się utowrzyć foledru");
+                Log.d("Civic Project", "nie udało się utowrzyć folderu");
                 return null;
             }
         }
