@@ -183,6 +183,8 @@
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_weight="16"
+                android:textSize="25dp"
+                android:textStyle="bold"
                 android:text="0"
                 android:textColor="@color/colorAccent" />
 
