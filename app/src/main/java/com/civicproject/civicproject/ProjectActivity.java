@@ -151,17 +151,6 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    public Bitmap convertStringToBitMap(String encodedString) {
-        try {
-            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        } catch (Exception e) {
-            e.getMessage();
-            return null;
-        }
-    }
-
     @Override
     public void onClick(View v) {
 
@@ -212,6 +201,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
 
     public String ftpDownloadImage(final String srcFilePath) {
         final String desFilePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Civic Project/" + srcFilePath;
+        final int[] x = {0};
         new Thread(new Runnable() {
             public void run() {
                 boolean status = false;
@@ -227,6 +217,9 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
                 ftpclient.ftpChangeDirectory("/images/");
                 //ftpclient.ftpDownload(srcFilePath, desFilePath);
                 imageBitmap = ftpclient.ftpDownloadBitmap(srcFilePath);
+                imageViewPicture.setImageBitmap(imageBitmap);
+                x[0] = 1;
+
                 /*
                 try {
                 FileOutputStream out = null;
@@ -239,12 +232,14 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
             }
         }).start();
 
-        new Thread(new Runnable() {
-            public void run() {
-                ftpclient.ftpDisconnect();
-            }
-        }).start();
-
+        if(x[0] == 1){
+            new Thread(new Runnable() {
+                public void run() {
+                    ftpclient.ftpDisconnect();
+                    x[0] = 2;
+                }
+            }).start();
+        }
         return desFilePath;
     }
 }
