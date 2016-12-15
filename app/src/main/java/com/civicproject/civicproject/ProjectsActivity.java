@@ -2,11 +2,10 @@ package com.civicproject.civicproject;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -15,7 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ProjectsActivity extends AppCompatActivity implements View.OnClickListener {
-    Button buttonAddProject, buttonSettings, buttonMap;
+    Button buttonAddProject, buttonSettings, buttonMap, button7;
     String url = "http://188.128.220.60/projects.php";
 
     @Override
@@ -27,6 +26,10 @@ public class ProjectsActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_projects);
+
+        button7 = (Button)findViewById(R.id.button7);
+
+
         buttonAddProject = (Button)findViewById(R.id.buttonAddProject);
         buttonSettings = (Button)findViewById(R.id.buttonSettings);
         buttonMap = (Button)findViewById(R.id.buttonMap);
@@ -101,6 +104,13 @@ public class ProjectsActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Map.class));
+            }
+        });
+
+        button7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ProjectActivity.class));
             }
         });
     }

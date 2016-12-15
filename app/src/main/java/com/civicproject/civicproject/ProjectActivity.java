@@ -1,31 +1,21 @@
 package com.civicproject.civicproject;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.provider.Settings;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,17 +26,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import static android.R.attr.author;
-import static android.R.attr.description;
-import static android.R.attr.id;
-import static android.R.attr.x;
-import static com.civicproject.civicproject.Parser.likesids;
-import static com.civicproject.civicproject.R.id.buttonCamera;
-import static com.civicproject.civicproject.R.id.textViewLike;
-import static com.google.android.gms.analytics.internal.zzy.C;
-import static com.google.android.gms.analytics.internal.zzy.i;
+public class ProjectActivity extends AppCompatActivity implements View.OnClickListener{
 
-public class ProjectActivity extends AppCompatActivity implements View.OnClickListener {
     Button buttonEditProject, buttonLikeProject;
     TextView textViewLocation, textViewDate, textViewAuthor, textViewLike;
     LocationManager locationManager;
@@ -61,7 +42,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_project);
+        setContentView(R.layout.activity_scrolling);
 
         textViewLike = (TextView) findViewById(R.id.textViewLike);
         textViewLocation = (TextView) findViewById(R.id.textViewLocation);
@@ -118,8 +99,9 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
             DateFormat df = new SimpleDateFormat("EEE d-MMM-yyyy, HH:mm");
             textViewDate.setText(df.format(Calendar.getInstance().getTime()));
         }
-    }
 
+
+    }
 
     public void onLikeProjectButtonClick(View view) {
         int likes = Integer.parseInt((String)textViewLike.getText()) + 1;
@@ -191,7 +173,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void configureButton() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
@@ -230,4 +212,5 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
             }
         }).start();
     }
+
 }

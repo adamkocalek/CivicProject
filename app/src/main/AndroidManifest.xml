@@ -38,8 +38,6 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".UserAreaActivity" />
         <activity android:name=".ProjectsActivity" />
-        <activity android:name=".AddProjectActivity" />
-        <activity android:name=".ProjectActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -48,7 +46,14 @@
         <activity
             android:name=".Map"
             android:label="@string/title_activity_map" />
-        <activity android:name=".AboutActivity"></activity>
+        <activity android:name=".AboutActivity" />
+        <activity
+            android:name=".ProjectActivity"
+            android:label="@string/title_activity_scrolling" />
+        <activity
+            android:name=".AddProjectActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
