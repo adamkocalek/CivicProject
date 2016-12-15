@@ -24,10 +24,9 @@ public class UserAreaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_area);
+
         init();
         events();
-
-
 
         SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
         String username = myprefs.getString("username", null);
@@ -42,8 +41,6 @@ public class UserAreaActivity extends AppCompatActivity {
         editTextSurname.setText(surname + "");
         editTextPassword.setText(password + "");
         textViewUsername.setText(username);
-
-
     }
 
     public void init() {
@@ -56,8 +53,6 @@ public class UserAreaActivity extends AppCompatActivity {
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         editTextAge = (EditText) findViewById(R.id.editTextAge);
     }
-
-
 
     public void events() {
         buttonEdit.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +69,4 @@ public class UserAreaActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }

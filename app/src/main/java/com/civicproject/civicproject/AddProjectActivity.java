@@ -160,8 +160,7 @@ public class AddProjectActivity extends AppCompatActivity {
                         editTextSubject.setText("");
                         editTextDesctiption.setText("");
                         if (textViewLocation == null) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Twój projekt został dodany bez lokalizacji, nie wyświetli się na mapie...", Toast.LENGTH_LONG);
-                            toast.show();
+                            Toast.makeText(getApplicationContext(), "Twój projekt został dodany bez lokalizacji, nie wyświetli się na mapie...", Toast.LENGTH_LONG).show();
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), "Znajdujesz się poza Łodzią twój projekt nie może zostać dodany...", Toast.LENGTH_LONG).show();
@@ -230,12 +229,13 @@ public class AddProjectActivity extends AppCompatActivity {
                 String srcFilePath = file.toString();
                 ftpclient.ftpChangeDirectory("/images/");
                 ftpclient.ftpUpload(srcFilePath, desFileName);
-            }
-        }).start();
 
-        new Thread(new Runnable() {
-            public void run() {
-                ftpclient.ftpDisconnect();
+                status = ftpclient.ftpDisconnect();
+                if (status == true) {
+                    Log.d(TAG, "Połączenie zakończone");
+                } else {
+                    Log.d(TAG, "Połączenie nie mogło zostać zakończone");
+                }
             }
         }).start();
 

@@ -3,6 +3,7 @@ package com.civicproject.civicproject;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.Scanner;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -240,5 +241,41 @@ public class MyFTPClientFunctions {
         }
 
         return status;
+    }
+
+    public boolean ftpUploadString(InputStream srcFileStream, String desFileName) {
+        boolean status = false;
+        try {
+
+            // change working directory to the destination directory
+            // if (ftpChangeDirectory(desDirectory)) {
+            status = mFTPClient.storeFile(desFileName, srcFileStream);
+            // }
+
+            srcFileStream.close();
+
+            return status;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d(TAG, "dodawanie nieudane: " + e);
+        }
+
+        return status;
+    }
+
+    public String ftpDownloadString(String srcFilePath) {
+        String logins = null;
+        try {
+            InputStream srcFileStream = mFTPClient.retrieveFileStream(srcFilePath);
+
+            Scanner s = new Scanner(srcFileStream).useDelimiter("\\A");
+            logins = s.hasNext() ? s.next() : "";
+
+            return logins;
+        } catch (Exception e) {
+            Log.d(TAG, "pobieranie nieudane");
+        }
+
+        return logins;
     }
 }
