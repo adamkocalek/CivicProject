@@ -116,19 +116,10 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
     public void onEditProjectButtonClick(View view) {
         String subject = editTextSubject.getText().toString();
         String description = editTextDesctiption.getText().toString();
-        String author = textViewAuthor.getText().toString();
-        String date = textViewDate.getText().toString();
-        String location = textViewLocation.getText().toString();
+        System.out.println(subject + "       " + description + "          " + id);
         String type = "updateProject";
-//        String image = camera.convertBitMapToString(imageBitmap);
         BackgroundWorker backgroundWorker = new BackgroundWorker(ProjectActivity.this);
-        backgroundWorker.execute(type, author, subject, description, location, date, author_key, image, id);
-        editTextSubject.setText("");
-        editTextDesctiption.setText("");
-        if (textViewLocation == null) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Twoj projekt został dodany bez lokalizacji, nie wyświetli się na mapie...", Toast.LENGTH_LONG);
-            toast.show();
-        }
+        backgroundWorker.execute(type, subject, description, id);
     }
 
     @Override
