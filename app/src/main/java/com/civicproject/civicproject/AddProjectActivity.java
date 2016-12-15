@@ -43,6 +43,7 @@ public class AddProjectActivity extends AppCompatActivity {
     EditText editTextSubject, editTextDesctiption;
     ImageView imageViewPicture;
     String tempAuthorKey;
+    Double locationX = Double.NaN, locationY = Double.NaN;
     Uri file;
     private Camera camera = null;
     private MyFTPClientFunctions ftpclient = null;
@@ -77,6 +78,8 @@ public class AddProjectActivity extends AppCompatActivity {
             @Override
             public void onLocationChanged(Location location) {
                 textViewLocation.setText(location.getLatitude() + " " + location.getLongitude());
+                locationX = location.getLatitude();
+                locationY = location.getLongitude();
             }
 
             @Override
@@ -143,20 +146,28 @@ public class AddProjectActivity extends AppCompatActivity {
         buttonAddProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String subject = editTextSubject.getText().toString();
-                String description = editTextDesctiption.getText().toString();
-                String author = textViewAuthor.getText().toString();
-                String date = textViewDate.getText().toString();
-                String location = textViewLocation.getText().toString();
-                String type = "addProject";
-                String image = ftpUploadImage();
-                BackgroundWorker backgroundWorker = new BackgroundWorker(AddProjectActivity.this);
-                backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey, image);
-                editTextSubject.setText("");
-                editTextDesctiption.setText("");
-                if (textViewLocation == null) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Twój projekt został dodany bez lokalizacji, nie wyświetli się na mapie...", Toast.LENGTH_LONG);
-                    toast.show();
+                if(!locationX.isNaN() && !locationY.isNaN()){
+                    if(locationX <= 51.843678 && locationX >= 51.690382 && locationY <= 19.619980 && locationY >= 19.324036){
+                        String subject = editTextSubject.getText().toString();
+                        String description = editTextDesctiption.getText().toString();
+                        String author = textViewAuthor.getText().toString();
+                        String date = textViewDate.getText().toString();
+                        String location = textViewLocation.getText().toString();
+                        String type = "addProject";
+                        String image = ftpUploadImage();
+                        BackgroundWorker backgroundWorker = new BackgroundWorker(AddProjectActivity.this);
+                        backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey, image);
+                        editTextSubject.setText("");
+                        editTextDesctiption.setText("");
+                        if (textViewLocation == null) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Twój projekt został dodany bez lokalizacji, nie wyświetli się na mapie...", Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Znajdujesz się poza Łodzią twój projekt nie może zostać dodany...", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Musisz poczekać na znalezienie twojej lokalizacji...", Toast.LENGTH_LONG).show();
                 }
             }
         });
