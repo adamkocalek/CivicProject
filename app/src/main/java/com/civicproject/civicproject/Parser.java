@@ -1,5 +1,6 @@
 package com.civicproject.civicproject;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 
 public class Parser extends AsyncTask<Void, Integer, Integer> {
     Context context;
+    Activity activity;
     ListView listView;
     String data;
     public static ArrayList<String> locations = new ArrayList<>(), likes = new ArrayList<>(), likesids = new ArrayList<>(), ids = new ArrayList<>(), descriptions = new ArrayList<>(), subjects = new ArrayList<>();
@@ -29,9 +32,10 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
 
     }
 
-    public Parser(Context context, String data, ListView listView) {
+    public Parser(Context context, String data, Activity activity, ListView listView) {
         this.context = context;
         this.data = data;
+        this.activity = activity;
         this.listView = listView;
     }
 
@@ -53,20 +57,23 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
     protected void onPostExecute(Integer integer) {
         super.onPostExecute(integer);
         if (integer == 1) {
+
             //ADAPTER
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, ids);
+            ListViewAdapter lviewAdapter;
+            lviewAdapter = new ListViewAdapter(activity, ids, subjects);
             //ADAPT TO LISTVIEW
-            listView.setAdapter(adapter);
-            //LISTENET
+            listView.setAdapter(lviewAdapter);
+
+            //LISTENER
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                     Intent intent = new Intent(context, ProjectActivity.class);
-
+                    TextView textView = (TextView) view.findViewById(R.id.textViewIds);
                     //ProjectActivity.textViewAuthor.setText("");
-                    if (ids.contains(listView.getItemAtPosition(position).toString())) {
-                        position = ids.indexOf(listView.getItemAtPosition(position).toString());
+                    if (ids.contains(textView.getText() + "")) {
+                        position = ids.indexOf(textView.getText() + "");
                     } else {
                         position = -1;
                     }
@@ -84,8 +91,8 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
                         context.startActivity(intent);
                     }
                 }
-
             });
+
         } else {
             Toast.makeText(context, "Unable to Parse", Toast.LENGTH_SHORT).show();
         }

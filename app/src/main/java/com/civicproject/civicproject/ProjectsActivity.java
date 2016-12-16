@@ -13,6 +13,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class ProjectsActivity extends AppCompatActivity implements View.OnClickListener {
     Button buttonAddProject, buttonSettings, buttonMap, button7;
     String url = "http://188.128.220.60/projects.php";
@@ -27,12 +29,12 @@ public class ProjectsActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_projects);
 
-        button7 = (Button)findViewById(R.id.button7);
+        button7 = (Button) findViewById(R.id.button7);
 
 
-        buttonAddProject = (Button)findViewById(R.id.buttonAddProject);
-        buttonSettings = (Button)findViewById(R.id.buttonSettings);
-        buttonMap = (Button)findViewById(R.id.buttonMap);
+        buttonAddProject = (Button) findViewById(R.id.buttonAddProject);
+        buttonSettings = (Button) findViewById(R.id.buttonSettings);
+        buttonMap = (Button) findViewById(R.id.buttonMap);
         final ListView listView = (ListView) findViewById(R.id.listView);
         TextView mainTextView = (TextView) findViewById(R.id.textViewNotification);
 
@@ -59,13 +61,12 @@ public class ProjectsActivity extends AppCompatActivity implements View.OnClickL
         } catch (InterruptedException e) {
 
         }
-        JSONArray ja= null;
+        JSONArray ja = null;
         try {
             ja = new JSONArray(backgroundWorker.tempJSON);
             JSONObject jo1 = null;
-            for(int i = 0; i < ja.length(); i++)
-            {
-                SharedPreferences sharedPreferences = this.getSharedPreferences("user", MODE_PRIVATE );
+            for (int i = 0; i < ja.length(); i++) {
+                SharedPreferences sharedPreferences = this.getSharedPreferences("user", MODE_PRIVATE);
 
                 jo1 = ja.getJSONObject(i);
                 String name = jo1.getString("name");
@@ -88,7 +89,7 @@ public class ProjectsActivity extends AppCompatActivity implements View.OnClickL
             e.printStackTrace();
         }
 
-        final Downloader downloader = new Downloader(this,url,listView);
+        final Downloader downloader = new Downloader(this, url, this, listView);
         downloader.execute();
         buttonAddProject.setOnClickListener(new View.OnClickListener() {
             @Override
