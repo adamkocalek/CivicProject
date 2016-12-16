@@ -168,6 +168,8 @@ public class AddProjectActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "Musisz poczekać na znalezienie twojej lokalizacji...", Toast.LENGTH_LONG).show();
                 }
+                Toast toast = Toast.makeText(getApplicationContext(), "Dodano projekt. Bedzie on widoczny po ponownym zalogowaniu ; )", Toast.LENGTH_LONG);
+                toast.show();
             }
         });
     }

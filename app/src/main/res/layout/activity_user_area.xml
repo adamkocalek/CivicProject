@@ -7,106 +7,136 @@
     android:padding="@dimen/activity_horizontal_margin">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Panel użytkownika"
-            android:textStyle="italic"
-            android:gravity="center"
-            android:textSize="30dp"
-            android:textColor="@color/colorAccent"
             android:id="@+id/textViewUserArea"
-            android:layout_centerHorizontal="true" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="Panel użytkownika"
+            android:textColor="@color/colorAccent"
+            android:textSize="30dp"
+            android:textStyle="italic" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:gravity="center"
-            android:textStyle="italic"
-            android:textSize="28dp"
-            android:textColor="@color/colorAccent"
             android:id="@+id/textViewUsername"
-            android:layout_centerHorizontal="true" />
-
-        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/colorAccent"
+            android:textSize="28dp"
+            android:textStyle="italic" />
+
+        <EditText
             android:id="@+id/editTextName"
-            android:textColorHint="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/textViewUserArea"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:hint="Imię" />
+            android:ems="10"
+            android:hint="Imię"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/colorAccent" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/editTextrSurname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/editTextName"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:textColorHint="@color/colorAccent"
-            android:hint="Nazwisko" />
+            android:hint="Nazwisko"
+            android:textColorHint="@color/colorAccent" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/editTextPassword"
-            android:layout_below="@+id/editTextUsername"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
-            android:textColorHint="@color/colorAccent"
-            android:layout_alignParentEnd="true"
-            android:hint="Hasło" />
+        android:id="@+id/editTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editTextUsername"
+        android:ems="10"
+        android:hint="Hasło"
+        android:inputType="textPassword"
+        android:textColorHint="@color/colorAccent" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
             android:id="@+id/editTextAge"
-            android:layout_below="@+id/editTextPassword"
-            android:layout_alignParentLeft="true"
-            android:textColorHint="@color/colorAccent"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:hint="Wiek" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/editTextPassword"
+            android:ems="10"
+            android:hint="Wiek"
+            android:inputType="number"
+            android:textColorHint="@color/colorAccent" />
+
+        <EditText
+            android:id="@+id/editTextTelephone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/editTextAge"
+            android:ems="10"
+            android:hint="Telefon"
+            android:inputType="number"
+            android:textColorHint="@color/colorAccent" />
+
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:ems="10"
+            android:hint="Email"
+            android:textColorHint="@color/colorAccent" />
 
         <Button
+            android:id="@+id/buttonEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Edytuj"
-            android:id="@+id/buttonEdit"
             android:background="@drawable/button_primary"
-            android:textColor="#878787"
-            android:layout_below="@+id/editTextAge"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignRight="@+id/editTextAge"
-            android:layout_alignEnd="@+id/editTextAge" />
+            android:text="Edytuj"
+            android:textColor="#878787" />
+
+        <Button
+            android:id="@+id/buttonDeleteUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_primary"
+            android:layout_marginTop="5dp"
+            android:text="Usuń konto"
+            android:textColor="#878787" />
     </LinearLayout>
 
     <EditText
+        android:id="@+id/editTextUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editTextUsername"
-        android:visibility="invisible"
+        android:hint="Login"
         android:textColorHint="@color/colorAccent"
-        android:hint="Login" />
+        android:visibility="invisible" />
 
 </RelativeLayout>

@@ -28,7 +28,7 @@ import java.util.Locale;
 
 public class ProjectActivity extends AppCompatActivity implements View.OnClickListener{
 
-    Button buttonEditProject, buttonLikeProject;
+    Button buttonEditProject, buttonLikeProject, buttonDeleteProject;
     TextView textViewLocation, textViewDate, textViewAuthor, textViewLike;
     LocationManager locationManager;
     LocationListener locationListener;
@@ -53,6 +53,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         imageViewPicture = (ImageView) findViewById(R.id.imageViewPictureExist);
         buttonEditProject = (Button) findViewById(R.id.buttonEditProject);
         buttonLikeProject = (Button) findViewById(R.id.buttonLikeProject);
+        buttonDeleteProject = (Button) findViewById(R.id.buttonDeleteProject);
         textViewDate = (TextView) findViewById(R.id.textViewDate);
 
         ftpclient = new MyFTPClientFunctions();
@@ -85,6 +86,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
 //        CZY JEST AUTOREM??
         if(Integer.parseInt(author_id) != Integer.parseInt(author_key)){
             buttonEditProject.setVisibility(View.INVISIBLE);
+            buttonDeleteProject.setVisibility(View.INVISIBLE);
             String location = intent.getStringExtra("location");
             String[] splited = location.split("\\s+");
             if(splited.length > 1) {
@@ -95,12 +97,21 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
             textViewDate.setText("Data: " + intent.getStringExtra("date"));
         } else {
             buttonEditProject.setVisibility(View.VISIBLE);
+            buttonDeleteProject.setVisibility(View.VISIBLE);
             String location = intent.getStringExtra("location");
             DateFormat df = new SimpleDateFormat("EEE d-MMM-yyyy, HH:mm");
             textViewDate.setText(df.format(Calendar.getInstance().getTime()));
         }
 
 
+    }
+
+    public void onDeleteProjectButtonClick(View view) {
+        String type = "deleteProject";
+        BackgroundWorker backgroundWorker = new BackgroundWorker(ProjectActivity.this);
+        backgroundWorker.execute(type, id);
+        Intent myIntent = new Intent(ProjectActivity.this, LoginActivity.class);
+        ProjectActivity.this.startActivity(myIntent);
     }
 
     public void onLikeProjectButtonClick(View view) {

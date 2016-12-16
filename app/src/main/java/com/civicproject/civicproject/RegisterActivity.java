@@ -1,5 +1,6 @@
 package com.civicproject.civicproject;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,8 +15,11 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Scanner;
 
+import static android.R.attr.duration;
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+
 public class RegisterActivity extends AppCompatActivity {
-    EditText etRegisterAge, etRegisterName, etRegisterUsername, etRegisterPassword, etRegisterSurname;
+    EditText etRegisterAge, etRegisterName, etRegisterUsername, etRegisterPassword, etRegisterSurname, editTextTelephone, editTextEmail;
     private MyFTPClientFunctions ftpclient = null;
     private static final String TAG = "MainActivity";
     String loginsDownloaded = null, loginsUptaded = null;
@@ -30,6 +34,8 @@ public class RegisterActivity extends AppCompatActivity {
         etRegisterUsername = (EditText) findViewById(R.id.etRegisterUsername);
         etRegisterPassword = (EditText) findViewById(R.id.etRegisterPassword);
         etRegisterSurname = (EditText) findViewById(R.id.etRegisterSurname);
+        editTextTelephone = (EditText) findViewById(R.id.editTextTelephone);
+        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
 
         ftpclient = new MyFTPClientFunctions();
         ftpDownloadFileWithLogins();
@@ -41,9 +47,11 @@ public class RegisterActivity extends AppCompatActivity {
         String str_age = etRegisterAge.getText().toString();
         String str_username = etRegisterUsername.getText().toString();
         String str_password = etRegisterPassword.getText().toString();
+        String str_telephone = editTextTelephone.getText().toString();
+        String str_email = editTextEmail.getText().toString();
         String type = "register";
 
-        if (!str_name.isEmpty() && !str_surname.isEmpty() && !str_age.isEmpty() && !str_username.isEmpty() && !str_password.isEmpty()) {
+        if (!str_name.isEmpty() && !str_surname.isEmpty() && !str_age.isEmpty() && !str_username.isEmpty() && !str_password.isEmpty() && !str_telephone.isEmpty() && !str_email.isEmpty()) {
             int i = 0;
             Scanner scanner = new Scanner(loginsDownloaded);
             while (scanner.hasNextLine()) {
@@ -57,14 +65,11 @@ public class RegisterActivity extends AppCompatActivity {
                 loginsUptaded = loginsDownloaded + "\n" + str_username;
                 ftpUploadFileWithLogins();
                 BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-                backgroundWorker.execute(type, str_name, str_surname, str_age, str_username, str_password);
-                etRegisterName.setText("");
-                etRegisterSurname.setText("");
-                etRegisterAge.setText("");
-                etRegisterUsername.setText("");
-                etRegisterPassword.setText("");
-                //Intent intent = new Intent(context, LoginActivity.class);
-                //context.startActivity(intent);
+                backgroundWorker.execute(type, str_name, str_surname, str_age, str_username, str_password, str_telephone, str_email);
+                Toast toast = Toast.makeText(getApplicationContext(), "Zarejestrowano, możesz się zalogować ; )", Toast.LENGTH_LONG);
+                toast.show();
+                Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+                RegisterActivity.this.startActivity(myIntent);
             } else {
                 Toast.makeText(getApplicationContext(), "Wybrany login już istnieje.", Toast.LENGTH_LONG).show();
             }

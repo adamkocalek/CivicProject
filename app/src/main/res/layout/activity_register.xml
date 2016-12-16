@@ -50,6 +50,22 @@
             android:hint="Wiek"
             android:inputType="number"
             android:textColorHint="@color/colorAccent" />
+        <EditText
+            android:id="@+id/editTextTelephone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Telefon"
+            android:inputType="number"
+            android:textColorHint="@color/colorAccent" />
+
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Email"
+            android:textColorHint="@color/colorAccent" />
 
         <Button
             android:id="@+id/bRegister"
