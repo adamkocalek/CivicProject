@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_main"
+        android:icon="@drawable/inbox"
+        android:title="Strona Główna" />
+
+    <item
+        android:id="@+id/nav_old"
+        android:icon="@drawable/inbox"
+        android:title="Stary Wygląd"/>
+
+    <item
+        android:id="@+id/nav_idea"
+        android:icon="@drawable/inbox"
+        android:title="Dodaj Pomysł" />
+
+    <group android:id="@+id/group_account">
+
+        <item
+            android:id="@+id/nav_my_account"
+            android:icon="@drawable/inbox"
+            android:title="Moje Konto" />
+
+        <item
+            android:id="@+id/nav_my_projects"
+            android:icon="@drawable/inbox"
+            android:title="Moje Projekty" />
+    </group>
+
+    <group android:id="@+id/group_others">
+
+        <item
+            android:id="@+id/nav_rules"
+            android:icon="@drawable/inbox"
+            android:title="Regulamin" />
+
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/inbox"
+            android:title="Pomoc" />
+
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/inbox"
+            android:title="O Aplikacji" />
+    </group>
+
+    <group android:id="@+id/group_logout">
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/inbox"
+            android:title="Wyloguj się" />
+    </group>
+
+</menu>

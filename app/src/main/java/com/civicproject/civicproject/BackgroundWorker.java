@@ -392,7 +392,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         String temp = "Login success. Welcome!";
 
         if (result.equals(temp)) {
-            Intent intent = new Intent(context, ProjectsActivity.class);
+            Intent intent = new Intent(context, MainActivity.class);
             context.startActivity(intent);
         } else if (result.contains("[{")) {
 
