@@ -63,7 +63,7 @@ public class AddProjectActivity extends AppCompatActivity {
         init();
         events();
 
-        DateFormat df = new SimpleDateFormat("EEE d-MMM-yyyy, HH:mm");
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy, HH:mm");
         textViewDate.setText(df.format(Calendar.getInstance().getTime()));
 
         //SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
@@ -162,14 +162,13 @@ public class AddProjectActivity extends AppCompatActivity {
                         if (textViewLocation == null) {
                             Toast.makeText(getApplicationContext(), "Twój projekt został dodany bez lokalizacji, nie wyświetli się na mapie...", Toast.LENGTH_LONG).show();
                         }
+                        Toast.makeText(getApplicationContext(), "Dodano projekt. Bedzie on widoczny po ponownym zalogowaniu ; )", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "Znajdujesz się poza Łodzią twój projekt nie może zostać dodany...", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "Musisz poczekać na znalezienie twojej lokalizacji...", Toast.LENGTH_LONG).show();
                 }
-                Toast toast = Toast.makeText(getApplicationContext(), "Dodano projekt. Bedzie on widoczny po ponownym zalogowaniu ; )", Toast.LENGTH_LONG);
-                toast.show();
             }
         });
     }

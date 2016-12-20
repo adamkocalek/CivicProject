@@ -27,6 +27,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
     ArrayList<String> projects = new ArrayList<>(), dates = new ArrayList<>(), authors = new ArrayList<>(), authors_keys = new ArrayList<>(),
             images = new ArrayList<>();
     ProgressDialog progressDialog;
+    DateParser dateParser = null;
 
     public Parser() {
 
@@ -60,7 +61,11 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
 
             //ADAPTER
             ListViewAdapter lviewAdapter;
-            lviewAdapter = new ListViewAdapter(activity, ids, subjects);
+            dateParser = new DateParser();
+            for(int i = 0; i < dates.size(); i++) {
+                dates.set(i, dateParser.getDate(dates.get(i)));
+            }
+            lviewAdapter = new ListViewAdapter(activity, ids, subjects, authors, likes, dates);
             //ADAPT TO LISTVIEW
             listView.setAdapter(lviewAdapter);
 
