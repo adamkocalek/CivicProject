@@ -79,13 +79,13 @@ public class DateParser {
 
         String formatedDate;
 
-        ArrayList<String> monthsPL = new ArrayList<>(Arrays.asList("", "STYCZEŃ", "Luty", "Marzec","Kwiecień",
-                "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "GRUDZIEŃ"));
+        ArrayList<String> monthsPL = new ArrayList<>(Arrays.asList("", "STYCZEŃ", "LUTY", "MARZEC","KWIECIEŃ",
+                "MAJ", "CZERWIEC", "LIPIEC", "SIERPIEŃ", "WRZESIEŃ", "PAŹDZIERNIK", "LISTOPAD", "GRUDZIEŃ"));
 
-        SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
+        SimpleDateFormat dayFormat = new SimpleDateFormat("d");
         SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
         SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy, HH:mm");
+        SimpleDateFormat formatter = new SimpleDateFormat("d.MM.yyyy, HH:mm");
         
         Date date = null;
         try {
@@ -99,24 +99,36 @@ public class DateParser {
             if(minutes <= 1440) {
                 if(minutes < 60)
                     if(minutes <= 1) {
-                        formatedDate = minutes + " minutę temu";
+                        formatedDate = minutes + " MINUTĘ TEMU";
                         return formatedDate;
                     } else {
-                        formatedDate =  minutes + " minut temu";
+                        formatedDate =  minutes + " MINUT TEMU";
                         return formatedDate;
                     }
                 else {
                     minutes /= 60;
                     if(minutes == 1) {
-                        formatedDate = minutes + " godzinę temu";
+                        formatedDate = minutes + " GODZINĘ TEMU";
+                        return formatedDate;
+                    } else if(minutes == 2 || minutes == 3 || minutes == 4 || minutes == 22 || minutes == 23 || minutes == 24) {
+                        formatedDate = minutes + " GODZINY TEMU";
                         return formatedDate;
                     } else {
-                        formatedDate = minutes + " godzin temu";
+                        formatedDate = minutes + " GODZIN TEMU";
                         return formatedDate;
                     }
                 }
-            }
-            else {
+            } else if(minutes <= 10080) {
+                minutes /= 60 * 24;
+                if(minutes == 1) {
+                    formatedDate = minutes + " DZIEŃ TEMU";
+                    return formatedDate;
+                } else {
+                    formatedDate = minutes + " DNI TEMU";
+                    return formatedDate;
+                }
+
+            } else {
                 String dayString = dayFormat.format(date.getTime());
                 int monthInt = Integer.parseInt(monthFormat.format(date.getTime()));
                 formatedDate = dayString + " " + monthsPL.get(monthInt);

@@ -42,10 +42,12 @@ public class NewestFragment extends Fragment {
 //      nf_button1.setOnClickListener(this);
         */
 
+        /*
         final ListView nf_list = (ListView) view.findViewById(R.id.nf_list);
 
         final Downloader downloader = new Downloader(getContext(), url, getActivity(), nf_list);
         downloader.execute();
+        */
 
         return view;
 

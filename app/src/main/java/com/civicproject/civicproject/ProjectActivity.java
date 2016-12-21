@@ -26,7 +26,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class ProjectActivity extends AppCompatActivity implements View.OnClickListener{
+public class ProjectActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button buttonEditProject, buttonLikeProject, buttonDeleteProject;
     TextView textViewLocation, textViewDate, textViewAuthor, textViewLike;
@@ -63,47 +63,40 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         editTextSubject.setText(intent.getStringExtra("subject"));
         editTextDesctiption.setText(intent.getStringExtra("description"));
         textViewAuthor.setText(intent.getStringExtra("author"));
+        textViewDate.setText("Data: " + intent.getStringExtra("date"));
         textViewLike.setText(intent.getStringExtra("likes"));
         likesidss = intent.getStringExtra("likesids");
         author_key = intent.getStringExtra("author_key");
-        image = intent.getStringExtra("image");
 
+        image = intent.getStringExtra("image");
         ftpDownloadImage(image);
 
-        //imageViewPicture.setImageBitmap(imageBitmap);
-        //imageViewPicture.setImageURI(Uri.parse(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Civic Project/" + "test.jpg"));
-
+        String location = intent.getStringExtra("location");
+        String[] splited = location.split("\\s+");
+        if (splited.length > 1) {
+            textViewLocation.setText(getCompleteAddressString(Double.parseDouble(splited[0]), Double.parseDouble(splited[1])));
+        } else {
+            textViewLocation.setText("Brak lokalizacji.");
+        }
 
         //SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
         SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
 
         author_id = myprefs.getString("author_key", null);
-        if(likesidss.contains(author_id)){
+        if (likesidss.contains(author_id)) {
             buttonLikeProject.setVisibility(View.INVISIBLE);
         } else {
             buttonLikeProject.setVisibility(View.VISIBLE);
         }
-//        CZY JEST AUTOREM??
-        if(Integer.parseInt(author_id) != Integer.parseInt(author_key)){
+
+        // CZY JEST AUTOREM??
+        if (Integer.parseInt(author_id) != Integer.parseInt(author_key)) {
             buttonEditProject.setVisibility(View.INVISIBLE);
             buttonDeleteProject.setVisibility(View.INVISIBLE);
-            String location = intent.getStringExtra("location");
-            String[] splited = location.split("\\s+");
-            if(splited.length > 1) {
-                textViewLocation.setText(getCompleteAddressString(Double.parseDouble(splited[0]), Double.parseDouble(splited[1])));
-            } else {
-                textViewLocation.setText("Brak lokalizacji.");
-            }
-            textViewDate.setText("Data: " + intent.getStringExtra("date"));
         } else {
             buttonEditProject.setVisibility(View.VISIBLE);
             buttonDeleteProject.setVisibility(View.VISIBLE);
-            String location = intent.getStringExtra("location");
-            DateFormat df = new SimpleDateFormat("EEE d-MMM-yyyy, HH:mm");
-            textViewDate.setText(df.format(Calendar.getInstance().getTime()));
         }
-
-
     }
 
     public void onDeleteProjectButtonClick(View view) {
@@ -115,7 +108,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void onLikeProjectButtonClick(View view) {
-        int likes = Integer.parseInt((String)textViewLike.getText()) + 1;
+        int likes = Integer.parseInt((String) textViewLike.getText()) + 1;
         textViewLike.setText(likes + "");
         likesidss = likesidss + author_id + ",";
         String type = "updateProjectLikes";
