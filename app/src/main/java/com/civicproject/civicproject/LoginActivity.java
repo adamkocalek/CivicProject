@@ -3,6 +3,7 @@ package com.civicproject.civicproject;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,7 +28,8 @@ public class LoginActivity extends AppCompatActivity {
             finish();
             System.exit(0);
         }else{
-            Toast.makeText(getApplicationContext(), "Wciśnij przycisk jeszcze raz aby wyjść...", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar.make(getCurrentFocus(), "Wciśnij jeszcze raz aby wyjść...", Snackbar.LENGTH_SHORT);
+            snackbar.show();
         }
         back =1;
     }
@@ -43,50 +45,50 @@ public class LoginActivity extends AppCompatActivity {
         bLogin = (Button) findViewById(R.id.bSignIn);
         tvAbout = (TextView) findViewById(R.id.tvAbout);
 
-        bLogin.setEnabled(false);
+        //bLogin.setEnabled(false);
 
         // ZMIANA LOGIN TEXT
-        etLoginUsername.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(!s.toString().isEmpty() && !etLoginPassword.getText().toString().isEmpty()) {
-                    bLogin.setEnabled(true);
-                }else{
-                    bLogin.setEnabled(false);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+//        etLoginUsername.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                if(!s.toString().isEmpty() && !etLoginPassword.getText().toString().isEmpty()) {
+//                    bLogin.setEnabled(true);
+//                }else{
+//                    bLogin.setEnabled(false);
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
 
         // ZMIANA PASSWORD TEXT
-        etLoginPassword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(!s.toString().isEmpty() && !etLoginUsername.getText().toString().isEmpty()){
-                    bLogin.setEnabled(true);
-                }else{
-                    bLogin.setEnabled(false);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+//        etLoginPassword.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                if(!s.toString().isEmpty() && !etLoginUsername.getText().toString().isEmpty()){
+//                    bLogin.setEnabled(true);
+//                }else{
+//                    bLogin.setEnabled(false);
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
 
         bRegisterLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +120,5 @@ public class LoginActivity extends AppCompatActivity {
                 backgroundWorker.execute(type, username, password);
             }
         });
-
-
     }
 }

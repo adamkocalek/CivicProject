@@ -59,24 +59,25 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
         super.onPostExecute(integer);
         if (integer == 1) {
 
-            //ADAPTER
+            // ADAPTER
             ListViewAdapter lviewAdapter;
             dateParser = new DateParser();
             for(int i = 0; i < dates.size(); i++) {
                 dates.set(i, dateParser.getDate(dates.get(i)));
             }
             lviewAdapter = new ListViewAdapter(activity, ids, subjects, authors, likes, dates);
-            //ADAPT TO LISTVIEW
+            // ADAPT TO LISTVIEW
             listView.setAdapter(lviewAdapter);
 
-            //LISTENER
+            // LISTENER
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                     Intent intent = new Intent(context, ProjectActivity.class);
                     TextView textView = (TextView) view.findViewById(R.id.textViewIds);
-                    //ProjectActivity.textViewAuthor.setText("");
+
+                    // ProjectActivity.textViewAuthor.setText("");
                     if (ids.contains(textView.getText() + "")) {
                         position = ids.indexOf(textView.getText() + "");
                     } else {
@@ -104,18 +105,20 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
         progressDialog.dismiss();
     }
 
-    //PARSE RECEIVED DATA
+    // PARSE RECEIVED DATA
     private int parse() {
         try {
-            //ADD THAT DATA TO JSON ARRAY FIRST
+            // ADD THAT DATA TO JSON ARRAY FIRST
             JSONArray ja = new JSONArray(data);
             //CREATE JO OBJ TO HOLD A SINGLE ITEM
             JSONObject jo = null;
             projects.clear();
-            //LOOP THRU ARRAY
+
+            // LOOP THROUGH ARRAY
             for (int i = 0; i < ja.length(); i++) {
                 jo = ja.getJSONObject(i);
-                //RETRIOEVE DATA
+
+                // RETRIEVE DATA
                 String subject = jo.getString("subject");
                 String description = jo.getString("description");
                 String location = jo.getString("location");
@@ -126,7 +129,8 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
                 String id = jo.getString("id");
                 String like = jo.getString("likes");
                 String likeids = jo.getString("likesids");
-                //ADD IT TO OUR ARRAYLIST
+
+                // ADD IT TO OUR ARRAYLIST
                 projects.add(subject);
                 subjects.add(subject);
                 descriptions.add(description);

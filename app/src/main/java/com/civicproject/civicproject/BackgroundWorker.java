@@ -1,6 +1,5 @@
 package com.civicproject.civicproject;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -18,18 +17,20 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import static com.civicproject.civicproject.Parser.likes;
-
 public class BackgroundWorker extends AsyncTask<String, Void, String> {
     Context context;
     AlertDialog alertDialog;
+
     BackgroundWorker() {
     }
+
     BackgroundWorker(Context ctx) {
         context = ctx;
     }
+
     String tempJSON;
     String tempAuthor;
+
     @Override
     protected String doInBackground(String... params) {
         String type = params[0];
@@ -77,6 +78,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         } else if (type.equals("register")) {
             try {
                 String name = params[1];
@@ -97,7 +99,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                         + URLEncoder.encode("surname", "UTF-8") + "=" + URLEncoder.encode(surname, "UTF-8") + "&"
                         + URLEncoder.encode("age", "UTF-8") + "=" + URLEncoder.encode(age, "UTF-8") + "&"
                         + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(usename, "UTF-8") + "&"
-                        + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8")+ "&"
+                        + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") + "&"
                         + URLEncoder.encode("telephone", "UTF-8") + "=" + URLEncoder.encode(telephone, "UTF-8") + "&"
                         + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
                 bufferedWriter.write(post_data);
@@ -121,6 +123,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         } else if (type.equals("addProject")) {
             try {
                 String author = params[1];
@@ -165,6 +168,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         } else if (type.equals("updateProject")) {
             try {
                 String subject = params[1];
@@ -201,6 +205,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         } else if (type.equals("updateProjectLikes")) {
             try {
                 String likesids = params[1];
@@ -237,6 +242,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         } else if (type.equals("updateUser")) {
             try {
                 String name = params[1];
@@ -257,7 +263,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                         + URLEncoder.encode("surname", "UTF-8") + "=" + URLEncoder.encode(surname, "UTF-8") + "&"
                         + URLEncoder.encode("age", "UTF-8") + "=" + URLEncoder.encode(age, "UTF-8") + "&"
                         + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(usename, "UTF-8") + "&"
-                        + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8")+ "&"
+                        + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") + "&"
                         + URLEncoder.encode("telephone", "UTF-8") + "=" + URLEncoder.encode(telephone, "UTF-8") + "&"
                         + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
                 bufferedWriter.write(post_data);
@@ -313,6 +319,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         } else if (type.equals("deleteUser")) {
             try {
                 String id = params[1];
@@ -345,6 +352,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         } else if (type.equals("deleteProject")) {
             try {
                 String id = params[1];
@@ -392,12 +400,12 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         String temp = "Login success. Welcome!";
 
         if (result.equals(temp)) {
-            Intent intent = new Intent(context, HubActivity.class);
+            Intent intent = new Intent(context, MainActivity.class);
             context.startActivity(intent);
         } else if (result.contains("[{")) {
 
         } else {
-            result = result.replaceAll("<","");
+            result = result.replaceAll("<", "");
             alertDialog.setMessage(result);
             alertDialog.show();
         }

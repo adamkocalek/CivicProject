@@ -40,9 +40,16 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
     private static final String TAG = "MainActivity";
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(android.R.anim.slide_out_right, android.R.anim.slide_in_left);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling);
+        ProjectActivity.this.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
 
         textViewLike = (TextView) findViewById(R.id.textViewLike);
         textViewLocation = (TextView) findViewById(R.id.textViewLocation);

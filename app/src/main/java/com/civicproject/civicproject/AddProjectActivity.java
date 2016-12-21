@@ -50,9 +50,16 @@ public class AddProjectActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling2);
+        AddProjectActivity.this.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
 
         try {
             Thread.sleep(1000);

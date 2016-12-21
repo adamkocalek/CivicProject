@@ -14,6 +14,7 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
         tvAboutText = (TextView) findViewById(R.id.tvAboutText);
         tvAboutUsText = (TextView) findViewById(R.id.tvAboutUs);
+        AboutActivity.this.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         String textAbout = "Na budżet obywatelski IV edycji przewidziano 40 mln zł z czego na zadania osiedlowe 30.050.000,00 zł, a na zadania ponadosiedlowe 9.950.000,00 zł.\n" +
                 "\n" +
                 "W bieżącym roku mieszkańcy naszego miasta w okresie od 7 marca do 20 kwietnia będą mogli zgłosić takie propozycje zadań do realizacji w 2017 r., które, w ich przekonaniu, najbardziej odpowiadają potrzebom osiedlowym albo ponadosiedlowym.\n" +

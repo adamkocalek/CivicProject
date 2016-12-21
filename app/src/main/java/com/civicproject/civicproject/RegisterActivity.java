@@ -25,9 +25,16 @@ public class RegisterActivity extends AppCompatActivity {
     String loginsDownloaded = null, loginsUptaded = null;
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        RegisterActivity.this.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
 
         etRegisterAge = (EditText) findViewById(R.id.etRegisterAge);
         etRegisterName = (EditText) findViewById(R.id.etRegisterName);

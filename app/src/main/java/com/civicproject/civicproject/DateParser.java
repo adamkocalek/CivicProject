@@ -1,5 +1,7 @@
 package com.civicproject.civicproject;
 
+import android.support.annotation.Nullable;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
