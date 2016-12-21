@@ -13,8 +13,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 public class ProjectsActivity extends AppCompatActivity implements View.OnClickListener {
     Button buttonAddProject, buttonSettings, buttonMap, button7;
     String url = "http://188.128.220.60/projects.php";
@@ -50,7 +48,6 @@ public class ProjectsActivity extends AppCompatActivity implements View.OnClickL
         }
 
         SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
-        //SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
 
         String username = myprefs.getString("username", null);
         String type = "getUser";

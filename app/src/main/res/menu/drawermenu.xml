@@ -7,14 +7,38 @@
         android:title="Strona Główna" />
 
     <item
-        android:id="@+id/nav_old"
-        android:icon="@drawable/inbox"
-        android:title="Stary Wygląd"/>
-
-    <item
         android:id="@+id/nav_idea"
         android:icon="@drawable/inbox"
         android:title="Dodaj Pomysł" />
+
+    <item
+        android:id="@+id/nav_old"
+        android:icon="@drawable/inbox"
+        android:title="Stary Layout" />
+
+    <item
+        android:id="@+id/nav_map"
+        android:icon="@drawable/map"
+        android:title="Mapa" />
+
+    <group android:id="@+id/group_old">
+
+        <item
+            android:id="@+id/nav_szymon"
+            android:icon="@drawable/inbox"
+            android:title="Layout Szymona"/>
+
+        <item
+            android:id="@+id/nav_patryk"
+            android:icon="@drawable/inbox"
+            android:title="Layout Szymona"/>
+
+        <item
+            android:id="@+id/nav_adam"
+            android:icon="@drawable/inbox"
+            android:title="Layout Adama"/>
+
+    </group>
 
     <group android:id="@+id/group_account">
 

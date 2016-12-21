@@ -1,4 +1,4 @@
-package com.civicproject.civicproject.Fragments;
+package com.civicproject.civicproject.Layout_Patryk;
 
 import android.content.Context;
 import android.net.Uri;
@@ -26,7 +26,7 @@ public class Tab1Contacts extends Fragment {
         ((HubActivity) getActivity()).setActionBarTitle("Contacts");
         View rootView = inflater.inflate(R.layout.tab1contacts, container,false);
 
-        final ListView nf_list = (ListView) rootView.findViewById(R.id.nf_list);
+        final ListView p1_list = (ListView) rootView.findViewById(R.id.p1_list);
 
         ids.add("1");
         ids.add("2");
@@ -50,7 +50,7 @@ public class Tab1Contacts extends Fragment {
 
         ListViewAdapter lviewAdapter;
         lviewAdapter = new ListViewAdapter(getActivity(), ids, subjects, authors, likes, dates);
-        nf_list.setAdapter(lviewAdapter);
+        p1_list.setAdapter(lviewAdapter);
 
         return rootView;
     }

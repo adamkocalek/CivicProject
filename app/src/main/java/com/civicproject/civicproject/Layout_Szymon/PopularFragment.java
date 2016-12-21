@@ -1,22 +1,20 @@
-package com.civicproject.civicproject.Fragments;
+package com.civicproject.civicproject.Layout_Szymon;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.civicproject.civicproject.HubActivity;
 import com.civicproject.civicproject.R;
 
-public class Tab3Online extends Fragment {
 
+public class PopularFragment extends Fragment {
+
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        ((HubActivity) getActivity()).setActionBarTitle("Contacts");
-        View rootView = inflater.inflate(R.layout.tab1contacts, container, false);
-
-        return rootView;
+        return inflater.inflate(R.layout.popularfragment_layout,null);
     }
 }

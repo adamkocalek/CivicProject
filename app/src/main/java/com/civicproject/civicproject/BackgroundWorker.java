@@ -407,10 +407,4 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
     }
-
-//    public String testIntent(){
-//        String nextIntent = "";
-//    }
-
-
 }

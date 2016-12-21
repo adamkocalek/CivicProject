@@ -5,7 +5,7 @@
     tools:context="com.civicproject.civicproject.HubActivity$PlaceholderFragment">
 
     <ListView
-        android:id="@+id/nf_list"
+        android:id="@+id/p1_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

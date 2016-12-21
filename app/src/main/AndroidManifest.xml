@@ -54,8 +54,11 @@
         <activity
             android:name=".AddProjectActivity"
             android:label="@string/title_activity_scrolling"
-            android:theme="@style/AppTheme"></activity>
-        <activity android:name=".HubActivity"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".HubActivity" />
+        <activity android:name=".Layout_Szymon.Main3Activity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".RootActivity"></activity>
     </application>
 
 </manifest>

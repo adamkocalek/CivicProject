@@ -1,4 +1,4 @@
-package com.civicproject.civicproject.Fragments;
+package com.civicproject.civicproject.Layout_Szymon;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
