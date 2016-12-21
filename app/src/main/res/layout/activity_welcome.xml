@@ -6,10 +6,8 @@
     android:id="@+id/lin_lay"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="#FFF"
+    android:background="@drawable/background"
     android:weightSum="1">
-
-    <!--android:background="@drawable/background" -->
 
     <RelativeLayout
         android:layout_width="match_parent"

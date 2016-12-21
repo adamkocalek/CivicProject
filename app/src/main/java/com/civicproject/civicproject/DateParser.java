@@ -16,7 +16,7 @@ public class DateParser {
 
         Calendar actualDate = Calendar.getInstance();
         actualDate.clear();
-        actualDate.set(2016,9,18);
+        actualDate.set(2016, 9, 18);
 
         SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
         String year_string = yearFormat.format(actualDate.getTime());
@@ -79,14 +79,14 @@ public class DateParser {
 
         String formatedDate;
 
-        ArrayList<String> monthsPL = new ArrayList<>(Arrays.asList("", "STYCZEŃ", "LUTY", "MARZEC","KWIECIEŃ",
+        ArrayList<String> monthsPL = new ArrayList<>(Arrays.asList("", "STYCZEŃ", "LUTY", "MARZEC", "KWIECIEŃ",
                 "MAJ", "CZERWIEC", "LIPIEC", "SIERPIEŃ", "WRZESIEŃ", "PAŹDZIERNIK", "LISTOPAD", "GRUDZIEŃ"));
 
         SimpleDateFormat dayFormat = new SimpleDateFormat("d");
         SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
         SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
         SimpleDateFormat formatter = new SimpleDateFormat("d.MM.yyyy, HH:mm");
-        
+
         Date date = null;
         try {
             date = formatter.parse(downloadedDate);
@@ -94,23 +94,23 @@ public class DateParser {
             e.printStackTrace();
         }
 
-        if(!(date.getYear() < Calendar.getInstance().getTime().getYear()) ) {
+        if (!(date.getYear() < Calendar.getInstance().getTime().getYear())) {
             long minutes = getMinutesByDifference(date);
-            if(minutes <= 1440) {
-                if(minutes < 60)
-                    if(minutes <= 1) {
+            if (minutes <= 1440) {
+                if (minutes < 60)
+                    if (minutes <= 1) {
                         formatedDate = minutes + " MINUTĘ TEMU";
                         return formatedDate;
                     } else {
-                        formatedDate =  minutes + " MINUT TEMU";
+                        formatedDate = minutes + " MINUT TEMU";
                         return formatedDate;
                     }
                 else {
                     minutes /= 60;
-                    if(minutes == 1) {
+                    if (minutes == 1) {
                         formatedDate = minutes + " GODZINĘ TEMU";
                         return formatedDate;
-                    } else if(minutes == 2 || minutes == 3 || minutes == 4 || minutes == 22 || minutes == 23 || minutes == 24) {
+                    } else if (minutes == 2 || minutes == 3 || minutes == 4 || minutes == 22 || minutes == 23 || minutes == 24) {
                         formatedDate = minutes + " GODZINY TEMU";
                         return formatedDate;
                     } else {
@@ -118,9 +118,9 @@ public class DateParser {
                         return formatedDate;
                     }
                 }
-            } else if(minutes <= 10080) {
+            } else if (minutes <= 10080) {
                 minutes /= 60 * 24;
-                if(minutes == 1) {
+                if (minutes == 1) {
                     formatedDate = minutes + " DZIEŃ TEMU";
                     return formatedDate;
                 } else {

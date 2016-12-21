@@ -34,16 +34,16 @@
             </FrameLayout>
 
 
-            <android.support.design.widget.NavigationView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/shitstuff"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:layout_marginTop="-24dp"
-                app:itemTextColor="#595656"
-                app:headerLayout="@layout/drawermenu_header"
-                app:menu="@menu/drawermenu" />
+            <!--<android.support.design.widget.NavigationView xmlns:android="http://schemas.android.com/apk/res/android"-->
+                <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+                <!--android:id="@+id/shitstuff"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_gravity="start"-->
+                <!--android:layout_marginTop="-24dp"-->
+                <!--app:itemTextColor="#595656"-->
+                <!--app:headerLayout="@layout/drawermenu_header"-->
+                <!--app:menu="@menu/drawermenu" />-->
 
         </android.support.v4.widget.DrawerLayout>
     </LinearLayout>

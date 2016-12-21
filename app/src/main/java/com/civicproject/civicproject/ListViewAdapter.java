@@ -1,10 +1,5 @@
 package com.civicproject.civicproject;
 
-/**
- * Created by Patrycjusz on 2016-12-16.
- */
-
-
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,17 +28,14 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     public int getCount() {
-        // TODO Auto-generated method stub
         return ids.size();
     }
 
     public Object getItem(int position) {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return 0;
     }
 
@@ -56,7 +48,6 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         ViewHolder holder;
         LayoutInflater inflater = activity.getLayoutInflater();
 
@@ -81,5 +72,4 @@ public class ListViewAdapter extends BaseAdapter {
 
         return convertView;
     }
-
 }
