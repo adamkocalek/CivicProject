@@ -1,5 +1,6 @@
-package com.civicproject.civicproject.Layout_Adam;
+package com.civicproject.civicproject.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,22 +11,24 @@ import android.widget.ListView;
 
 import com.civicproject.civicproject.Downloader;
 import com.civicproject.civicproject.R;
+import com.civicproject.civicproject.RootActivity;
 
-public class PrimaryFragment extends Fragment {
+public class NewItems_Fragment extends Fragment {
 
     String url = "http://188.128.220.60/projects.php";
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.primary_layout,null);
 
-        final ListView nf_list = (ListView) view.findViewById(R.id.listView11);
+//        ((RootActivity) getActivity()).toolbar.setTitle("1");
+        View view = inflater.inflate(R.layout.new_frag_layout,null);
+
+        final ListView nf_list = (ListView) view.findViewById(R.id.listView);
 
         final Downloader downloader = new Downloader(getContext(), url, getActivity(), nf_list);
         downloader.execute();
 
         return view;
-
     }
 }

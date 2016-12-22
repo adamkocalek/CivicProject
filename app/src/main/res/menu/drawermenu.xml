@@ -21,25 +21,6 @@
         android:icon="@drawable/map"
         android:title="Mapa" />
 
-    <group android:id="@+id/group_old">
-
-        <item
-            android:id="@+id/nav_szymon"
-            android:icon="@drawable/inbox"
-            android:title="Layout Szymona"/>
-
-        <item
-            android:id="@+id/nav_patryk"
-            android:icon="@drawable/inbox"
-            android:title="Layout Patryka"/>
-
-        <item
-            android:id="@+id/nav_adam"
-            android:icon="@drawable/inbox"
-            android:title="Layout Adama"/>
-
-    </group>
-
     <group android:id="@+id/group_account">
 
         <item

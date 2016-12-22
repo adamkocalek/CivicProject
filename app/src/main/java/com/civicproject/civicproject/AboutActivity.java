@@ -2,6 +2,7 @@ package com.civicproject.civicproject;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 
 public class AboutActivity extends AppCompatActivity {
@@ -9,11 +10,20 @@ public class AboutActivity extends AppCompatActivity {
     TextView tvAboutText,tvAboutUsText;
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.in_from_left,R.anim.out_to_right);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+        overridePendingTransition(R.anim.right_in,R.anim.left_out);
+
         tvAboutText = (TextView) findViewById(R.id.tvAboutText);
         tvAboutUsText = (TextView) findViewById(R.id.tvAboutUs);
+
         AboutActivity.this.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         String textAbout = "Na budżet obywatelski IV edycji przewidziano 40 mln zł z czego na zadania osiedlowe 30.050.000,00 zł, a na zadania ponadosiedlowe 9.950.000,00 zł.\n" +
                 "\n" +

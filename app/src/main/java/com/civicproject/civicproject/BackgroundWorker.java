@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -18,14 +20,28 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 public class BackgroundWorker extends AsyncTask<String, Void, String> {
-    Context context;
-    AlertDialog alertDialog;
+
+//    Context context;
+//    AlertDialog alertDialog;
 
     BackgroundWorker() {
     }
 
-    BackgroundWorker(Context ctx) {
-        context = ctx;
+//    BackgroundWorker(Context ctx) {
+//        context = ctx;
+//    }
+
+    Context context;
+    View view;
+    AlertDialog alertDialog;
+
+    BackgroundWorker(Context context, View view) {
+        this.context = context;
+        this.view = view;
+    }
+
+    BackgroundWorker(Context context) {
+        this(context, null);
     }
 
     String tempJSON;
@@ -400,14 +416,15 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         String temp = "Login success. Welcome!";
 
         if (result.equals(temp)) {
-            Intent intent = new Intent(context, MainActivity.class);
+            Intent intent = new Intent(context, RootActivity.class);
             context.startActivity(intent);
         } else if (result.contains("[{")) {
 
         } else {
-            result = result.replaceAll("<", "");
-            alertDialog.setMessage(result);
-            alertDialog.show();
+            Snackbar.make(view, "Login lub hasło nieprawidłowe...", Snackbar.LENGTH_SHORT).show();
+//            result = result.replaceAll("<", "");
+//            alertDialog.setMessage(result);
+//            alertDialog.show();
         }
     }
 

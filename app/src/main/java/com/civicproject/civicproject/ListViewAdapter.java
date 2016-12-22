@@ -1,6 +1,7 @@
 package com.civicproject.civicproject;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,11 +65,15 @@ public class ListViewAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.textViewIds.setText(ids.get(position));
-        holder.textViewSubjects.setText(subjects.get(position));
-        holder.textViewAuthors.setText(authors.get(position));
-        holder.textViewLikes.setText(likes.get(position));
-        holder.textViewDates.setText(dates.get(position));
+        try{
+            holder.textViewAuthors.setText(authors.get(position));
+            holder.textViewDates.setText(dates.get(position));
+            holder.textViewIds.setText(ids.get(position));
+            holder.textViewSubjects.setText(subjects.get(position));
+            holder.textViewLikes.setText(likes.get(position));
+
+        }catch (Exception e){
+        }
 
         return convertView;
     }

@@ -1,4 +1,4 @@
-package com.civicproject.civicproject.Layout_Adam;
+package com.civicproject.civicproject.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,20 +12,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.civicproject.civicproject.R;
+import com.civicproject.civicproject.RootActivity;
 
 public class Tab2Fragment extends Fragment {
 
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
-    public static int int_items = 2 ;
+    public static int int_items = 2;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View x =  inflater.inflate(R.layout.tab2_layout,null);
-        tabLayout = (TabLayout) x.findViewById(R.id.tabs2);
-        viewPager = (ViewPager) x.findViewById(R.id.viewpager2);
+        View view = inflater.inflate(R.layout.tab2_layout, null);
+        tabLayout = (TabLayout) view.findViewById(R.id.tabs2);
+        viewPager = (ViewPager) view.findViewById(R.id.viewpager2);
 
         viewPager.setAdapter(new MyAdapter(getChildFragmentManager()));
 
@@ -33,11 +34,12 @@ public class Tab2Fragment extends Fragment {
             @Override
             public void run() {
                 tabLayout.setupWithViewPager(viewPager);
+                tabLayout.getTabAt(0).setIcon(R.drawable.home_icon_tab);
+                tabLayout.getTabAt(1).setIcon(R.drawable.flame_icon_tab);
             }
         });
 
-        return x;
-
+        return view;
     }
 
     class MyAdapter extends FragmentPagerAdapter {
@@ -47,11 +49,10 @@ public class Tab2Fragment extends Fragment {
         }
 
         @Override
-        public Fragment getItem(int position)
-        {
-            switch (position){
-                case 0 : return new PrimaryFragment();
-                case 1 : return new SocialFragment();
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0: return new NewItems_Fragment();
+                case 1: return new PopularItems_Fragment();
             }
             return null;
         }
@@ -66,11 +67,11 @@ public class Tab2Fragment extends Fragment {
         @Override
         public CharSequence getPageTitle(int position) {
 
-            switch (position){
-                case 0 :
-                    return "Primary";
-                case 1 :
-                    return "Social";
+            switch (position) {
+                case 0:
+                    return "";
+                case 1:
+                    return "";
             }
             return null;
         }

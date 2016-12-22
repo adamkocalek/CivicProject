@@ -39,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         back = 0;
         setContentView(R.layout.activity_login);
+        overridePendingTransition(R.anim.right_in,R.anim.left_out);
+
         etLoginUsername = (EditText) findViewById(R.id.etLoginUsername);
         etLoginPassword = (EditText) findViewById(R.id.etLoginPassword);
         bRegisterLink = (Button) findViewById(R.id.bRegisterLink);
@@ -116,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences myprefs = LoginActivity.this.getSharedPreferences("user", MODE_PRIVATE);
                 myprefs.edit().putString("username", username).commit();
 
-                BackgroundWorker backgroundWorker = new BackgroundWorker(LoginActivity.this);
+                BackgroundWorker backgroundWorker = new BackgroundWorker(LoginActivity.this, getCurrentFocus());
                 backgroundWorker.execute(type, username, password);
             }
         });

@@ -26,15 +26,15 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(android.R.anim.slide_out_right, android.R.anim.slide_in_left);
+        overridePendingTransition(R.anim.in_from_left,R.anim.out_to_right);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+        overridePendingTransition(R.anim.right_in,R.anim.left_out);
 
-        Map.this.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(map);

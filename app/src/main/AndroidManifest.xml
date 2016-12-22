@@ -26,8 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!-- android:windowSoftInputMode="adjustResize|stateHidden" -->
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +36,6 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".UserAreaActivity" />
         <activity android:name=".ProjectsActivity" />
-        <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -55,10 +52,10 @@
             android:name=".AddProjectActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme" />
-        <activity android:name=".HubActivity" />
-        <activity android:name=".Layout_Szymon.Main3Activity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".RootActivity"></activity>
+        <activity android:name=".RootActivity" />
+        <activity android:name=".UserProjectsActivity" />
+        <activity android:name=".RulesActivity" />
+        <activity android:name=".HelpActivity"></activity>
     </application>
 
 </manifest>

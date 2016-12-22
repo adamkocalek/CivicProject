@@ -27,10 +27,18 @@ public class UserAreaActivity extends AppCompatActivity {
     TextView textViewUserArea, textViewUsername;
     EditText editTextName, editTextSurname, editTextUsername, editTextPassword, editTextAge, editTextTelephone, editTextEmail;
     String userId;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.in_from_left,R.anim.out_to_right);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_area);
+        overridePendingTransition(R.anim.right_in,R.anim.left_out);
 
         init();
         events();
