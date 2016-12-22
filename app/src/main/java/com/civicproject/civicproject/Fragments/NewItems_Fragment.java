@@ -21,7 +21,6 @@ public class NewItems_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-//        ((RootActivity) getActivity()).toolbar.setTitle("1");
         View view = inflater.inflate(R.layout.new_frag_layout,null);
 
         final ListView nf_list = (ListView) view.findViewById(R.id.listView);
