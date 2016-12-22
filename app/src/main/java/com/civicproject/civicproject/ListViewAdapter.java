@@ -73,6 +73,7 @@ public class ListViewAdapter extends BaseAdapter {
             holder.textViewLikes.setText(likes.get(position));
 
         }catch (Exception e){
+            Log.d("BŁĄD: ", "OutOfBound Exception w liście...");
         }
 
         return convertView;
