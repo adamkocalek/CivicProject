@@ -24,15 +24,12 @@ public class RootActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_root);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        mNavigationView = (NavigationView) findViewById(R.id.shitstuff) ;
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout1);
+        mNavigationView = (NavigationView) findViewById(R.id.shitstuff1) ;
 
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.containerView,new Tab2Fragment()).commit();
-        /**
-         * Setup click events on the Navigation View Items.
-         */
+        mFragmentTransaction.replace(R.id.containerView1,new Tab2Fragment()).commit();
 
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
