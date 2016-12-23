@@ -1,6 +1,7 @@
 package com.civicproject.civicproject;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.civicproject.civicproject.Fragments.Tab2Fragment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class RootActivity extends AppCompatActivity {
     DrawerLayout mDrawerLayout;
@@ -106,11 +111,51 @@ public class RootActivity extends AppCompatActivity {
         });
 
         //android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar1);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar1);
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         mDrawerToggle.syncState();
+
+        SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
+
+        String username = myprefs.getString("username", null);
+        String type = "getUser";
+        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+        backgroundWorker.execute(type, username);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+
+        }
+        JSONArray ja = null;
+        try {
+            ja = new JSONArray(backgroundWorker.tempJSON);
+            JSONObject jo1 = null;
+            for (int i = 0; i < ja.length(); i++) {
+                SharedPreferences sharedPreferences = this.getSharedPreferences("user", MODE_PRIVATE);
+
+                jo1 = ja.getJSONObject(i);
+                String name = jo1.getString("name");
+                String surname = jo1.getString("surname");
+                String age = jo1.getString("age");
+                String password = jo1.getString("password");
+                String author_key = jo1.getString("id");
+                String telephone = jo1.getString("telephone");
+                String email = jo1.getString("email");
+
+                sharedPreferences.edit().putString("name", name).apply();
+                sharedPreferences.edit().putString("surname", surname).apply();
+                sharedPreferences.edit().putString("age", age).apply();
+                sharedPreferences.edit().putString("password", password).apply();
+                sharedPreferences.edit().putString("author_key", author_key).apply();
+                sharedPreferences.edit().putString("telephone", telephone).apply();
+                sharedPreferences.edit().putString("email", email).apply();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

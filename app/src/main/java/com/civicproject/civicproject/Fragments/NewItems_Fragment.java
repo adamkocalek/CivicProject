@@ -23,10 +23,10 @@ public class NewItems_Fragment extends Fragment {
 
         View view = inflater.inflate(R.layout.new_frag_layout,null);
 
-        final ListView nf_list = (ListView) view.findViewById(R.id.listView);
+        final ListView nf_list = (ListView) view.findViewById(R.id.listView_new);
 
-        final Downloader downloader = new Downloader(getContext(), url, getActivity(), nf_list);
-        downloader.execute();
+        //final Downloader downloader = new Downloader(getContext(), url, getActivity(), nf_list);
+        //downloader.execute();
 
         return view;
     }

@@ -101,7 +101,13 @@ public class DateParser {
             if (minutes <= 1440) {
                 if (minutes < 60)
                     if (minutes <= 1) {
+                        if(minutes == 0){
+                            minutes = 1;
+                        }
                         formatedDate = minutes + " MINUTĘ TEMU";
+                        return formatedDate;
+                    } else if (minutes == 2 || minutes == 3 || minutes == 4 || minutes == 22 || minutes == 23 || minutes == 24 || minutes == 32 || minutes == 33 || minutes == 34 || minutes == 42 || minutes == 43 || minutes == 44 || minutes == 52 || minutes == 53 || minutes == 54 || minutes == 60) {
+                        formatedDate = minutes + " MINUTY TEMU";
                         return formatedDate;
                     } else {
                         formatedDate = minutes + " MINUT TEMU";
@@ -136,13 +142,16 @@ public class DateParser {
                 formatedDate = dayString + " " + monthsPL.get(monthInt);
                 return formatedDate;
             }
-        } else {
+        } else
+
+        {
             String dayString = dayFormat.format(date.getTime());
             int monthInt = Integer.parseInt(monthFormat.format(date.getTime()));
             String yearString = yearFormat.format(date.getTime());
             formatedDate = dayString + " " + monthsPL.get(monthInt) + " " + yearString;
             return formatedDate;
         }
+
     }
 
     public static long getMinutesByDifference(java.util.Date baseDate) {

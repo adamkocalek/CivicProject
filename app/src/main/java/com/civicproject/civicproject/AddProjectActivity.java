@@ -73,7 +73,6 @@ public class AddProjectActivity extends AppCompatActivity {
         DateFormat df = new SimpleDateFormat("d.MM.yyyy, HH:mm");
         textViewDate.setText(df.format(Calendar.getInstance().getTime()));
 
-        //SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
         SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
 
         String name = myprefs.getString("name", null);

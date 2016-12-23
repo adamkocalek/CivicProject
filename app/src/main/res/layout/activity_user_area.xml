@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:padding="@dimen/activity_horizontal_margin">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_drawer"
+        android:id="@+id/toolbar_user_area"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:title="Panel Użytkownika" />
 
         <TextView
             android:id="@+id/textViewUserArea"
@@ -129,7 +134,6 @@
             android:layout_marginTop="5dp"
             android:text="Usuń konto"
             android:textColor="#878787" />
-    </LinearLayout>
 
     <EditText
         android:id="@+id/editTextUsername"
@@ -139,4 +143,4 @@
         android:textColorHint="@color/colorAccent"
         android:visibility="invisible" />
 
-</RelativeLayout>
+</LinearLayout>

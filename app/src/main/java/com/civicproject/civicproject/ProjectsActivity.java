@@ -26,14 +26,13 @@ public class ProjectsActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_projects);
-        //ProjectsActivity.this.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
 
         button7 = (Button) findViewById(R.id.button7);
 
         buttonAddProject = (Button) findViewById(R.id.buttonAddProject);
         buttonSettings = (Button) findViewById(R.id.buttonSettings);
         buttonMap = (Button) findViewById(R.id.buttonMap);
-        final ListView listView = (ListView) findViewById(R.id.listView);
+        final ListView listView = (ListView) findViewById(R.id.listView_old);
         TextView mainTextView = (TextView) findViewById(R.id.textViewNotification);
 
         DateParser dateParser = new DateParser();

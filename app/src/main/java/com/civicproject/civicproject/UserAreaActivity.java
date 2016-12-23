@@ -7,6 +7,8 @@ import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -35,15 +37,31 @@ public class UserAreaActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            super.onBackPressed();
+            overridePendingTransition(R.anim.in_from_left,R.anim.out_to_right);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_area);
         overridePendingTransition(R.anim.right_in,R.anim.left_out);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_user_area);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         init();
         events();
 
-//        SharedPreferences myprefs = getSharedPreferences("user", MODE_WORLD_READABLE);
         SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
         String username = myprefs.getString("username", null);
         String name = myprefs.getString("name", null);

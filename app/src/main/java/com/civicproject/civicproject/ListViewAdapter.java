@@ -29,6 +29,7 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     public int getCount() {
+
         return ids.size();
     }
 
@@ -61,6 +62,7 @@ public class ListViewAdapter extends BaseAdapter {
             holder.textViewLikes = (TextView) convertView.findViewById(R.id.textViewLikes);
             holder.textViewDates = (TextView) convertView.findViewById(R.id.textViewDates);
             convertView.setTag(holder);
+
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
@@ -72,7 +74,7 @@ public class ListViewAdapter extends BaseAdapter {
             holder.textViewSubjects.setText(subjects.get(position));
             holder.textViewLikes.setText(likes.get(position));
 
-        }catch (Exception e){
+        }catch (IndexOutOfBoundsException e){
             Log.d("BŁĄD: ", "OutOfBound Exception w liście...");
         }
 
