@@ -23,9 +23,8 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
     Activity activity;
     ListView listView;
     String data;
-    public static ArrayList<String> locations = new ArrayList<>(), likes = new ArrayList<>(), likesids = new ArrayList<>(), ids = new ArrayList<>(), descriptions = new ArrayList<>(), subjects = new ArrayList<>();
-    ArrayList<String> projects = new ArrayList<>(), dates = new ArrayList<>(), authors = new ArrayList<>(), authors_keys = new ArrayList<>(),
-            images = new ArrayList<>();
+    public static ArrayList<String> locations = new ArrayList<>(), likes = new ArrayList<>(), likesids = new ArrayList<>(), ids = new ArrayList<>(), descriptions = new ArrayList<>(), subjects = new ArrayList<>(), projects = new ArrayList<>(), dates = new ArrayList<>(), authors = new ArrayList<>(), authors_keys = new ArrayList<>(),
+            images = new ArrayList<>();;
     ProgressDialog progressDialog;
     DateParser dateParser = null;
 
@@ -110,6 +109,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
         try {
             // ADD THAT DATA TO JSON ARRAY FIRST
             JSONArray ja = new JSONArray(data);
+
             //CREATE JO OBJ TO HOLD A SINGLE ITEM
             JSONObject jo = null;
             projects.clear();

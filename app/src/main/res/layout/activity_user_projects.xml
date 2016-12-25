@@ -10,4 +10,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.civicproject.civicproject.UserProjectsActivity">
 
+    <ListView
+        android:id="@+id/listViewMyProjects"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@android:color/transparent"
+        android:scrollbarSize="30dp"/>
+
 </RelativeLayout>
