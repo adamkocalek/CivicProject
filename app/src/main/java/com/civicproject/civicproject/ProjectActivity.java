@@ -37,7 +37,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
     String id, author_key, image, likesidss, author_id;
     Bitmap imageBitmap;
     private MyFTPClientFunctions ftpclient = null;
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "ProjectActivity";
 
     @Override
     public void onBackPressed() {

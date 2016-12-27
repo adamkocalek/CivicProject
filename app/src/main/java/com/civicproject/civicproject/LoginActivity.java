@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences myprefs = LoginActivity.this.getSharedPreferences("user", MODE_PRIVATE);
                 myprefs.edit().putString("username", username).commit();
 
-                BackgroundWorker backgroundWorker = new BackgroundWorker(LoginActivity.this, getCurrentFocus());
+                BackgroundWorker backgroundWorker = new BackgroundWorker(LoginActivity.this);
                 backgroundWorker.execute(type, username, password);
             }
         });

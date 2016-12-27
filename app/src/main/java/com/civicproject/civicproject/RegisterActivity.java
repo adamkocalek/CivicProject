@@ -14,6 +14,8 @@ import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static android.R.attr.duration;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
@@ -21,8 +23,9 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 public class RegisterActivity extends AppCompatActivity {
     EditText etRegisterAge, etRegisterName, etRegisterUsername, etRegisterPassword, etRegisterSurname, editTextTelephone, editTextEmail;
     private MyFTPClientFunctions ftpclient = null;
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "RegisterActivity";
     String loginsDownloaded = null, loginsUptaded = null;
+    private Validator validator = null;
 
     @Override
     public void onBackPressed() {
@@ -134,5 +137,4 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }).start();
     }
-
 }
