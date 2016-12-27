@@ -46,7 +46,7 @@ public class AddProjectActivity extends AppCompatActivity {
     Uri file;
     private Camera camera = null;
     private MyFTPClientFunctions ftpclient = null;
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "AddProjectActivity";
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
