@@ -39,7 +39,7 @@
             android:id="@+id/shitstuff1"
             app:itemTextColor="#878787"
             app:menu="@menu/drawermenu"
-            app:headerLayout="@layout/drawermenu_header"
+            app:headerLayout="@layout/menu_header"
             android:layout_marginTop="-24dp"/>
 
     </android.support.v4.widget.DrawerLayout>

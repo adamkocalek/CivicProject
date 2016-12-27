@@ -8,7 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
@@ -20,6 +23,7 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText etRegisterAge, etRegisterName, etRegisterUsername, etRegisterPassword, etRegisterSurname, editTextTelephone, editTextEmail;
+    TextView tvRegisterRules;
     private MyFTPClientFunctions ftpclient = null;
     private static final String TAG = "MainActivity";
     String loginsDownloaded = null, loginsUptaded = null;
@@ -43,9 +47,18 @@ public class RegisterActivity extends AppCompatActivity {
         etRegisterSurname = (EditText) findViewById(R.id.etRegisterSurname);
         editTextTelephone = (EditText) findViewById(R.id.editTextTelephone);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
+        tvRegisterRules = (TextView) findViewById(R.id.tvRegisterRules);
 
         ftpclient = new MyFTPClientFunctions();
         ftpDownloadFileWithLogins();
+
+        tvRegisterRules.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent rulesIntent = new Intent(RegisterActivity.this, RulesActivity.class);
+                RegisterActivity.this.startActivity(rulesIntent);
+            }
+        });
     }
 
     public void onRegisterButtonClick(View view) {

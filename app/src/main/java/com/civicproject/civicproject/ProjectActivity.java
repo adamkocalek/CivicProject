@@ -12,17 +12,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -40,6 +38,15 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
     private static final String TAG = "MainActivity";
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            super.onBackPressed();
+            overridePendingTransition(R.anim.in_from_left,R.anim.out_to_right);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.in_from_left,R.anim.out_to_right);
@@ -48,8 +55,16 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scrolling);
+        setContentView(R.layout.scrolling_project);
         overridePendingTransition(R.anim.right_in,R.anim.left_out);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_project);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         textViewLike = (TextView) findViewById(R.id.textViewLike);
         textViewLocation = (TextView) findViewById(R.id.textViewLocation);
@@ -74,6 +89,8 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         textViewLike.setText(intent.getStringExtra("likes"));
         likesidss = intent.getStringExtra("likesids");
         author_key = intent.getStringExtra("author_key");
+
+        toolbar.setTitle(intent.getStringExtra("subject"));
 
         image = intent.getStringExtra("image");
         ftpDownloadImage(image);

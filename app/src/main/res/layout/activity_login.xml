@@ -64,7 +64,17 @@
             android:layout_width="match_parent"
             android:gravity="center"
             android:layout_height="wrap_content"
-            android:id="@+id/tvAbout"
+            android:id="@+id/tvLoginAbout"
+            android:layout_weight="1" />
+
+        <TextView
+            android:text="Regulamin"
+            android:textColor="#878787"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvLoginRules"
             android:layout_weight="1" />
 
     </LinearLayout>

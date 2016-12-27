@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.civicproject.civicproject.AddProjectActivity"
-    tools:showIn="@layout/activity_scrolling2">
+    tools:showIn="@layout/scrolling_addproject">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,6 +26,14 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/toolbar_addproject"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_drawer"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:title="Dodaj Pomysł" />
+
                 <TextView
                     android:id="@+id/textViewSubject"
                     android:layout_width="match_parent"
@@ -41,9 +49,11 @@
                     android:hint="Temat"
                     android:inputType="textMultiLine"
                     android:textColorHint="@color/colorAccent"
+                    android:textCursorDrawable="@drawable/cursor"
                     tools:textColor="@android:color/black" />
 
             </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -71,9 +81,11 @@
                     android:hint="Opis"
                     android:inputType="textMultiLine"
                     android:textColorHint="@color/colorAccent"
+                    android:textCursorDrawable="@drawable/cursor"
                     tools:textColor="@android:color/black" />
 
             </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout

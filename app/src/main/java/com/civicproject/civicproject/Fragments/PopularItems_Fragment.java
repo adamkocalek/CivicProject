@@ -23,10 +23,10 @@ public class PopularItems_Fragment extends Fragment {
 
         View view = inflater.inflate(R.layout.popular_frag_layout,null);
 
-        final ListView pf_list = (ListView) view.findViewById(R.id.listView_popular);
-
-        final Downloader downloader = new Downloader(getContext(), url, getActivity(), pf_list);
-        downloader.execute();
+//        final ListView pf_list = (ListView) view.findViewById(R.id.listView_popular);
+//
+//        final Downloader downloader = new Downloader(getContext(), url, getActivity(), pf_list);
+//        downloader.execute();
 
         return view;
     }

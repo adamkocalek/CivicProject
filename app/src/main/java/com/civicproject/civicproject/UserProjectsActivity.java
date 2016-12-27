@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,6 +21,15 @@ public class UserProjectsActivity extends AppCompatActivity {
     Parser parser = new Parser();
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            super.onBackPressed();
+            overridePendingTransition(R.anim.in_from_left,R.anim.out_to_right);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
@@ -29,9 +40,20 @@ public class UserProjectsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_projects);
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_user_projects);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         listViewMyProjects = (ListView) findViewById(R.id.listViewMyProjects);
+
         SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
         author_key = myprefs.getString("author_key", null);
+
         ArrayList<String> myProjects = new ArrayList<String>();
         final ArrayList<Integer> indexs = new ArrayList<Integer>();
 
@@ -69,5 +91,4 @@ public class UserProjectsActivity extends AppCompatActivity {
             }
         });
     }
-
 }

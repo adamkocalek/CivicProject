@@ -21,27 +21,12 @@ import java.net.URLEncoder;
 
 public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
-//    Context context;
-//    AlertDialog alertDialog;
-
-    BackgroundWorker() {
-    }
-
-//    BackgroundWorker(Context ctx) {
-//        context = ctx;
-//    }
-
     Context context;
-    View view;
     AlertDialog alertDialog;
 
-    BackgroundWorker(Context context, View view) {
-        this.context = context;
-        this.view = view;
-    }
 
     BackgroundWorker(Context context) {
-        this(context, null);
+        this.context = context;
     }
 
     String tempJSON;
@@ -420,10 +405,9 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         } else if (result.contains("[{")) {
 
         } else {
-            Snackbar.make(view, "Login lub hasło nieprawidłowe...", Snackbar.LENGTH_SHORT).show();
-//            result = result.replaceAll("<", "");
-//            alertDialog.setMessage(result);
-//            alertDialog.show();
+            result = result.replaceAll("<", "");
+            alertDialog.setMessage(result);
+            alertDialog.show();
         }
     }
 

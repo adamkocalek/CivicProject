@@ -14,12 +14,11 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,16 +49,25 @@ public class AddProjectActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            super.onBackPressed();
+            overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.in_from_left,R.anim.out_to_right);
+        overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scrolling2);
-        overridePendingTransition(R.anim.right_in,R.anim.left_out);
+        setContentView(R.layout.scrolling_addproject);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
         try {
             Thread.sleep(1000);
@@ -69,6 +77,14 @@ public class AddProjectActivity extends AppCompatActivity {
 
         init();
         events();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_addproject);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         DateFormat df = new SimpleDateFormat("d.MM.yyyy, HH:mm");
         textViewDate.setText(df.format(Calendar.getInstance().getTime()));
@@ -152,8 +168,8 @@ public class AddProjectActivity extends AppCompatActivity {
         buttonAddProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!locationX.isNaN() && !locationY.isNaN()){
-                    if(locationX <= 51.843678 && locationX >= 51.690382 && locationY <= 19.619980 && locationY >= 19.324036){
+                if (!locationX.isNaN() && !locationY.isNaN()) {
+                    if (locationX <= 51.843678 && locationX >= 51.690382 && locationY <= 19.619980 && locationY >= 19.324036) {
                         String subject = editTextSubject.getText().toString();
                         String description = editTextDesctiption.getText().toString();
                         String author = textViewAuthor.getText().toString();
@@ -220,12 +236,10 @@ public class AddProjectActivity extends AppCompatActivity {
 
     public String ftpUploadImage() {
         final String desFileName = tempAuthorKey + "_" + textViewDate.getText() + ".jpg";
+
         new Thread(new Runnable() {
             public void run() {
                 boolean status = false;
-                // host – your FTP address
-                // username & password – for your secured login
-                // 21 default gateway for FTP
                 status = ftpclient.ftpConnect("serwer1633804.home.pl", "serwer1633804", "33murs0tKiby", 21);
                 if (status == true) {
                     Log.d(TAG, "Połączenie udane");
@@ -245,7 +259,6 @@ public class AddProjectActivity extends AppCompatActivity {
                 }
             }
         }).start();
-
         return desFileName;
     }
 }

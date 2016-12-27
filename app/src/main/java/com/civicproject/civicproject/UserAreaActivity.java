@@ -26,7 +26,7 @@ import static android.R.attr.value;
 public class UserAreaActivity extends AppCompatActivity {
 
     Button buttonEdit, buttonDeleteUser;
-    TextView textViewUserArea, textViewUsername;
+    TextView textViewUsername;
     EditText editTextName, editTextSurname, editTextUsername, editTextPassword, editTextAge, editTextTelephone, editTextEmail;
     String userId;
 
@@ -85,7 +85,6 @@ public class UserAreaActivity extends AppCompatActivity {
     public void init() {
         buttonEdit = (Button) findViewById(R.id.buttonEdit);
         buttonDeleteUser = (Button) findViewById(R.id.buttonDeleteUser);
-        textViewUserArea = (TextView) findViewById(R.id.textViewUserArea);
         textViewUsername = (TextView) findViewById(R.id.textViewUsername);
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextSurname = (EditText) findViewById(R.id.editTextrSurname);
