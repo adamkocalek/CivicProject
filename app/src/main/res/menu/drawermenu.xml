@@ -12,11 +12,6 @@
         android:title="Dodaj Pomysł" />
 
     <item
-        android:id="@+id/nav_old"
-        android:icon="@drawable/drawer_inbox"
-        android:title="Stary Layout" />
-
-    <item
         android:id="@+id/nav_map"
         android:icon="@drawable/map"
         android:title="Mapa" />

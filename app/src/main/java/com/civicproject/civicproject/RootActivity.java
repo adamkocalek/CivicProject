@@ -64,11 +64,6 @@ public class RootActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
 
-                else if(menuItem.getItemId() == R.id.nav_old){
-                    Intent intent = new Intent(RootActivity.this, ProjectsActivity.class);
-                    startActivity(intent);
-                }
-
                 else if(menuItem.getItemId() == R.id.nav_map){
                     Intent intent = new Intent(RootActivity.this, Map.class);
                     startActivity(intent);

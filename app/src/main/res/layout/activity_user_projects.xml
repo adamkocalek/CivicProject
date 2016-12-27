@@ -10,8 +10,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.civicproject.civicproject.UserProjectsActivity">
 
+    <TextView
+        android:id="@+id/textViewMyProjects"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="Moje projekty"
+        android:textColor="@color/colorAccent"
+        android:textSize="30dp"
+        android:textStyle="italic" />
+
     <ListView
         android:id="@+id/listViewMyProjects"
+        android:layout_below="@+id/textViewMyProjects"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@android:color/transparent"
