@@ -8,10 +8,10 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -24,7 +24,7 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.Locale;
 
-public class ProjectActivity extends AppCompatActivity implements View.OnClickListener {
+public class UserProjectActivity extends AppCompatActivity implements View.OnClickListener{
 
     Button buttonEditProject, buttonLikeProject, buttonDeleteProject;
     TextView textViewLocation, textViewDate, textViewAuthor, textViewLike;
@@ -35,7 +35,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
     String id, author_key, image, likesidss, author_id;
     Bitmap imageBitmap;
     private MyFTPClientFunctions ftpclient = null;
-    private static final String TAG = "ProjectActivity";
+    private static final String TAG = "UserProjectActivity";
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -55,10 +55,10 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.scrolling_project);
+        setContentView(R.layout.scrolling_userproject);
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_project);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_userproject);
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
@@ -111,6 +111,23 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         } else {
             buttonLikeProject.setVisibility(View.VISIBLE);
         }
+
+        // CZY JEST AUTOREM??
+        if (Integer.parseInt(author_id) != Integer.parseInt(author_key)) {
+            buttonEditProject.setVisibility(View.INVISIBLE);
+            buttonDeleteProject.setVisibility(View.INVISIBLE);
+        } else {
+            buttonEditProject.setVisibility(View.VISIBLE);
+            buttonDeleteProject.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void onDeleteProjectButtonClick(View view) {
+        String type = "deleteProject";
+        BackgroundWorker backgroundWorker = new BackgroundWorker(UserProjectActivity.this);
+        backgroundWorker.execute(type, id);
+        Intent myIntent = new Intent(UserProjectActivity.this, LoginActivity.class);
+        UserProjectActivity.this.startActivity(myIntent);
     }
 
     public void onLikeProjectButtonClick(View view) {
@@ -118,9 +135,18 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         textViewLike.setText(likes + "");
         likesidss = likesidss + author_id + ",";
         String type = "updateProjectLikes";
-        BackgroundWorker backgroundWorker = new BackgroundWorker(ProjectActivity.this);
+        BackgroundWorker backgroundWorker = new BackgroundWorker(UserProjectActivity.this);
         backgroundWorker.execute(type, likesidss, likes + "", id);
         buttonLikeProject.setVisibility(View.INVISIBLE);
+    }
+
+    public void onEditProjectButtonClick(View view) {
+        String subject = editTextSubject.getText().toString();
+        String description = editTextDesctiption.getText().toString();
+        System.out.println(subject + "       " + description + "          " + id);
+        String type = "updateProject";
+        BackgroundWorker backgroundWorker = new BackgroundWorker(UserProjectActivity.this);
+        backgroundWorker.execute(type, subject, description, id);
     }
 
     @Override

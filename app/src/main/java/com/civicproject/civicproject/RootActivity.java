@@ -95,8 +95,8 @@ public class RootActivity extends AppCompatActivity {
                 }
 
                 else if(menuItem.getItemId() == R.id.nav_logout){
-                    finish();
-                    Intent intent = new Intent(RootActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }
 

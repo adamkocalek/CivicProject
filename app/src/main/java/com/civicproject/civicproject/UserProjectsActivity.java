@@ -74,7 +74,7 @@ public class UserProjectsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(UserProjectsActivity.this, ProjectActivity.class);
+                Intent intent = new Intent(UserProjectsActivity.this, UserProjectActivity.class);
                 System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX  " + position + "  xxxxx   " + indexs.get(position));
                 intent.putExtra("subject", parser.subjects.get(indexs.get(position)));
                 intent.putExtra("description", parser.descriptions.get(indexs.get(position)));
