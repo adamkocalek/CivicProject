@@ -82,23 +82,6 @@ public class UserProjectsActivity extends AppCompatActivity {
         listViewMyProjects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-<<<<<<< HEAD
-                Intent intent = new Intent(UserProjectsActivity.this, UserProjectActivity.class);
-                System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX  " + position + "  xxxxx   " + indexs.get(position));
-                intent.putExtra("subject", parser.subjects.get(indexs.get(position)));
-                intent.putExtra("description", parser.descriptions.get(indexs.get(position)));
-                intent.putExtra("location", parser.locations.get(indexs.get(position)));
-                intent.putExtra("date", parser.dates.get(indexs.get(position)));
-                intent.putExtra("image", parser.images.get(indexs.get(position)));
-                intent.putExtra("id", parser.ids.get(indexs.get(position)));
-                intent.putExtra("likes", parser.likes.get(indexs.get(position)));
-                intent.putExtra("likesids", parser.likesids.get(indexs.get(position)));
-                intent.putExtra("author", parser.authors.get(indexs.get(position)));
-                intent.putExtra("author_key", parser.authors_keys.get(indexs.get(position)));
-                UserProjectsActivity.this.startActivity(intent);
-
-=======
                 TextView textView = (TextView) view.findViewById(R.id.textViewIds);
                 if (ids.contains(textView.getText() + "")) {
                     position = ids.indexOf(textView.getText() + "");
@@ -120,7 +103,6 @@ public class UserProjectsActivity extends AppCompatActivity {
                     intent.putExtra("author_key", parser.authors_keys.get(indexs.get(position)));
                     UserProjectsActivity.this.startActivity(intent);
                 }
->>>>>>> origin/master
             }
         });
     }
