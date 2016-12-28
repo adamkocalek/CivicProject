@@ -23,11 +23,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
     Context context;
     AlertDialog alertDialog;
-
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
     BackgroundWorker(Context context) {
         this.context = context;
     }
