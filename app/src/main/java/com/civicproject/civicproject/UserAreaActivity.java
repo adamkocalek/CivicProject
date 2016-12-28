@@ -9,13 +9,9 @@ import android.view.View;
 import android.widget.Button;
 
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 
 public class UserAreaActivity extends AppCompatActivity {
 
@@ -23,9 +19,6 @@ public class UserAreaActivity extends AppCompatActivity {
     TextView textViewUsername;
     EditText editTextName, editTextSurname, editTextUsername, editTextPassword, editTextAge, editTextTelephone, editTextEmail;
     String userId;
-    private MyFTPClientFunctions ftpclient = null;
-    private static final String TAG = "UserAreaActivity";
-    String loginsDownloaded = null, loginsUpdated = null;
 
     @Override
     public void onBackPressed() {
@@ -90,8 +83,6 @@ public class UserAreaActivity extends AppCompatActivity {
         editTextAge = (EditText) findViewById(R.id.editTextAge);
         editTextTelephone = (EditText) findViewById(R.id.editTextTelephone);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
-
-        ftpclient = new MyFTPClientFunctions();
     }
 
     public void events() {
@@ -114,10 +105,6 @@ public class UserAreaActivity extends AppCompatActivity {
         buttonDeleteUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ftpDownloadFileWithLogins();
-                loginsUpdated.replace(editTextUsername.getText(), "");
-                ftpUploadFileWithLogins();
-
                 String type = "deleteUser";;
                 BackgroundWorker backgroundWorker = new BackgroundWorker(UserAreaActivity.this);
                 backgroundWorker.execute(type, userId);
@@ -127,55 +114,5 @@ public class UserAreaActivity extends AppCompatActivity {
                 toast.show();
             }
         });
-    }
-
-    public void ftpUploadFileWithLogins() {
-        new Thread(new Runnable() {
-            public void run() {
-                boolean status = false;
-                status = ftpclient.ftpConnect("serwer1633804.home.pl", "serwer1633804", "33murs0tKiby", 21);
-                if (status == true) {
-                    Log.d(TAG, "Połączenie udane");
-                } else {
-                    Log.d(TAG, "Połączenie nieudane");
-                }
-
-                InputStream input = new ByteArrayInputStream(loginsUpdated.getBytes());
-
-                ftpclient.ftpChangeDirectory("/important_data/");
-                ftpclient.ftpUploadString(input, "Logins.txt");
-
-                status = ftpclient.ftpDisconnect();
-                if (status == true) {
-                    Log.d(TAG, "Połączenie zakończone");
-                } else {
-                    Log.d(TAG, "Połączenie nie mogło zostać zakończone");
-                }
-            }
-        }).start();
-    }
-
-    public void ftpDownloadFileWithLogins() {
-        new Thread(new Runnable() {
-            public void run() {
-                boolean status = false;
-                status = ftpclient.ftpConnect("serwer1633804.home.pl", "serwer1633804", "33murs0tKiby", 21);
-                if (status == true) {
-                    Log.d(TAG, "Połączenie udane");
-                } else {
-                    Log.d(TAG, "Połączenie nieudane");
-                }
-
-                ftpclient.ftpChangeDirectory("/important_data/");
-                loginsDownloaded = ftpclient.ftpDownloadString("Logins.txt");
-
-                status = ftpclient.ftpDisconnect();
-                if (status == true) {
-                    Log.d(TAG, "Połączenie zakończone");
-                } else {
-                    Log.d(TAG, "Połączenie nie mogło zostać zakończone");
-                }
-            }
-        }).start();
     }
 }

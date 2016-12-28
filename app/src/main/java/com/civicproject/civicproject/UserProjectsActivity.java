@@ -24,7 +24,7 @@ public class UserProjectsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             super.onBackPressed();
-            overridePendingTransition(R.anim.in_from_left,R.anim.out_to_right);
+            overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -44,7 +44,7 @@ public class UserProjectsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_user_projects);
         setSupportActionBar(toolbar);
 
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
@@ -54,12 +54,16 @@ public class UserProjectsActivity extends AppCompatActivity {
         SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
         author_key = myprefs.getString("author_key", null);
 
-        ArrayList<String> myProjects = new ArrayList<String>();
-        final ArrayList<Integer> indexs = new ArrayList<Integer>();
+        final ArrayList<String> myProjects = new ArrayList<>(), ids = new ArrayList<>(), authors = new ArrayList<>(), likes = new ArrayList<>(), dates = new ArrayList<>();
+        final ArrayList<Integer> indexs = new ArrayList<>();
 
         for (int i = 0; i < parser.subjects.size(); i++) {
             if (parser.authors_keys.get(i).equals(author_key)) {
+                ids.add(parser.ids.get(i));
                 myProjects.add(parser.subjects.get(i));
+                authors.add(parser.authors.get(i));
+                likes.add(parser.likes.get(i));
+                dates.add(parser.dates.get(i));
                 indexs.add(parser.subjects.indexOf(parser.subjects.get(i)));
             }
         }
@@ -68,26 +72,38 @@ public class UserProjectsActivity extends AppCompatActivity {
             System.out.println(indexs.get(i));
         }
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, myProjects);
-        listViewMyProjects.setAdapter(arrayAdapter);
+
+        ListViewAdapter lviewAdapter;
+        lviewAdapter = new ListViewAdapter(this, ids, myProjects, authors, likes, dates);
+        listViewMyProjects.setAdapter(lviewAdapter);
+
+        //ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ids);
+        //listViewMyProjects.setAdapter(arrayAdapter);
         listViewMyProjects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(UserProjectsActivity.this, ProjectActivity.class);
-                System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX  " + position + "  xxxxx   " + indexs.get(position));
-                intent.putExtra("subject", parser.subjects.get(indexs.get(position)));
-                intent.putExtra("description", parser.descriptions.get(indexs.get(position)));
-                intent.putExtra("location", parser.locations.get(indexs.get(position)));
-                intent.putExtra("date", parser.dates.get(indexs.get(position)));
-                intent.putExtra("image", parser.images.get(indexs.get(position)));
-                intent.putExtra("id", parser.ids.get(indexs.get(position)));
-                intent.putExtra("likes", parser.likes.get(indexs.get(position)));
-                intent.putExtra("likesids", parser.likesids.get(indexs.get(position)));
-                intent.putExtra("author", parser.authors.get(indexs.get(position)));
-                intent.putExtra("author_key", parser.authors_keys.get(indexs.get(position)));
-                UserProjectsActivity.this.startActivity(intent);
-
+                TextView textView = (TextView) view.findViewById(R.id.textViewIds);
+                if (ids.contains(textView.getText() + "")) {
+                    position = ids.indexOf(textView.getText() + "");
+                } else {
+                    position = -1;
+                }
+                if (position != -1) {
+                    Intent intent = new Intent(UserProjectsActivity.this, ProjectActivity.class);
+                    System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX  " + position + "  xxxxx   " + indexs.get(position));
+                    intent.putExtra("subject", parser.subjects.get(indexs.get(position)));
+                    intent.putExtra("description", parser.descriptions.get(indexs.get(position)));
+                    intent.putExtra("location", parser.locations.get(indexs.get(position)));
+                    intent.putExtra("date", parser.dates.get(indexs.get(position)));
+                    intent.putExtra("image", parser.images.get(indexs.get(position)));
+                    intent.putExtra("id", parser.ids.get(indexs.get(position)));
+                    intent.putExtra("likes", parser.likes.get(indexs.get(position)));
+                    intent.putExtra("likesids", parser.likesids.get(indexs.get(position)));
+                    intent.putExtra("author", parser.authors.get(indexs.get(position)));
+                    intent.putExtra("author_key", parser.authors_keys.get(indexs.get(position)));
+                    UserProjectsActivity.this.startActivity(intent);
+                }
             }
         });
     }
