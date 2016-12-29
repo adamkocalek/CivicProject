@@ -75,26 +75,39 @@ public class RegisterActivity extends AppCompatActivity {
         String type = "register";
 
         if (!str_name.isEmpty() && !str_surname.isEmpty() && !str_age.isEmpty() && !str_username.isEmpty() && !str_password.isEmpty() && !str_telephone.isEmpty() && !str_email.isEmpty()) {
-            int i = 0;
-            Scanner scanner = new Scanner(loginsDownloaded);
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                if(line.equals(str_username)) {
-                    i++;
-                }
-            }
-            scanner.close();
-            if (i == 0) {
-                loginsUptaded = loginsDownloaded + "\n" + str_username;
-                ftpUploadFileWithLogins();
-                BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-                backgroundWorker.execute(type, str_name, str_surname, str_age, str_username, str_password, str_telephone, str_email);
-                Toast toast = Toast.makeText(getApplicationContext(), "Zarejestrowano, możesz się zalogować ; )", Toast.LENGTH_LONG);
-                toast.show();
-                Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-                RegisterActivity.this.startActivity(myIntent);
+            Validator validator = new Validator();
+            if(validator.passwordValidator(etRegisterPassword.getText()+"")) {
+               if(validator.emailValidator(editTextEmail.getText()+"")) {
+                   if(validator.phoneNumberValidator(editTextTelephone.getText()+"")) {
+                       int i = 0;
+                       Scanner scanner = new Scanner(loginsDownloaded);
+                       while (scanner.hasNextLine()) {
+                           String line = scanner.nextLine();
+                           if(line.equals(str_username)) {
+                               i++;
+                           }
+                       }
+                       scanner.close();
+                       if (i == 0) {
+                           loginsUptaded = loginsDownloaded + "\n" + str_username;
+                           ftpUploadFileWithLogins();
+                           BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+                           backgroundWorker.execute(type, str_name, str_surname, str_age, str_username, str_password, str_telephone, str_email);
+                           Toast toast = Toast.makeText(getApplicationContext(), "Zarejestrowano, możesz się zalogować ; )", Toast.LENGTH_LONG);
+                           toast.show();
+                           Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+                           RegisterActivity.this.startActivity(myIntent);
+                       } else {
+                           Toast.makeText(getApplicationContext(), "Wybrany login już istnieje.", Toast.LENGTH_LONG).show();
+                       }
+                   } else {
+                       Toast.makeText(getApplicationContext(), "Numer telefonu musi być 9 cyfrowy (XXX-XXX-XXX).", Toast.LENGTH_LONG).show();
+                   }
+               } else {
+                   Toast.makeText(getApplicationContext(), "Niepoprawny adres email.", Toast.LENGTH_LONG).show();
+               }
             } else {
-                Toast.makeText(getApplicationContext(), "Wybrany login już istnieje.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Hasło musi mieć długość 6-20 i zawierać przynajmniej jedną cyfre, jedną dużą literę, jedną małą literę i jeden znak specjalny (“@#$%”).", Toast.LENGTH_LONG).show();
             }
         } else {
             Toast.makeText(getApplicationContext(), "Uzupełnij wszystkie pola danymi.", Toast.LENGTH_LONG).show();

@@ -72,7 +72,6 @@ public class UserProjectsActivity extends AppCompatActivity {
             System.out.println(indexs.get(i));
         }
 
-
         ListViewAdapter lviewAdapter;
         lviewAdapter = new ListViewAdapter(this, ids, myProjects, authors, likes, dates);
         listViewMyProjects.setAdapter(lviewAdapter);
