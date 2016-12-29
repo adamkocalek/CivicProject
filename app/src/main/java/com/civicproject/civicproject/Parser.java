@@ -115,7 +115,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
             projects.clear();
 
             // LOOP THROUGH ARRAY
-            for (int i = 0; i < ja.length(); i++) {
+            for (int i = ja.length() - 1; i > -1; i--) {
                 jo = ja.getJSONObject(i);
 
                 // RETRIEVE DATA
