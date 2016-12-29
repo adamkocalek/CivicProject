@@ -49,6 +49,11 @@
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".LocationActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
         <activity android:name=".RootActivity" android:screenOrientation="portrait" />
         <activity android:name=".UserProjectsActivity" android:screenOrientation="portrait" />
         <activity android:name=".RulesActivity" android:screenOrientation="portrait" />
