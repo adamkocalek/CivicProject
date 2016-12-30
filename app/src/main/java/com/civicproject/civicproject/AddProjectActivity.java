@@ -197,7 +197,7 @@ public class AddProjectActivity extends AppCompatActivity {
                             String description = editTextDesctiption.getText().toString();
                             String author = textViewAuthor.getText().toString();
                             String date = textViewDate.getText().toString();
-                            String location = textViewLocation.getText().toString();
+                            String location = locationX + locationY + "";
                             String type = "addProject";
                             String image = ftpUploadImage();
                             BackgroundWorker backgroundWorker = new BackgroundWorker(AddProjectActivity.this);

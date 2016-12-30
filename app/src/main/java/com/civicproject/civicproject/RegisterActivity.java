@@ -119,7 +119,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
             } else {
-                Toast.makeText(getApplicationContext(), "Hasło musi mieć długość 6-20 i zawierać przynajmniej jedną cyfrę, jedną dużą literę, jedną małą literę i jeden znak specjalny (“@#$%”).", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Hasło musi mieć długość od 6 do 20 znaków i zawierać przynajmniej jedną cyfrę.", Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(getApplicationContext(), "Wszystkie pola muszą zostać uzupełnione.", Toast.LENGTH_SHORT).show();

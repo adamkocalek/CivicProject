@@ -67,14 +67,13 @@ public class ListViewAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        try{
+        try {
             holder.textViewAuthors.setText(authors.get(position));
             holder.textViewDates.setText(dates.get(position));
             holder.textViewIds.setText(ids.get(position));
             holder.textViewSubjects.setText(subjects.get(position));
             holder.textViewLikes.setText(likes.get(position));
-
-        }catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             Log.d("BŁĄD: ", "OutOfBound Exception w liście...");
         }
 
