@@ -22,7 +22,6 @@
         android:layout_below="@+id/textViewMyProjects"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@android:color/transparent"
         android:scrollbarSize="30dp"/>
 
 </LinearLayout>

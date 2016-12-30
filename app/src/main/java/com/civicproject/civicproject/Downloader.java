@@ -36,8 +36,8 @@ public class Downloader extends AsyncTask<Void, Integer, String> {
     protected void onPreExecute() {
         super.onPreExecute();
         progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Fetch Data");
-        progressDialog.setMessage("Fetching Data...Please wait");
+        progressDialog.setTitle("Pobieranie");
+        progressDialog.setMessage("Pobieranie danych, proszę czekać.");
         progressDialog.show();
     }
 
@@ -56,7 +56,7 @@ public class Downloader extends AsyncTask<Void, Integer, String> {
             Parser p = new Parser(context, s, activity, listView);
             p.execute();
         } else {
-            Toast.makeText(context, "Unable to download data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Nie można pobrać danych.", Toast.LENGTH_SHORT).show();
         }
     }
 

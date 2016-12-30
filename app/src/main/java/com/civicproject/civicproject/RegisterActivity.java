@@ -89,15 +89,13 @@ public class RegisterActivity extends AppCompatActivity {
                 ftpUploadFileWithLogins();
                 BackgroundWorker backgroundWorker = new BackgroundWorker(this);
                 backgroundWorker.execute(type, str_name, str_surname, str_age, str_username, str_password, str_telephone, str_email);
-                Toast toast = Toast.makeText(getApplicationContext(), "Zarejestrowano, możesz się zalogować ; )", Toast.LENGTH_LONG);
-                toast.show();
                 Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                 RegisterActivity.this.startActivity(myIntent);
             } else {
                 Toast.makeText(getApplicationContext(), "Wybrany login już istnieje.", Toast.LENGTH_LONG).show();
             }
         } else {
-            Toast.makeText(getApplicationContext(), "Uzupełnij wszystkie pola danymi.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Wszystkie pola muszą zostać uzupełnione.", Toast.LENGTH_SHORT).show();
         }
     }
 

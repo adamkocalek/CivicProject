@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.civicproject.civicproject.Fragments.Tab2Fragment;
 
@@ -48,18 +49,13 @@ public class RootActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 mDrawerLayout.closeDrawers();
 
-//                if (menuItem.getItemId() == R.id.nav_main) {
-//                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-//                    fragmentTransaction.replace(R.id.containerView1, new PopularItems_Fragment()).commit();
-//                }
-
                 if(menuItem.getItemId() == R.id.nav_main){
                     finish();
                     Intent intent = new Intent(RootActivity.this, RootActivity.class);
                     startActivity(intent);
                 }
 
-                else if(menuItem.getItemId() == R.id.nav_idea){
+                if(menuItem.getItemId() == R.id.nav_idea){
                     Intent intent = new Intent(RootActivity.this, AddProjectActivity.class);
                     startActivity(intent);
                 }
@@ -98,6 +94,7 @@ public class RootActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+                    Toast.makeText(getApplicationContext(),"Wylogowano poprawnie.",Toast.LENGTH_SHORT).show();
                 }
 
                 return false;
@@ -116,6 +113,7 @@ public class RootActivity extends AppCompatActivity {
 
         String username = myprefs.getString("username", null);
         String type = "getUser";
+
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         backgroundWorker.execute(type, username);
         try {

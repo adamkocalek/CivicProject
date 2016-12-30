@@ -43,8 +43,8 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
     protected void onPreExecute() {
         super.onPreExecute();
         progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Parser");
-        progressDialog.setMessage("Parsing ....Please wait");
+        progressDialog.setTitle("Przetwarzanie");
+        progressDialog.setMessage("Przetwarzanie danych, proszę czekać.");
         progressDialog.show();
     }
 
@@ -64,7 +64,9 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
             for(int i = 0; i < dates.size(); i++) {
                 dates.set(i, dateParser.getDate(dates.get(i)));
             }
+
             lviewAdapter = new ListViewAdapter(activity, ids, subjects, authors, likes, dates);
+
             // ADAPT TO LISTVIEW
             listView.setAdapter(lviewAdapter);
 
@@ -113,6 +115,16 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
             //CREATE JO OBJ TO HOLD A SINGLE ITEM
             JSONObject jo = null;
             projects.clear();
+            subjects.clear();
+            descriptions.clear();
+            locations.clear();
+            dates.clear();
+            authors.clear();
+            authors_keys.clear();
+            ids.clear();
+            likes.clear();
+            likesids.clear();
+            images.clear();
 
             // LOOP THROUGH ARRAY
             for (int i = 0; i < ja.length(); i++) {

@@ -13,10 +13,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 public class UserAreaActivity extends AppCompatActivity {
 
-    Button buttonEdit, buttonDeleteUser;
-    TextView textViewUsername;
+    Button buttonEdit;
+    TextView textViewUsername, tvDeleteUser;
     EditText editTextName, editTextSurname, editTextUsername, editTextPassword, editTextAge, editTextTelephone, editTextEmail;
     String userId;
 
@@ -74,7 +76,7 @@ public class UserAreaActivity extends AppCompatActivity {
 
     public void init() {
         buttonEdit = (Button) findViewById(R.id.buttonEdit);
-        buttonDeleteUser = (Button) findViewById(R.id.buttonDeleteUser);
+        tvDeleteUser = (TextView) findViewById(R.id.tvDeleteUser);
         textViewUsername = (TextView) findViewById(R.id.textViewUsername);
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextSurname = (EditText) findViewById(R.id.editTextrSurname);
@@ -97,21 +99,23 @@ public class UserAreaActivity extends AppCompatActivity {
                 String password = editTextPassword.getText().toString();
                 String telephone = editTextTelephone.getText().toString();
                 String email = editTextEmail.getText().toString();
+
                 BackgroundWorker backgroundWorker = new BackgroundWorker(UserAreaActivity.this);
                 backgroundWorker.execute(type, name, surname, age, login, password, telephone, email);
             }
         });
 
-        buttonDeleteUser.setOnClickListener(new View.OnClickListener() {
+        tvDeleteUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String type = "deleteUser";;
+                String type = "deleteUser";
                 BackgroundWorker backgroundWorker = new BackgroundWorker(UserAreaActivity.this);
                 backgroundWorker.execute(type, userId);
-                Intent myIntent = new Intent(UserAreaActivity.this, LoginActivity.class);
-                UserAreaActivity.this.startActivity(myIntent);
-                Toast toast = Toast.makeText(getApplicationContext(), "Twoje konto zostalo skasowane", Toast.LENGTH_LONG);
-                toast.show();
+                finish();
+
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
     }
