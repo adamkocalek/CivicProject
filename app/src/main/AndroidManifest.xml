@@ -26,37 +26,39 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".UserAreaActivity" />
-        <activity android:name=".ProjectsActivity" />
+        <activity android:name=".RegisterActivity" android:screenOrientation="portrait" />
+        <activity android:name=".UserAreaActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ProjectsActivity" android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".Map"
-            android:label="@string/title_activity_map" />
-        <activity android:name=".AboutActivity" />
-        <activity
-            android:name=".ProjectActivity"
-            android:label="@string/title_activity_scrolling" />
+        <activity android:name=".Map" android:label="@string/title_activity_map" android:screenOrientation="portrait" />
+        <activity android:name=".AboutActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ProjectActivity" android:label="@string/title_activity_scrolling" android:screenOrientation="portrait" />
         <activity
             android:name=".AddProjectActivity"
             android:label="@string/title_activity_scrolling"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".RootActivity" />
-        <activity android:name=".UserProjectsActivity" />
-        <activity android:name=".RulesActivity" />
-        <activity android:name=".HelpActivity" />
-        <activity android:name=".UserProjectActivity"></activity>
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LocationActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity android:name=".RootActivity" android:screenOrientation="portrait" />
+        <activity android:name=".UserProjectsActivity" android:screenOrientation="portrait" />
+        <activity android:name=".RulesActivity" android:screenOrientation="portrait" />
+        <activity android:name=".HelpActivity" android:screenOrientation="portrait" />
+        <activity android:name=".UserProjectActivity" android:screenOrientation="portrait" />
     </application>
 
 </manifest>

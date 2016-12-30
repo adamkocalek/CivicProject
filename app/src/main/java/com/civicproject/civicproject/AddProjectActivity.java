@@ -17,6 +17,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -168,28 +169,39 @@ public class AddProjectActivity extends AppCompatActivity {
         buttonAddProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!locationX.isNaN() && !locationY.isNaN()) {
-                    if (locationX <= 51.843678 && locationX >= 51.690382 && locationY <= 19.619980 && locationY >= 19.324036) {
-                        String subject = editTextSubject.getText().toString();
-                        String description = editTextDesctiption.getText().toString();
-                        String author = textViewAuthor.getText().toString();
-                        String date = textViewDate.getText().toString();
-                        String location = textViewLocation.getText().toString();
-                        String type = "addProject";
-                        String image = ftpUploadImage();
-                        BackgroundWorker backgroundWorker = new BackgroundWorker(AddProjectActivity.this);
-                        backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey, image);
-                        editTextSubject.setText("");
-                        editTextDesctiption.setText("");
-                        if (textViewLocation == null) {
-                            Toast.makeText(getApplicationContext(), "Twój projekt został dodany bez lokalizacji, nie wyświetli się na mapie...", Toast.LENGTH_LONG).show();
-                        }
-                        Toast.makeText(getApplicationContext(), "Dodano projekt. Bedzie on widoczny po ponownym zalogowaniu ; )", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Znajdujesz się poza Łodzią twój projekt nie może zostać dodany...", Toast.LENGTH_LONG).show();
-                    }
+
+                String editTextSubject_check = editTextSubject.getText().toString();
+                String editTextDesctiption_check = editTextDesctiption.getText().toString();
+
+                if(TextUtils.isEmpty(editTextSubject_check) && TextUtils.isEmpty( editTextDesctiption_check)) {
+                    editTextSubject.setError("Wypełnij pole");
+                    editTextDesctiption.setError("Wypełnij pole");
+                    return;
                 } else {
-                    Toast.makeText(getApplicationContext(), "Musisz poczekać na znalezienie twojej lokalizacji...", Toast.LENGTH_LONG).show();
+                    if (!locationX.isNaN() && !locationY.isNaN()) {
+                        if (locationX <= 51.843678 && locationX >= 51.690382 && locationY <= 19.619980 && locationY >= 19.324036) {
+                            String subject = editTextSubject.getText().toString();
+                            String description = editTextDesctiption.getText().toString();
+                            String author = textViewAuthor.getText().toString();
+                            String date = textViewDate.getText().toString();
+                            String location = textViewLocation.getText().toString();
+                            String type = "addProject";
+                            String image = ftpUploadImage();
+                            BackgroundWorker backgroundWorker = new BackgroundWorker(AddProjectActivity.this);
+                            backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey, image);
+                            editTextSubject.setText("");
+                            editTextDesctiption.setText("");
+                            if (textViewLocation == null) {
+                                Toast.makeText(getApplicationContext(), "Twój projekt został dodany bez lokalizacji, nie wyświetli się na mapie...", Toast.LENGTH_LONG).show();
+                            }
+                            Toast.makeText(getApplicationContext(), "Dodano projekt. Bedzie on widoczny po ponownym zalogowaniu ; )", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Znajdujesz się poza Łodzią twój projekt nie może zostać dodany...", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Musisz poczekać na znalezienie twojej lokalizacji...", Toast.LENGTH_LONG).show();
+                    }
+
                 }
             }
         });
