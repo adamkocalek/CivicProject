@@ -1,7 +1,5 @@
 package com.civicproject.civicproject;
 
-import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,17 +9,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static android.R.attr.duration;
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText etRegisterAge, etRegisterName, etRegisterUsername, etRegisterPassword, etRegisterSurname, editTextTelephone, editTextEmail;
@@ -34,14 +24,14 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.in_from_left,R.anim.out_to_right);
+        overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        overridePendingTransition(R.anim.right_in,R.anim.left_out);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
         etRegisterAge = (EditText) findViewById(R.id.etRegisterAge);
         etRegisterName = (EditText) findViewById(R.id.etRegisterName);
@@ -95,41 +85,41 @@ public class RegisterActivity extends AppCompatActivity {
 //                RegisterActivity.this.startActivity(myIntent);
 
             Validator validator = new Validator();
-            if(validator.passwordValidator(etRegisterPassword.getText()+"")) {
-               if(validator.emailValidator(editTextEmail.getText()+"")) {
-                   if(validator.phoneNumberValidator(editTextTelephone.getText()+"")) {
-                       int i = 0;
-                       Scanner scanner = new Scanner(loginsDownloaded);
-                       while (scanner.hasNextLine()) {
-                           String line = scanner.nextLine();
-                           if(line.equals(str_username)) {
-                               i++;
-                           }
-                       }
-                       scanner.close();
+            if (validator.passwordValidator(etRegisterPassword.getText() + "")) {
+                if (validator.emailValidator(editTextEmail.getText() + "")) {
+                    if (validator.phoneNumberValidator(editTextTelephone.getText() + "")) {
+                        int i = 0;
+                        Scanner scanner = new Scanner(loginsDownloaded);
+                        while (scanner.hasNextLine()) {
+                            String line = scanner.nextLine();
+                            if (line.equals(str_username)) {
+                                i++;
+                            }
+                        }
+                        scanner.close();
 
-                       if (i == 0) {
-                           loginsUptaded = loginsDownloaded + "\n" + str_username;
-                           ftpUploadFileWithLogins();
-                           BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-                           backgroundWorker.execute(type, str_name, str_surname, str_age, str_username, str_password, str_telephone, str_email);
-                           Toast toast = Toast.makeText(getApplicationContext(), "Zarejestrowano, możesz się zalogować ; )", Toast.LENGTH_LONG);
-                           toast.show();
-                           Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-                           RegisterActivity.this.startActivity(myIntent);
+                        if (i == 0) {
+                            loginsUptaded = loginsDownloaded + "\n" + str_username;
+                            ftpUploadFileWithLogins();
+                            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+                            backgroundWorker.execute(type, str_name, str_surname, str_age, str_username, str_password, str_telephone, str_email);
+                            Toast toast = Toast.makeText(getApplicationContext(), "Zarejestrowano, możesz się zalogować ; )", Toast.LENGTH_LONG);
+                            toast.show();
+                            Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+                            RegisterActivity.this.startActivity(myIntent);
 
-                       } else {
-                           Toast.makeText(getApplicationContext(), "Wybrany login już istnieje.", Toast.LENGTH_LONG).show();
-                       }
-                   } else {
-                       Toast.makeText(getApplicationContext(), "Numer telefonu musi być 9 cyfrowy (XXX-XXX-XXX).", Toast.LENGTH_LONG).show();
-                   }
-               } else {
-                   Toast.makeText(getApplicationContext(), "Niepoprawny adres email.", Toast.LENGTH_LONG).show();
-               }
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Wybrany login już istnieje.", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Numer telefonu musi być 9 cyfrowy (XXX-XXX-XXX).", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Niepoprawny adres email.", Toast.LENGTH_SHORT).show();
+                }
 
             } else {
-                Toast.makeText(getApplicationContext(), "Hasło musi mieć długość 6-20 i zawierać przynajmniej jedną cyfre, jedną dużą literę, jedną małą literę i jeden znak specjalny (“@#$%”).", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Hasło musi mieć długość 6-20 i zawierać przynajmniej jedną cyfrę, jedną dużą literę, jedną małą literę i jeden znak specjalny (“@#$%”).", Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(getApplicationContext(), "Wszystkie pola muszą zostać uzupełnione.", Toast.LENGTH_SHORT).show();
@@ -154,9 +144,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                 status = ftpclient.ftpDisconnect();
                 if (status == true) {
-                    Log.d(TAG, "Połączenie zakończone");
+                    Log.d(TAG, "Połączenie zakończone.");
                 } else {
-                    Log.d(TAG, "Połączenie nie mogło zostać zakończone");
+                    Log.d(TAG, "Połączenie nie mogło zostać zakończone.");
                 }
             }
         }).start();
@@ -168,9 +158,9 @@ public class RegisterActivity extends AppCompatActivity {
                 boolean status = false;
                 status = ftpclient.ftpConnect("serwer1633804.home.pl", "serwer1633804", "33murs0tKiby", 21);
                 if (status == true) {
-                    Log.d(TAG, "Połączenie udane");
+                    Log.d(TAG, "Połączenie udane.");
                 } else {
-                    Log.d(TAG, "Połączenie nieudane");
+                    Log.d(TAG, "Połączenie nieudane.");
                 }
 
                 ftpclient.ftpChangeDirectory("/important_data/");
@@ -178,9 +168,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                 status = ftpclient.ftpDisconnect();
                 if (status == true) {
-                    Log.d(TAG, "Połączenie zakończone");
+                    Log.d(TAG, "Połączenie zakończone.");
                 } else {
-                    Log.d(TAG, "Połączenie nie mogło zostać zakończone");
+                    Log.d(TAG, "Połączenie nie mogło zostać zakończone.");
                 }
             }
         }).start();

@@ -18,6 +18,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import dmax.dialog.SpotsDialog;
+
 public class Parser extends AsyncTask<Void, Integer, Integer> {
     Context context;
     Activity activity;
@@ -25,7 +27,8 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
     String data;
     public static ArrayList<String> locations = new ArrayList<>(), likes = new ArrayList<>(), likesids = new ArrayList<>(), ids = new ArrayList<>(), descriptions = new ArrayList<>(), subjects = new ArrayList<>(), projects = new ArrayList<>(), dates = new ArrayList<>(), authors = new ArrayList<>(), authors_keys = new ArrayList<>(),
             images = new ArrayList<>();;
-    ProgressDialog progressDialog;
+
+    SpotsDialog progressDialog;
     DateParser dateParser = null;
 
     public Parser() {
@@ -42,9 +45,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Przetwarzanie");
-        progressDialog.setMessage("Przetwarzanie danych, proszę czekać.");
+        progressDialog = new SpotsDialog(context, R.style.CustomDialogParse);
         progressDialog.show();
     }
 

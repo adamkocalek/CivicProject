@@ -1,10 +1,8 @@
 package com.civicproject.civicproject;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.SystemClock;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,12 +15,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import dmax.dialog.SpotsDialog;
+
 public class Downloader extends AsyncTask<Void, Integer, String> {
     Context context;
     String address;
     Activity activity;
     ListView listView;
-    ProgressDialog progressDialog;
+    SpotsDialog progressDialog;
 
     public Downloader(Context context, String address, Activity activity, ListView listView) {
         this.context = context;
@@ -35,9 +35,7 @@ public class Downloader extends AsyncTask<Void, Integer, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Pobieranie");
-        progressDialog.setMessage("Pobieranie danych, proszę czekać.");
+        progressDialog = new SpotsDialog(context, R.style.CustomDialogDownload);
         progressDialog.show();
     }
 
@@ -51,7 +49,7 @@ public class Downloader extends AsyncTask<Void, Integer, String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         progressDialog.dismiss();
-        ;
+
         if (s != null) {
             Parser p = new Parser(context, s, activity, listView);
             p.execute();

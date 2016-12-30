@@ -13,4 +13,5 @@
         <item name="android:textColorSecondary">@color/textColorSecondary</item>
         <item name="android:textColorPrimaryInverse">@android:color/darker_gray</item>
     </style>
+
 </resources>

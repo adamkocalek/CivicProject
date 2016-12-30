@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
     EditText etLoginUsername, etLoginPassword;
@@ -73,11 +74,16 @@ public class LoginActivity extends AppCompatActivity {
                 String password = etLoginPassword.getText().toString();
                 String type = "login";
 
-                SharedPreferences myprefs = LoginActivity.this.getSharedPreferences("user", MODE_PRIVATE);
-                myprefs.edit().putString("username", username).commit();
+                if (etLoginUsername.getText().toString().isEmpty() || etLoginPassword.getText().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Wszystkie pola muszą być wypełnione.", Toast.LENGTH_SHORT).show();
 
-                BackgroundWorker backgroundWorker = new BackgroundWorker(LoginActivity.this);
-                backgroundWorker.execute(type, username, password);
+                } else {
+                    SharedPreferences myprefs = LoginActivity.this.getSharedPreferences("user", MODE_PRIVATE);
+                    myprefs.edit().putString("username", username).commit();
+
+                    BackgroundWorker backgroundWorker = new BackgroundWorker(LoginActivity.this);
+                    backgroundWorker.execute(type, username, password);
+                }
             }
         });
     }

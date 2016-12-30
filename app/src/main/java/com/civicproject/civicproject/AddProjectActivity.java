@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -29,9 +31,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 
 public class AddProjectActivity extends AppCompatActivity {
 
@@ -70,21 +75,23 @@ public class AddProjectActivity extends AppCompatActivity {
         setContentView(R.layout.scrolling_addproject);
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-
-        }
-
-        init();
-        events();
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_addproject);
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
+        init();
+        events();
+
+
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+
         }
 
         DateFormat df = new SimpleDateFormat("d.MM.yyyy, HH:mm");
@@ -100,9 +107,15 @@ public class AddProjectActivity extends AppCompatActivity {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                textViewLocation.setText(location.getLatitude() + " " + location.getLongitude());
                 locationX = location.getLatitude();
                 locationY = location.getLongitude();
+                String address = getAddress(location.getLatitude(), location.getLongitude());
+                Log.d("BŁĄD: ", address);
+                textViewLocation.setText(location.getLatitude() + " " + location.getLongitude());
+
+                if(address!=""){
+                    textViewLocation.setText(address);
+                }
             }
 
             @Override
@@ -237,6 +250,31 @@ public class AddProjectActivity extends AppCompatActivity {
             default:
                 break;
         }
+    }
+
+    private String getAddress(double LATITUDE, double LONGITUDE) {
+        String strAdd = "";
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder
+                    .getFromLocation(LATITUDE, LONGITUDE, 1);
+            if (addresses != null) {
+                android.location.Address returnedAddress = addresses.get(0);
+                StringBuilder strReturnedAddress = new StringBuilder("");
+
+                for (int i = 0; i < returnedAddress.getMaxAddressLineIndex(); i++) {
+                    strReturnedAddress
+                            .append(returnedAddress.getAddressLine(i)).append(
+                            "\n");
+                }
+                strAdd = strReturnedAddress.toString();
+            } else {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return strAdd;
     }
 
     private void configureButton() {
