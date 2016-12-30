@@ -76,22 +76,23 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (!str_name.isEmpty() && !str_surname.isEmpty() && !str_age.isEmpty() && !str_username.isEmpty() && !str_password.isEmpty() && !str_telephone.isEmpty() && !str_email.isEmpty()) {
 
-            int i = 0;
-            Scanner scanner = new Scanner(loginsDownloaded);
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                if(line.equals(str_username)) {
-                    i++;
-                }
-            }
-            scanner.close();
-            if (i == 0) {
-                loginsUptaded = loginsDownloaded + "\n" + str_username;
-                ftpUploadFileWithLogins();
-                BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-                backgroundWorker.execute(type, str_name, str_surname, str_age, str_username, str_password, str_telephone, str_email);
-                Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-                RegisterActivity.this.startActivity(myIntent);
+//            int i = 0;
+//            Scanner scanner = new Scanner(loginsDownloaded);
+//            while (scanner.hasNextLine()) {
+//                String line = scanner.nextLine();
+//                if(line.equals(str_username)) {
+//                    i++;
+//                }
+//            }
+//            scanner.close();
+//
+//            if (i == 0) {
+//                loginsUptaded = loginsDownloaded + "\n" + str_username;
+//                ftpUploadFileWithLogins();
+//                BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+//                backgroundWorker.execute(type, str_name, str_surname, str_age, str_username, str_password, str_telephone, str_email);
+//                Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+//                RegisterActivity.this.startActivity(myIntent);
 
             Validator validator = new Validator();
             if(validator.passwordValidator(etRegisterPassword.getText()+"")) {
@@ -106,6 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
                            }
                        }
                        scanner.close();
+
                        if (i == 0) {
                            loginsUptaded = loginsDownloaded + "\n" + str_username;
                            ftpUploadFileWithLogins();
@@ -115,6 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
                            toast.show();
                            Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                            RegisterActivity.this.startActivity(myIntent);
+
                        } else {
                            Toast.makeText(getApplicationContext(), "Wybrany login już istnieje.", Toast.LENGTH_LONG).show();
                        }
