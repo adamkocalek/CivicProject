@@ -45,6 +45,7 @@ public class PopularItems_Fragment extends Fragment {
         final ArrayList<String> popularList = new ArrayList<>(), ids = new ArrayList<>(), authors = new ArrayList<>(), subjects = new ArrayList<>(), likes = new ArrayList<>(), dates = new ArrayList<>(), images = new ArrayList<>();
         parser = new Parser();
 
+
         for (int i = 0; i < parser.subjects.size(); i++) {
             tempList.add(Integer.parseInt(parser.likes.get(i)));
             mapLikes.put(i, parser.likes.get(i));

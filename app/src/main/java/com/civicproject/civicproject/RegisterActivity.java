@@ -3,6 +3,7 @@ package com.civicproject.civicproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -91,19 +92,44 @@ public class RegisterActivity extends AppCompatActivity {
                             RegisterActivity.this.startActivity(myIntent);
 
                         } else {
+                            etRegisterUsername.setError("Wybrany login już istnieje.");
                             Toast.makeText(getApplicationContext(), "Wybrany login już istnieje.", Toast.LENGTH_SHORT).show();
                         }
                     } else {
+                        editTextTelephone.setError("Numer telefonu musi być 9 cyfrowy (XXX-XXX-XXX).");
                         Toast.makeText(getApplicationContext(), "Numer telefonu musi być 9 cyfrowy (XXX-XXX-XXX).", Toast.LENGTH_SHORT).show();
                     }
                 } else {
+                    editTextEmail.setError("Niepoprawny adres email.");
                     Toast.makeText(getApplicationContext(), "Niepoprawny adres email.", Toast.LENGTH_SHORT).show();
                 }
-
             } else {
+                etRegisterPassword.setError("Hasło musi mieć długość od 6 do 20 znaków i zawierać przynajmniej jedną cyfrę.");
                 Toast.makeText(getApplicationContext(), "Hasło musi mieć długość od 6 do 20 znaków i zawierać przynajmniej jedną cyfrę.", Toast.LENGTH_SHORT).show();
             }
         } else {
+            if (TextUtils.isEmpty(str_name.replaceAll("^\\s+|\\s+$", ""))) {
+                etRegisterName.setError("Pole nie może być puste!");
+            }
+            if (TextUtils.isEmpty(str_surname)) {
+                etRegisterSurname.setError("Pole nie może być puste!");
+            }
+            if (TextUtils.isEmpty(str_age)) {
+                etRegisterAge.setError("Pole nie może być puste!");
+            }
+            if (TextUtils.isEmpty(str_username)) {
+                etRegisterUsername.setError("Pole nie może być puste!");
+            }
+            if (TextUtils.isEmpty(str_password)) {
+                etRegisterPassword.setError("Pole nie może być puste!");
+            }
+            if (TextUtils.isEmpty(str_telephone)) {
+                editTextTelephone.setError("Pole nie może być puste!");
+            }
+            if (TextUtils.isEmpty(str_email)) {
+                editTextEmail.setError("Pole nie może być puste!");
+            }
+
             Toast.makeText(getApplicationContext(), "Wszystkie pola muszą zostać uzupełnione.", Toast.LENGTH_SHORT).show();
         }
     }
@@ -111,9 +137,9 @@ public class RegisterActivity extends AppCompatActivity {
     public void ftpUploadFileWithLogins() {
         new Thread(new Runnable() {
             public void run() {
-                boolean status = false;
+                boolean status;
                 status = ftpclient.ftpConnect("serwer1633804.home.pl", "serwer1633804", "33murs0tKiby", 21);
-                if (status == true) {
+                if (status) {
                     Log.d(TAG, "Połączenie udane");
                 } else {
                     Log.d(TAG, "Połączenie nieudane");
@@ -125,7 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
                 ftpclient.ftpUploadString(input, "Logins.txt");
 
                 status = ftpclient.ftpDisconnect();
-                if (status == true) {
+                if (status) {
                     Log.d(TAG, "Połączenie zakończone.");
                 } else {
                     Log.d(TAG, "Połączenie nie mogło zostać zakończone.");
@@ -137,9 +163,9 @@ public class RegisterActivity extends AppCompatActivity {
     public void ftpDownloadFileWithLogins() {
         new Thread(new Runnable() {
             public void run() {
-                boolean status = false;
+                boolean status;
                 status = ftpclient.ftpConnect("serwer1633804.home.pl", "serwer1633804", "33murs0tKiby", 21);
-                if (status == true) {
+                if (status) {
                     Log.d(TAG, "Połączenie udane.");
                 } else {
                     Log.d(TAG, "Połączenie nieudane.");
@@ -149,7 +175,7 @@ public class RegisterActivity extends AppCompatActivity {
                 loginsDownloaded = ftpclient.ftpDownloadString("Logins.txt");
 
                 status = ftpclient.ftpDisconnect();
-                if (status == true) {
+                if (status) {
                     Log.d(TAG, "Połączenie zakończone.");
                 } else {
                     Log.d(TAG, "Połączenie nie mogło zostać zakończone.");

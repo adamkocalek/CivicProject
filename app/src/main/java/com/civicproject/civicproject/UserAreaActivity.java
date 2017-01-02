@@ -29,14 +29,14 @@ public class UserAreaActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.in_from_left,R.anim.out_to_right);
+        overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             super.onBackPressed();
-            overridePendingTransition(R.anim.in_from_left,R.anim.out_to_right);
+            overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -45,19 +45,18 @@ public class UserAreaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_area);
-        overridePendingTransition(R.anim.right_in,R.anim.left_out);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_user_area);
         setSupportActionBar(toolbar);
 
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
         init();
         events();
-
 
 
         SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
@@ -73,8 +72,8 @@ public class UserAreaActivity extends AppCompatActivity {
         editTextUsername.setText(username);
         editTextAge.setText(age);
         editTextName.setText(name);
-        editTextSurname.setText(surname );
-        editTextPassword.setText(password );
+        editTextSurname.setText(surname);
+        editTextPassword.setText(password);
         textViewUsername.setText(username);
         editTextTelephone.setText(telephone);
         editTextEmail.setText(email);
@@ -105,32 +104,31 @@ public class UserAreaActivity extends AppCompatActivity {
                 String editTextTelephone_check = editTextTelephone.getText().toString();
                 String editTextEmail_check = editTextEmail.getText().toString();
 
-                if(TextUtils.isEmpty(editTextSurname_check) || TextUtils.isEmpty(editTextName_check) || TextUtils.isEmpty(editTextAge_check) || TextUtils.isEmpty(editTextPassword_check)
-                        || TextUtils.isEmpty(editTextTelephone_check) || TextUtils.isEmpty(editTextEmail_check)){
+                if (TextUtils.isEmpty(editTextSurname_check) || TextUtils.isEmpty(editTextName_check) || TextUtils.isEmpty(editTextAge_check) || TextUtils.isEmpty(editTextPassword_check)
+                        || TextUtils.isEmpty(editTextTelephone_check) || TextUtils.isEmpty(editTextEmail_check)) {
 
-                    if(TextUtils.isEmpty(editTextName_check)){
+                    if (TextUtils.isEmpty(editTextName_check)) {
                         editTextName.setError("Pole nie może być puste!");
                     }
-                    if(TextUtils.isEmpty(editTextSurname_check)){
+                    if (TextUtils.isEmpty(editTextSurname_check)) {
                         editTextSurname.setError("Pole nie może być puste!");
                     }
-                    if(TextUtils.isEmpty(editTextAge_check)){
+                    if (TextUtils.isEmpty(editTextAge_check)) {
                         editTextAge.setError("Pole nie może być puste!");
                     }
-                    if(TextUtils.isEmpty(editTextPassword_check)){
+                    if (TextUtils.isEmpty(editTextPassword_check)) {
                         editTextPassword.setError("Pole nie może być puste!");
                     }
-                    if(TextUtils.isEmpty(editTextTelephone_check)){
+                    if (TextUtils.isEmpty(editTextTelephone_check)) {
                         editTextTelephone.setError("Pole nie może być puste!");
                     }
-                    if(TextUtils.isEmpty(editTextEmail_check)){
+                    if (TextUtils.isEmpty(editTextEmail_check)) {
                         editTextEmail.setError("Pole nie może być puste!");
                     }
 
                     Toast.makeText(getApplicationContext(), "Wszystkie pola muszą zostać uzupełnione.", Toast.LENGTH_SHORT).show();
 
-                }
-                else {
+                } else {
                     String type = "updateUser";
                     String name = editTextName.getText().toString();
                     String surname = editTextSurname.getText().toString();
