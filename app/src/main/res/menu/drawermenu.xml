@@ -3,29 +3,29 @@
 
     <item
         android:id="@+id/nav_main"
-        android:icon="@drawable/drawer_inbox"
+        android:icon="@drawable/drawer_home_icon"
         android:title="Strona Główna" />
 
     <item
         android:id="@+id/nav_idea"
-        android:icon="@drawable/drawer_inbox"
+        android:icon="@drawable/drawer_add_icon"
         android:title="Dodaj Pomysł" />
 
     <item
         android:id="@+id/nav_map"
-        android:icon="@drawable/map"
+        android:icon="@drawable/drawer_map_icon"
         android:title="Mapa" />
 
     <group android:id="@+id/group_account">
 
         <item
             android:id="@+id/nav_my_account"
-            android:icon="@drawable/drawer_inbox"
+            android:icon="@drawable/drawer_myaccount_icon"
             android:title="Moje Konto" />
 
         <item
             android:id="@+id/nav_my_projects"
-            android:icon="@drawable/drawer_inbox"
+            android:icon="@drawable/drawer_myprojects_icon"
             android:title="Moje Projekty" />
     </group>
 
@@ -33,17 +33,17 @@
 
         <item
             android:id="@+id/nav_rules"
-            android:icon="@drawable/drawer_inbox"
+            android:icon="@drawable/drawer_rules_icon"
             android:title="Regulamin" />
 
         <item
             android:id="@+id/nav_help"
-            android:icon="@drawable/drawer_inbox"
+            android:icon="@drawable/drawer_help_icon"
             android:title="Pomoc" />
 
         <item
             android:id="@+id/nav_about"
-            android:icon="@drawable/drawer_inbox"
+            android:icon="@drawable/drawer_about_icon"
             android:title="O Aplikacji" />
     </group>
 
@@ -51,7 +51,7 @@
 
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/drawer_inbox"
+            android:icon="@drawable/drawer_logout_icon"
             android:title="Wyloguj się" />
     </group>
 
