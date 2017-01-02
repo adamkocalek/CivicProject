@@ -43,6 +43,8 @@ public class RegisterActivity extends AppCompatActivity {
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         tvRegisterRules = (TextView) findViewById(R.id.tvRegisterRules);
 
+        validator = new Validator();
+
         ftpclient = new MyFTPClientFunctions();
         ftpDownloadFileWithLogins();
 
@@ -65,9 +67,8 @@ public class RegisterActivity extends AppCompatActivity {
         String str_email = editTextEmail.getText().toString();
         String type = "register";
 
-        if (!str_name.isEmpty() && !str_surname.isEmpty() && !str_age.isEmpty() && !str_username.isEmpty() && !str_password.isEmpty() && !str_telephone.isEmpty() && !str_email.isEmpty()) {
 
-            Validator validator = new Validator();
+        if (!validator.isEmpty(str_name) && !validator.isEmpty(str_surname) && !validator.isEmpty(str_age) && !validator.isEmpty(str_username) && !validator.isEmpty(str_password) && !validator.isEmpty(str_telephone) && !validator.isEmpty(str_email)) {
             if (validator.passwordValidator(etRegisterPassword.getText() + "")) {
                 if (validator.emailValidator(editTextEmail.getText() + "")) {
                     if (validator.phoneNumberValidator(editTextTelephone.getText() + "")) {
@@ -85,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
                             loginsUptaded = loginsDownloaded + "\n" + str_username;
                             ftpUploadFileWithLogins();
                             BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-                            backgroundWorker.execute(type, str_name, str_surname, str_age, str_username, str_password, str_telephone, str_email);
+                            backgroundWorker.execute(type, validator.trimSpaces(str_name), validator.trimSpaces(str_surname), validator.trimSpaces(str_age), validator.trimSpaces(str_username), validator.trimSpaces(str_password), validator.trimSpaces(str_telephone), validator.trimSpaces(str_email));
                             Toast toast = Toast.makeText(getApplicationContext(), "Zarejestrowano, możesz się zalogować ; )", Toast.LENGTH_LONG);
                             toast.show();
                             Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -108,25 +109,25 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Hasło musi mieć długość od 6 do 20 znaków i zawierać przynajmniej jedną cyfrę.", Toast.LENGTH_SHORT).show();
             }
         } else {
-            if (TextUtils.isEmpty(str_name.replaceAll("^\\s+|\\s+$", ""))) {
+            if (TextUtils.isEmpty(validator.trimSpaces(str_name))) {
                 etRegisterName.setError("Pole nie może być puste!");
             }
-            if (TextUtils.isEmpty(str_surname)) {
+            if (TextUtils.isEmpty(validator.trimSpaces(str_surname))) {
                 etRegisterSurname.setError("Pole nie może być puste!");
             }
-            if (TextUtils.isEmpty(str_age)) {
+            if (TextUtils.isEmpty(validator.trimSpaces(str_age))) {
                 etRegisterAge.setError("Pole nie może być puste!");
             }
-            if (TextUtils.isEmpty(str_username)) {
+            if (TextUtils.isEmpty(validator.trimSpaces(str_username))) {
                 etRegisterUsername.setError("Pole nie może być puste!");
             }
-            if (TextUtils.isEmpty(str_password)) {
+            if (TextUtils.isEmpty(validator.trimSpaces(str_password))) {
                 etRegisterPassword.setError("Pole nie może być puste!");
             }
-            if (TextUtils.isEmpty(str_telephone)) {
+            if (TextUtils.isEmpty(validator.trimSpaces(str_telephone))) {
                 editTextTelephone.setError("Pole nie może być puste!");
             }
-            if (TextUtils.isEmpty(str_email)) {
+            if (TextUtils.isEmpty(validator.trimSpaces(str_email))) {
                 editTextEmail.setError("Pole nie może być puste!");
             }
 
