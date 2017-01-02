@@ -186,10 +186,14 @@ public class AddProjectActivity extends AppCompatActivity {
                 String editTextSubject_check = editTextSubject.getText().toString();
                 String editTextDesctiption_check = editTextDesctiption.getText().toString();
 
-                if(TextUtils.isEmpty(editTextSubject_check) && TextUtils.isEmpty( editTextDesctiption_check)) {
-                    editTextSubject.setError("Wypełnij pole");
-                    editTextDesctiption.setError("Wypełnij pole");
-                    return;
+                if(TextUtils.isEmpty(editTextSubject_check) || TextUtils.isEmpty( editTextDesctiption_check)) {
+                    if(TextUtils.isEmpty(editTextSubject_check)){
+                        editTextSubject.setError("Pole nie może być puste!");
+                    }
+                    if(TextUtils.isEmpty(editTextDesctiption_check)){
+                        editTextDesctiption.setError("Pole nie może być puste!");
+                    }
+
                 } else {
                     if (!locationX.isNaN() && !locationY.isNaN()) {
                         if (locationX <= 51.843678 && locationX >= 51.690382 && locationY <= 19.619980 && locationY >= 19.324036) {

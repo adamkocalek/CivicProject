@@ -56,7 +56,7 @@ public class PopularItems_Fragment extends Fragment {
         Collections.sort(tempList2);
         Collections.reverse(tempList2);
         if(tempList2.size() > 2) {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 15; i++) {
                 popularList.add(tempList2.get(i) + "");
             }
         }
@@ -99,18 +99,9 @@ public class PopularItems_Fragment extends Fragment {
             ids.add(parser.ids.get(i));
         }
 
-
-        //Parser parser = new Parser();
-        //Toast.makeText(getContext(), parser.subjects.size() + "", Toast.LENGTH_LONG).show();
-
-        ids.add("1");
-        ids.add("2");
-        ids.add("3");
-        ids.add("4");
-
-
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, ids);
         */
+
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, popularList);
         listView_popular.setAdapter(arrayAdapter);
         return view;

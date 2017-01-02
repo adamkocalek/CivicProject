@@ -1,9 +1,13 @@
 package com.civicproject.civicproject;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -54,6 +58,8 @@ public class UserAreaActivity extends AppCompatActivity {
         init();
         events();
 
+
+
         SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
         String username = myprefs.getString("username", null);
         String name = myprefs.getString("name", null);
@@ -79,7 +85,7 @@ public class UserAreaActivity extends AppCompatActivity {
         tvDeleteUser = (TextView) findViewById(R.id.tvDeleteUser);
         textViewUsername = (TextView) findViewById(R.id.textViewUsername);
         editTextName = (EditText) findViewById(R.id.editTextName);
-        editTextSurname = (EditText) findViewById(R.id.editTextrSurname);
+        editTextSurname = (EditText) findViewById(R.id.editTextSurname);
         editTextUsername = (EditText) findViewById(R.id.editTextUsername);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         editTextAge = (EditText) findViewById(R.id.editTextAge);
@@ -91,31 +97,120 @@ public class UserAreaActivity extends AppCompatActivity {
         buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String type = "updateUser";
-                String name = editTextName.getText().toString();
-                String surname = editTextSurname.getText().toString();
-                String age = editTextAge.getText().toString();
-                String login = editTextUsername.getText().toString();
-                String password = editTextPassword.getText().toString();
-                String telephone = editTextTelephone.getText().toString();
-                String email = editTextEmail.getText().toString();
 
-                BackgroundWorker backgroundWorker = new BackgroundWorker(UserAreaActivity.this);
-                backgroundWorker.execute(type, name, surname, age, login, password, telephone, email);
+                String editTextName_check = editTextName.getText().toString();
+                String editTextSurname_check = editTextSurname.getText().toString();
+                String editTextAge_check = editTextAge.getText().toString();
+                String editTextPassword_check = editTextPassword.getText().toString();
+                String editTextTelephone_check = editTextTelephone.getText().toString();
+                String editTextEmail_check = editTextEmail.getText().toString();
+
+                if(TextUtils.isEmpty(editTextSurname_check) || TextUtils.isEmpty(editTextName_check) || TextUtils.isEmpty(editTextAge_check) || TextUtils.isEmpty(editTextPassword_check)
+                        || TextUtils.isEmpty(editTextTelephone_check) || TextUtils.isEmpty(editTextEmail_check)){
+
+                    if(TextUtils.isEmpty(editTextName_check)){
+                        editTextName.setError("Pole nie może być puste!");
+                    }
+                    if(TextUtils.isEmpty(editTextSurname_check)){
+                        editTextSurname.setError("Pole nie może być puste!");
+                    }
+                    if(TextUtils.isEmpty(editTextAge_check)){
+                        editTextAge.setError("Pole nie może być puste!");
+                    }
+                    if(TextUtils.isEmpty(editTextPassword_check)){
+                        editTextPassword.setError("Pole nie może być puste!");
+                    }
+                    if(TextUtils.isEmpty(editTextTelephone_check)){
+                        editTextTelephone.setError("Pole nie może być puste!");
+                    }
+                    if(TextUtils.isEmpty(editTextEmail_check)){
+                        editTextEmail.setError("Pole nie może być puste!");
+                    }
+
+                    Toast.makeText(getApplicationContext(), "Wszystkie pola muszą zostać uzupełnione.", Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+                    String type = "updateUser";
+                    String name = editTextName.getText().toString();
+                    String surname = editTextSurname.getText().toString();
+                    String age = editTextAge.getText().toString();
+                    String login = editTextUsername.getText().toString();
+                    String password = editTextPassword.getText().toString();
+                    String telephone = editTextTelephone.getText().toString();
+                    String email = editTextEmail.getText().toString();
+
+                    BackgroundWorker backgroundWorker = new BackgroundWorker(UserAreaActivity.this);
+                    backgroundWorker.execute(type, name, surname, age, login, password, telephone, email);
+                }
             }
         });
 
         tvDeleteUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String type = "deleteUser";
-                BackgroundWorker backgroundWorker = new BackgroundWorker(UserAreaActivity.this);
-                backgroundWorker.execute(type, userId);
-                finish();
+                new AlertDialog.Builder(new ContextThemeWrapper(UserAreaActivity.this, R.style.Dialog_Theme))
+                        .setTitle("Potwierdzenie").setMessage("Czy na pewno chcesz usunąć konto?")
+                        .setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                String type = "deleteUser";
+                                BackgroundWorker backgroundWorker = new BackgroundWorker(UserAreaActivity.this);
+                                backgroundWorker.execute(type, userId);
+                                finish();
 
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        })
+                        .show();
+            }
+        });
+
+        editTextName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editTextName.setText("");
+            }
+        });
+
+        editTextSurname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editTextSurname.setText("");
+            }
+        });
+
+        editTextAge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editTextAge.setText("");
+            }
+        });
+
+        editTextPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editTextPassword.setText("");
+            }
+        });
+
+        editTextEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editTextEmail.setText("");
+            }
+        });
+
+        editTextTelephone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editTextTelephone.setText("");
             }
         });
     }

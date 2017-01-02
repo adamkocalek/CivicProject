@@ -43,4 +43,9 @@
         <item name="DialogSpotCount">8</item>
     </style>
 
+    <style name="Dialog_Theme">
+        <item name="android:textColorPrimary">@android:color/darker_gray</item>
+        <item name="colorAccent">@android:color/darker_gray</item>
+    </style>
+
 </resources>

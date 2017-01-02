@@ -8,10 +8,10 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -24,7 +24,7 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.Locale;
 
-public class UserProjectActivity extends AppCompatActivity implements View.OnClickListener{
+public class UserProjectActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button buttonEditProject, buttonLikeProject, buttonDeleteProject;
     TextView textViewLocation, textViewDate, textViewAuthor, textViewLike;

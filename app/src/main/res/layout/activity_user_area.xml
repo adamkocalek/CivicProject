@@ -44,10 +44,11 @@
         android:layout_marginTop="5dp"/>
 
     <EditText
-        android:id="@+id/editTextrSurname"
+        android:id="@+id/editTextSurname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Nazwisko"
+        android:onClick="onClickTextSurname"
         android:textColorHint="@color/colorAccent"
         android:textCursorDrawable="@drawable/cursor"
         android:layout_marginLeft="7dp"

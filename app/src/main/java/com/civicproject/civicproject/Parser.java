@@ -1,13 +1,11 @@
 package com.civicproject.civicproject;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +24,8 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
     ListView listView;
     String data;
     public static ArrayList<String> locations = new ArrayList<>(), likes = new ArrayList<>(), likesids = new ArrayList<>(), ids = new ArrayList<>(), descriptions = new ArrayList<>(), subjects = new ArrayList<>(), projects = new ArrayList<>(), dates = new ArrayList<>(), authors = new ArrayList<>(), authors_keys = new ArrayList<>(),
-            images = new ArrayList<>();;
+            images = new ArrayList<>();
+    ;
 
     SpotsDialog progressDialog;
     DateParser dateParser = null;
@@ -62,7 +61,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
             // ADAPTER
             ListViewAdapter lviewAdapter;
             dateParser = new DateParser();
-            for(int i = 0; i < dates.size(); i++) {
+            for (int i = 0; i < dates.size(); i++) {
                 dates.set(i, dateParser.getDate(dates.get(i)));
             }
 
