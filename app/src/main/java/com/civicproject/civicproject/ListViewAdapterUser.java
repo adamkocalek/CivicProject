@@ -74,7 +74,6 @@ public class ListViewAdapterUser extends BaseAdapter {
             holder.textViewIds.setText(ids.get(position));
             holder.textViewSubjects.setText(subjects.get(position));
             holder.textViewLikes.setText(likes.get(position));
-            //holder.imageViewProject.setImageDrawable(activity.getResources().getDrawable(R.drawable.test));
             holder.imageViewProject.setImageBitmap(imagesBitmaps.get(position));
         } catch (IndexOutOfBoundsException e) {
             Log.d("BŁĄD: ", "OutOfBound Exception w liście...");
