@@ -85,7 +85,7 @@ public class ProjectsActivity extends AppCompatActivity implements View.OnClickL
             e.printStackTrace();
         }
 
-        final Downloader downloader = new Downloader(this, url, this, listView);
+        final Downloader downloader = new Downloader(this, url);
         downloader.execute();
         buttonAddProject.setOnClickListener(new View.OnClickListener() {
             @Override

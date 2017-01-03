@@ -24,12 +24,14 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
     Context context;
     AlertDialog alertDialog;
+
     BackgroundWorker(Context context) {
         this.context = context;
     }
 
     String tempJSON;
     String tempAuthor;
+    String projects_url = "http://188.128.220.60/projects.php";
 
     @Override
     protected String doInBackground(String... params) {
@@ -400,13 +402,15 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         if (result.equals(temp)) {
             Intent intent = new Intent(context, RootActivity.class);
             context.startActivity(intent);
-            Toast.makeText(context,"Zalogowano poprawnie.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Zalogowano poprawnie.", Toast.LENGTH_SHORT).show();
 
+            final Downloader downloader = new Downloader(context, projects_url);
+            downloader.execute();
         } else if (result.contains("[{")) {
 
         } else {
             result = result.replaceAll("<", "");
-            Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
         }
     }
 

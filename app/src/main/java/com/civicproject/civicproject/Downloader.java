@@ -20,16 +20,12 @@ import dmax.dialog.SpotsDialog;
 public class Downloader extends AsyncTask<Void, Integer, String> {
     Context context;
     String address;
-    Activity activity;
-    ListView listView;
     SpotsDialog progressDialog;
     public static boolean run = false;
 
-    public Downloader(Context context, String address, Activity activity, ListView listView) {
+    public Downloader(Context context, String address) {
         this.context = context;
         this.address = address;
-        this.activity = activity;
-        this.listView = listView;
     }
 
     //B4 JOB STARTS
@@ -52,7 +48,7 @@ public class Downloader extends AsyncTask<Void, Integer, String> {
         progressDialog.dismiss();
 
         if (s != null) {
-            Parser p = new Parser(context, s, activity, listView);
+            Parser p = new Parser(context, s);
             p.execute();
         } else {
             Toast.makeText(context, "Nie można pobrać danych.", Toast.LENGTH_SHORT).show();

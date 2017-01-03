@@ -25,8 +25,6 @@ import java.util.Map;
 
 public class PopularItems_Fragment extends Fragment {
     private Parser parser = null;
-    int temp;
-    public static int test = 0;
 
     @Nullable
     @Override
@@ -81,7 +79,7 @@ public class PopularItems_Fragment extends Fragment {
                         position = -1;
                     }
                     if (position != -1) {
-                        Intent intent = new Intent(getActivity(), ProjectActivity.class);
+                        Intent intent = new Intent(getContext(), ProjectActivity.class);
                         System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX  " + position + "  xxxxx   " + indexs.get(position));
                         intent.putExtra("subject", parser.subjects.get(indexs.get(position)));
                         intent.putExtra("description", parser.descriptions.get(indexs.get(position)));
@@ -93,7 +91,7 @@ public class PopularItems_Fragment extends Fragment {
                         intent.putExtra("likesids", parser.likesids.get(indexs.get(position)));
                         intent.putExtra("author", parser.authors.get(indexs.get(position)));
                         intent.putExtra("author_key", parser.authors_keys.get(indexs.get(position)));
-                        getActivity().startActivity(intent);
+                        getContext().startActivity(intent);
                     }
                 }
             });
