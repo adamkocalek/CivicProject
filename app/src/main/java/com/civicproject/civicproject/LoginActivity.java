@@ -83,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     BackgroundWorker backgroundWorker = new BackgroundWorker(LoginActivity.this);
                     backgroundWorker.execute(type, username, password);
+
                 }
             }
         });

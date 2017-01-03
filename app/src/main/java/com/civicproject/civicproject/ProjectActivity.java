@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,11 +27,11 @@ import java.util.Locale;
 
 public class ProjectActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button buttonEditProject, buttonLikeProject, buttonDeleteProject;
-    TextView textViewLocation, textViewDate, textViewAuthor, textViewLike;
+    Button buttonEditProject, buttonDeleteProject;
+    ImageButton buttonLikeProject;
+    TextView textViewLocation, textViewDate, textViewAuthor, textViewLike, editTextSubject, editTextDesctiption;
     LocationManager locationManager;
     LocationListener locationListener;
-    EditText editTextSubject, editTextDesctiption;
     ImageView imageViewPicture;
     String id, author_key, image, likesidss, author_id;
     Bitmap imageBitmap;
@@ -69,12 +70,12 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         textViewLike = (TextView) findViewById(R.id.textViewLike);
         textViewLocation = (TextView) findViewById(R.id.textViewLocation);
         textViewAuthor = (TextView) findViewById(R.id.textViewAuthor);
-        editTextSubject = (EditText) findViewById(R.id.editTextSubject);
-        editTextDesctiption = (EditText) findViewById(R.id.editTextDesctiption);
+        editTextSubject = (TextView) findViewById(R.id.editTextSubject);
+        editTextDesctiption = (TextView) findViewById(R.id.editTextDesctiption);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         imageViewPicture = (ImageView) findViewById(R.id.imageViewPictureExist);
         buttonEditProject = (Button) findViewById(R.id.buttonEditProject);
-        buttonLikeProject = (Button) findViewById(R.id.buttonLikeProject);
+        buttonLikeProject = (ImageButton) findViewById(R.id.buttonLikeProject);
         buttonDeleteProject = (Button) findViewById(R.id.buttonDeleteProject);
         textViewDate = (TextView) findViewById(R.id.textViewDate);
 
@@ -85,7 +86,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         editTextSubject.setText(intent.getStringExtra("subject"));
         editTextDesctiption.setText(intent.getStringExtra("description"));
         textViewAuthor.setText(intent.getStringExtra("author"));
-        textViewDate.setText("Data: " + intent.getStringExtra("date"));
+        textViewDate.setText(intent.getStringExtra("date"));
         textViewLike.setText(intent.getStringExtra("likes"));
         likesidss = intent.getStringExtra("likesids");
         author_key = intent.getStringExtra("author_key");
@@ -98,9 +99,14 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         String location = intent.getStringExtra("location");
         String[] splited = location.split("\\s+");
         if (splited.length > 1) {
-            textViewLocation.setText(getCompleteAddressString(Double.parseDouble(splited[0]), Double.parseDouble(splited[1])));
+            String fullAddress = getCompleteAddressString(Double.parseDouble(splited[0]), Double.parseDouble(splited[1]));
+
+            String splitLocation[];
+            splitLocation = fullAddress.split("\n");
+            fullAddress = splitLocation[0] + ", " + splitLocation[1];
+            textViewLocation.setText(fullAddress);
         } else {
-            textViewLocation.setText("Brak lokalizacji.");
+            textViewLocation.setText("Brak lokalizacji");
         }
 
         SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);

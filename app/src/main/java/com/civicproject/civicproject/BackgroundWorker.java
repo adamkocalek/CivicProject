@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -400,12 +398,13 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         String temp = "Login success. Welcome!";
 
         if (result.equals(temp)) {
+            final Downloader downloader = new Downloader(context, projects_url);
+            downloader.execute();
+
             Intent intent = new Intent(context, RootActivity.class);
             context.startActivity(intent);
             Toast.makeText(context, "Zalogowano poprawnie.", Toast.LENGTH_SHORT).show();
 
-            final Downloader downloader = new Downloader(context, projects_url);
-            downloader.execute();
         } else if (result.contains("[{")) {
 
         } else {

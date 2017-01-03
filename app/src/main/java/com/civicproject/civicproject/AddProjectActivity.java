@@ -31,7 +31,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -87,7 +86,6 @@ public class AddProjectActivity extends AppCompatActivity {
         events();
 
 
-
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -113,7 +111,7 @@ public class AddProjectActivity extends AppCompatActivity {
                 Log.d("BŁĄD: ", address);
                 textViewLocation.setText(location.getLatitude() + " " + location.getLongitude());
 
-                if(address!=""){
+                if (address != "") {
                     textViewLocation.setText(address);
                 }
             }
@@ -186,11 +184,11 @@ public class AddProjectActivity extends AppCompatActivity {
                 String editTextSubject_check = editTextSubject.getText().toString();
                 String editTextDesctiption_check = editTextDesctiption.getText().toString();
 
-                if(TextUtils.isEmpty(editTextSubject_check) || TextUtils.isEmpty( editTextDesctiption_check)) {
-                    if(TextUtils.isEmpty(editTextSubject_check)){
+                if (TextUtils.isEmpty(editTextSubject_check) || TextUtils.isEmpty(editTextDesctiption_check)) {
+                    if (TextUtils.isEmpty(editTextSubject_check)) {
                         editTextSubject.setError("Pole nie może być puste!");
                     }
-                    if(TextUtils.isEmpty(editTextDesctiption_check)){
+                    if (TextUtils.isEmpty(editTextDesctiption_check)) {
                         editTextDesctiption.setError("Pole nie może być puste!");
                     }
 
@@ -201,7 +199,7 @@ public class AddProjectActivity extends AppCompatActivity {
                             String description = editTextDesctiption.getText().toString();
                             String author = textViewAuthor.getText().toString();
                             String date = textViewDate.getText().toString();
-                            String location = locationX + locationY + "";
+                            String location = locationX + "" + locationY;
                             String type = "addProject";
                             String image = ftpUploadImage();
                             BackgroundWorker backgroundWorker = new BackgroundWorker(AddProjectActivity.this);

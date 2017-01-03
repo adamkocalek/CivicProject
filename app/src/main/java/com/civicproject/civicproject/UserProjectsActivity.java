@@ -99,7 +99,7 @@ public class UserProjectsActivity extends AppCompatActivity {
                         position = -1;
                     }
                     if (position != -1) {
-                        Intent intent = new Intent(UserProjectsActivity.this, ProjectActivity.class);
+                        Intent intent = new Intent(UserProjectsActivity.this, UserProjectActivity.class);
                         System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX  " + position + "  xxxxx   " + indexs.get(position));
                         intent.putExtra("subject", parser.subjects.get(indexs.get(position)));
                         intent.putExtra("description", parser.descriptions.get(indexs.get(position)));
