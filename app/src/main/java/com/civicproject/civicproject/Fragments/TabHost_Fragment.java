@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.civicproject.civicproject.R;
 import com.civicproject.civicproject.RootActivity;
 
-public class Tab2Fragment extends Fragment {
+public class TabHost_Fragment extends Fragment {
 
     public static TabLayout tabLayout;
     public static ViewPager viewPager;

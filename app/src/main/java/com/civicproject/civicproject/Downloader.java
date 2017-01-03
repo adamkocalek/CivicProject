@@ -23,6 +23,7 @@ public class Downloader extends AsyncTask<Void, Integer, String> {
     Activity activity;
     ListView listView;
     SpotsDialog progressDialog;
+    public static boolean run = false;
 
     public Downloader(Context context, String address, Activity activity, ListView listView) {
         this.context = context;
@@ -56,6 +57,7 @@ public class Downloader extends AsyncTask<Void, Integer, String> {
         } else {
             Toast.makeText(context, "Nie można pobrać danych.", Toast.LENGTH_SHORT).show();
         }
+        run = true;
     }
 
     public String downloadData() {

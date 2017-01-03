@@ -4,20 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.civicproject.civicproject.ListViewAdapter;
 import com.civicproject.civicproject.Parser;
 import com.civicproject.civicproject.ProjectActivity;
 import com.civicproject.civicproject.R;
-import com.civicproject.civicproject.UserProjectsActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +26,7 @@ import java.util.Map;
 public class PopularItems_Fragment extends Fragment {
     private Parser parser = null;
     int temp;
+    public static int test = 0;
 
     @Nullable
     @Override
@@ -43,8 +41,8 @@ public class PopularItems_Fragment extends Fragment {
         final ListView listView_popular = (ListView) view.findViewById(R.id.listView_popular);
         final ArrayList<Integer> indexs = new ArrayList<>(), tempList = new ArrayList<>();
         final ArrayList<String> popularList = new ArrayList<>(), ids = new ArrayList<>(), authors = new ArrayList<>(), subjects = new ArrayList<>(), likes = new ArrayList<>(), dates = new ArrayList<>(), images = new ArrayList<>();
-        parser = new Parser();
 
+        parser = new Parser();
 
         for (int i = 0; i < parser.subjects.size(); i++) {
             tempList.add(Integer.parseInt(parser.likes.get(i)));

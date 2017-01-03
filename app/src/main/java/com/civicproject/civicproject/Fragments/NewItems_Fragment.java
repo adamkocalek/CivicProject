@@ -16,6 +16,7 @@ import com.civicproject.civicproject.RootActivity;
 public class NewItems_Fragment extends Fragment {
 
     String url = "http://188.128.220.60/projects.php";
+    public static int TEST = 0;
 
     @Nullable
     @Override

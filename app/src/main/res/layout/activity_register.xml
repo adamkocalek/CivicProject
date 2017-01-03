@@ -105,7 +105,7 @@
                 android:gravity="center"
                 android:text="Zakładając konto, akcpetujesz REGULAMIN"
                 android:textColor="#878787"
-                android:textSize="11sp" />
+                android:textSize="13sp" />
 
             <Button
                 android:id="@+id/bRegister"

@@ -13,7 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.civicproject.civicproject.Fragments.Tab2Fragment;
+import com.civicproject.civicproject.Fragments.TabHost_Fragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +42,7 @@ public class RootActivity extends AppCompatActivity {
 
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.containerView1, new Tab2Fragment()).commit();
+        mFragmentTransaction.replace(R.id.containerView1, new TabHost_Fragment()).commit();
 
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
