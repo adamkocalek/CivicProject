@@ -10,7 +10,7 @@
         android:id="@+id/tabs2"
         app:tabGravity="fill"
         app:tabMode="fixed"
-        android:background="#303030"
+        android:background="@color/colorPrimary"
         app:tabIndicatorColor="@color/white"
         app:tabSelectedTextColor="@color/selected"
         app:tabTextColor="@color/white"
