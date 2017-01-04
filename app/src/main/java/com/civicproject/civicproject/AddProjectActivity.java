@@ -30,6 +30,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -52,6 +58,10 @@ public class AddProjectActivity extends AppCompatActivity {
     private Camera camera = null;
     private MyFTPClientFunctions ftpclient = null;
     private static final String TAG = "AddProjectActivity";
+    private static final String api_user = "63501098", api_secret = "pwQhu5WbwEHUqc2S";
+    private static final String API_URL = "https://api.sightengine.com/1.0/nudity.json?api_user=" + api_user + "&api_secret=" + api_secret + "&url=";
+    public boolean nudity;
+    public int nudityCheck = 0;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -180,7 +190,6 @@ public class AddProjectActivity extends AppCompatActivity {
         buttonAddProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String editTextSubject_check = editTextSubject.getText().toString();
                 String editTextDesctiption_check = editTextDesctiption.getText().toString();
 
@@ -218,6 +227,11 @@ public class AddProjectActivity extends AppCompatActivity {
                     }
 
                 }
+                /*
+                if (ftpCheckImageNudity()) {
+                    Toast.makeText(getApplicationContext(), "UFO PORNO!", Toast.LENGTH_LONG).show();
+                }
+                */
             }
         });
     }
@@ -270,8 +284,6 @@ public class AddProjectActivity extends AppCompatActivity {
                             "\n");
                 }
                 strAdd = strReturnedAddress.toString();
-            } else {
-
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -291,9 +303,9 @@ public class AddProjectActivity extends AppCompatActivity {
 
         new Thread(new Runnable() {
             public void run() {
-                boolean status = false;
+                boolean status;
                 status = ftpclient.ftpConnect("serwer1633804.home.pl", "serwer1633804", "33murs0tKiby", 21);
-                if (status == true) {
+                if (status) {
                     Log.d(TAG, "Połączenie udane");
                 } else {
                     Log.d(TAG, "Połączenie nieudane");
@@ -303,8 +315,12 @@ public class AddProjectActivity extends AppCompatActivity {
                 ftpclient.ftpChangeDirectory("/images/");
                 ftpclient.ftpUpload(srcFilePath, desFileName);
 
+                ftpclient.ftpChangeDirectory("/public_html/");
+                ftpclient.ftpUpload(srcFilePath, "CheckImageNudity.jpg");
+                ftpclient.ftpRemoveFile("CheckImageNudity.jpg");
+
                 status = ftpclient.ftpDisconnect();
-                if (status == true) {
+                if (status) {
                     Log.d(TAG, "Połączenie zakończone");
                 } else {
                     Log.d(TAG, "Połączenie nie mogło zostać zakończone");
@@ -312,5 +328,73 @@ public class AddProjectActivity extends AppCompatActivity {
             }
         }).start();
         return desFileName;
+    }
+
+    public boolean ftpCheckImageNudity() {
+        new Thread(new Runnable() {
+            public void run() {
+                boolean status;
+                status = ftpclient.ftpConnect("serwer1633804.home.pl", "serwer1633804", "33murs0tKiby", 21);
+                if (status) {
+                    Log.d(TAG, "Połączenie udane");
+                } else {
+                    Log.d(TAG, "Połączenie nieudane");
+                }
+
+                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Civic Project/IMG_CP_COMPRESSED" + ".jpg");
+                String srcFilePath = file.toString();
+
+                ftpclient.ftpChangeDirectory("/public_html/");
+                ftpclient.ftpUpload(srcFilePath, "CheckImageNudity.jpg");
+
+                AsyncHttpClient client = new AsyncHttpClient();
+
+                String API_URL_COMPLETE = API_URL + "http://188.128.220.60/CheckImageNudity.jpg";
+                client.get(API_URL_COMPLETE, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(String response) {
+                        Log.i("Połączenie nawiązane", "HTTP Sucess");
+                        try {
+                            nudity = unpackJSON(response);
+                            nudityCheck++;
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+                ftpclient.ftpRemoveFile("CheckImageNudity.jpg");
+
+                status = ftpclient.ftpDisconnect();
+                if (status) {
+                    Log.d(TAG, "Połączenie zakończone");
+                } else {
+                    Log.d(TAG, "Połączenie nie mogło zostać zakończone");
+                }
+            }
+        }).start();
+
+        do {
+        } while (nudityCheck == 0);
+
+        return nudity;
+    }
+
+    public boolean unpackJSON(String response) throws JSONException {
+        JSONObject jsonObj = new JSONObject(response);
+
+        String status = jsonObj.getString("status");
+        //JSONObject request = jsonObj.getJSONObject("request");
+        JSONObject nudity = jsonObj.getJSONObject("nudity");
+        //JSONObject media = jsonObj.getJSONObject("media");
+        Double raw = nudity.getDouble("raw");
+        Double partial = nudity.getDouble("partial");
+        Double safe = nudity.getDouble("safe");
+
+        if (safe < partial || safe < raw) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

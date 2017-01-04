@@ -35,4 +35,5 @@ dependencies {
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.github.d-max:spots-dialog:0.4@aar'
     testCompile 'junit:junit:4.12'
+    compile files('libs/android-async-http-1.4.3.jar')
 }
