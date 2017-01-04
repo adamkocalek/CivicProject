@@ -60,8 +60,7 @@ public class AddProjectActivity extends AppCompatActivity {
     private static final String TAG = "AddProjectActivity";
     private static final String api_user = "63501098", api_secret = "pwQhu5WbwEHUqc2S";
     private static final String API_URL = "https://api.sightengine.com/1.0/nudity.json?api_user=" + api_user + "&api_secret=" + api_secret + "&url=";
-    public boolean nudity;
-    public int nudityCheck = 0;
+    public String nudityResponse = "";
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -208,7 +207,7 @@ public class AddProjectActivity extends AppCompatActivity {
                             String description = editTextDesctiption.getText().toString();
                             String author = textViewAuthor.getText().toString();
                             String date = textViewDate.getText().toString();
-                            String location = locationX + "" + locationY;
+                            String location = locationX + " " + locationY;
                             String type = "addProject";
                             String image = ftpUploadImage();
                             BackgroundWorker backgroundWorker = new BackgroundWorker(AddProjectActivity.this);
@@ -227,10 +226,22 @@ public class AddProjectActivity extends AppCompatActivity {
                     }
 
                 }
+
                 /*
-                if (ftpCheckImageNudity()) {
-                    Toast.makeText(getApplicationContext(), "UFO PORNO!", Toast.LENGTH_LONG).show();
+                ftpCheckImageNudity();
+                do {
+                } while (nudityResponse.isEmpty());
+
+                try {
+                    if (unpackJSON(nudityResponse)) {
+                        Toast.makeText(getApplicationContext(), "UFO PORNO!", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "UFO PORNO FALSE!", Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+                nudityResponse = "";
                 */
             }
         });
@@ -330,7 +341,7 @@ public class AddProjectActivity extends AppCompatActivity {
         return desFileName;
     }
 
-    public boolean ftpCheckImageNudity() {
+    public void ftpCheckImageNudity() {
         new Thread(new Runnable() {
             public void run() {
                 boolean status;
@@ -348,22 +359,16 @@ public class AddProjectActivity extends AppCompatActivity {
                 ftpclient.ftpUpload(srcFilePath, "CheckImageNudity.jpg");
 
                 AsyncHttpClient client = new AsyncHttpClient();
-
                 String API_URL_COMPLETE = API_URL + "http://188.128.220.60/CheckImageNudity.jpg";
                 client.get(API_URL_COMPLETE, new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(String response) {
                         Log.i("Połączenie nawiązane", "HTTP Sucess");
-                        try {
-                            nudity = unpackJSON(response);
-                            nudityCheck++;
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        nudityResponse = response;
                     }
                 });
 
-                ftpclient.ftpRemoveFile("CheckImageNudity.jpg");
+                //ftpclient.ftpRemoveFile("CheckImageNudity.jpg");
 
                 status = ftpclient.ftpDisconnect();
                 if (status) {
@@ -373,11 +378,6 @@ public class AddProjectActivity extends AppCompatActivity {
                 }
             }
         }).start();
-
-        do {
-        } while (nudityCheck == 0);
-
-        return nudity;
     }
 
     public boolean unpackJSON(String response) throws JSONException {
