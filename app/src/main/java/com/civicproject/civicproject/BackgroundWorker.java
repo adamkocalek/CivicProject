@@ -211,6 +211,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String likesids = params[1];
                 String likes = params[2];
                 String id = params[3];
+                String likesnames = params[4];
                 URL url = new URL(updateLikes_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -220,7 +221,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String post_data = URLEncoder.encode("likesids", "UTF-8") + "=" + URLEncoder.encode(likesids, "UTF-8") + "&"
                         + URLEncoder.encode("likes", "UTF-8") + "=" + URLEncoder.encode(likes, "UTF-8") + "&"
-                        + URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8");
+                        + URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8") + "&"
+                        + URLEncoder.encode("likesnames", "UTF-8") + "=" + URLEncoder.encode(likesnames, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();

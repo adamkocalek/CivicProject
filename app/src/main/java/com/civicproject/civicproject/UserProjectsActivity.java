@@ -100,7 +100,6 @@ public class UserProjectsActivity extends AppCompatActivity {
                     }
                     if (position != -1) {
                         Intent intent = new Intent(UserProjectsActivity.this, UserProjectActivity.class);
-                        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX  " + position + "  xxxxx   " + indexs.get(position));
                         intent.putExtra("subject", parser.subjects.get(indexs.get(position)));
                         intent.putExtra("description", parser.descriptions.get(indexs.get(position)));
                         intent.putExtra("location", parser.locations.get(indexs.get(position)));
@@ -111,6 +110,7 @@ public class UserProjectsActivity extends AppCompatActivity {
                         intent.putExtra("likesids", parser.likesids.get(indexs.get(position)));
                         intent.putExtra("author", parser.authors.get(indexs.get(position)));
                         intent.putExtra("author_key", parser.authors_keys.get(indexs.get(position)));
+                        intent.putExtra("likesnames", parser.likesNames.get(indexs.get(position)));
                         UserProjectsActivity.this.startActivity(intent);
                     }
                 }

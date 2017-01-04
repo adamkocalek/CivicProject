@@ -21,7 +21,7 @@ import dmax.dialog.SpotsDialog;
 public class Parser extends AsyncTask<Void, Integer, Integer> {
     Context context;
     String data;
-    public static ArrayList<String> locations = new ArrayList<>(), likes = new ArrayList<>(), likesids = new ArrayList<>(), ids = new ArrayList<>(), descriptions = new ArrayList<>(), subjects = new ArrayList<>(), projects = new ArrayList<>(), dates = new ArrayList<>(), authors = new ArrayList<>(), authors_keys = new ArrayList<>(),
+    public static ArrayList<String> locations = new ArrayList<>(), likesNames = new ArrayList<>(), likes = new ArrayList<>(), likesids = new ArrayList<>(), ids = new ArrayList<>(), descriptions = new ArrayList<>(), subjects = new ArrayList<>(), projects = new ArrayList<>(), dates = new ArrayList<>(), authors = new ArrayList<>(), authors_keys = new ArrayList<>(),
             images = new ArrayList<>();
 
     SpotsDialog progressDialog;
@@ -97,7 +97,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
                 String id = jo.getString("id");
                 String like = jo.getString("likes");
                 String likeids = jo.getString("likesids");
-
+                String likesnames = jo.getString("likesnames");
                 // ADD IT TO OUR ARRAYLIST
                 projects.add(subject);
                 subjects.add(subject);
@@ -110,6 +110,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
                 likes.add(like);
                 likesids.add(likeids);
                 images.add(image);
+                likesNames.add(likesnames);
             }
             return 1;
         } catch (JSONException e) {

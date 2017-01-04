@@ -91,6 +91,7 @@ public class PopularItems_Fragment extends Fragment {
                         intent.putExtra("likesids", parser.likesids.get(indexs.get(position)));
                         intent.putExtra("author", parser.authors.get(indexs.get(position)));
                         intent.putExtra("author_key", parser.authors_keys.get(indexs.get(position)));
+                        intent.putExtra("likesnames", parser.likesNames.get(indexs.get(position)));
                         getContext().startActivity(intent);
                     }
                 }

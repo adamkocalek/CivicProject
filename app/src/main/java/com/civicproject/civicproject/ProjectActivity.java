@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class ProjectActivity extends AppCompatActivity implements View.OnClickListener {
+    Parser parser = new Parser();
 
     Button buttonEditProject, buttonDeleteProject;
     ImageButton buttonLikeProject;
@@ -33,7 +34,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
     LocationManager locationManager;
     LocationListener locationListener;
     ImageView imageViewPicture;
-    String id, author_key, image, likesidss, author_id;
+    String id, author_key, image, likesidss, author_id, author, likesnamestemp;
     Bitmap imageBitmap;
     private MyFTPClientFunctions ftpclient = null;
     private static final String TAG = "ProjectActivity";
@@ -90,7 +91,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         textViewLike.setText(intent.getStringExtra("likes"));
         likesidss = intent.getStringExtra("likesids");
         author_key = intent.getStringExtra("author_key");
-
+        likesnamestemp = intent.getStringExtra("likesnames");
         toolbar.setTitle(intent.getStringExtra("subject"));
 
         image = intent.getStringExtra("image");
@@ -110,7 +111,9 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
-
+        String name = myprefs.getString("name", null);
+        String surname = myprefs.getString("surname", null);
+        author = name + " " + surname;
         author_id = myprefs.getString("author_key", null);
         if (likesidss.contains(author_id)) {
             buttonLikeProject.setVisibility(View.INVISIBLE);
@@ -123,9 +126,10 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         int likes = Integer.parseInt((String) textViewLike.getText()) + 1;
         textViewLike.setText(likes + "");
         likesidss = likesidss + author_id + ",";
+        likesnamestemp = likesnamestemp + author + ", ";
         String type = "updateProjectLikes";
         BackgroundWorker backgroundWorker = new BackgroundWorker(ProjectActivity.this);
-        backgroundWorker.execute(type, likesidss, likes + "", id);
+        backgroundWorker.execute(type, likesidss, likes + "", id, likesnamestemp);
         buttonLikeProject.setVisibility(View.INVISIBLE);
     }
 

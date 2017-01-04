@@ -27,14 +27,16 @@ import java.util.Locale;
 
 public class UserProjectActivity extends AppCompatActivity implements View.OnClickListener {
 
+    Parser parser = new Parser();
+
     Button buttonEditProject, buttonDeleteProject;
     ImageButton buttonLikeProject;
-    TextView textViewLocation, textViewDate, textViewLike;
+    TextView textViewLocation, textViewDate, textViewLike, textViewLikesNames;
     LocationManager locationManager;
     LocationListener locationListener;
     EditText editTextSubject, editTextDesctiption;
     ImageView imageViewPicture;
-    String id, author_key, image, likesidss, author_id;
+    String id, author_key, image, likesidss, author_id, author, likesnamestemp;
     Bitmap imageBitmap;
     private MyFTPClientFunctions ftpclient = null;
     private static final String TAG = "UserProjectActivity";
@@ -70,6 +72,7 @@ public class UserProjectActivity extends AppCompatActivity implements View.OnCli
 
         textViewLike = (TextView) findViewById(R.id.textViewLike);
         textViewLocation = (TextView) findViewById(R.id.textViewLocation);
+        textViewLikesNames = (TextView) findViewById(R.id.textViewLikesNames);
         editTextSubject = (EditText) findViewById(R.id.editTextSubject);
         editTextDesctiption = (EditText) findViewById(R.id.editTextDesctiption);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -87,13 +90,21 @@ public class UserProjectActivity extends AppCompatActivity implements View.OnCli
         editTextDesctiption.setText(intent.getStringExtra("description"));
         textViewDate.setText(intent.getStringExtra("date"));
         textViewLike.setText(intent.getStringExtra("likes"));
+        textViewLikesNames.setText(intent.getStringExtra("likesnames"));
         likesidss = intent.getStringExtra("likesids");
+        likesnamestemp = intent.getStringExtra("likesnames");
         author_key = intent.getStringExtra("author_key");
 
         toolbar.setTitle(intent.getStringExtra("subject"));
 
         image = intent.getStringExtra("image");
         ftpDownloadImage(image);
+
+        SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
+
+        String name = myprefs.getString("name", null);
+        String surname = myprefs.getString("surname", null);
+        author = name + " " + surname;
 
         String location = intent.getStringExtra("location");
         String[] splited = location.split("\\s+");
@@ -108,8 +119,6 @@ public class UserProjectActivity extends AppCompatActivity implements View.OnCli
         } else {
             textViewLocation.setText("Brak lokalizacji.");
         }
-
-        SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
 
         author_id = myprefs.getString("author_key", null);
         if (likesidss.contains(author_id)) {
@@ -139,10 +148,11 @@ public class UserProjectActivity extends AppCompatActivity implements View.OnCli
     public void onLikeProjectButtonClick(View view) {
         int likes = Integer.parseInt((String) textViewLike.getText()) + 1;
         textViewLike.setText(likes + "");
+        likesnamestemp = likesnamestemp + author + ",";
         likesidss = likesidss + author_id + ",";
         String type = "updateProjectLikes";
         BackgroundWorker backgroundWorker = new BackgroundWorker(UserProjectActivity.this);
-        backgroundWorker.execute(type, likesidss, likes + "", id);
+        backgroundWorker.execute(type, likesidss, likes + "", id, likesnamestemp);
         buttonLikeProject.setVisibility(View.INVISIBLE);
     }
 
