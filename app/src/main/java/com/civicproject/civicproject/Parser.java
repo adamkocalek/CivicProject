@@ -1,13 +1,11 @@
 package com.civicproject.civicproject;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,33 +16,30 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import dmax.dialog.SpotsDialog;
+
 public class Parser extends AsyncTask<Void, Integer, Integer> {
     Context context;
-    Activity activity;
-    ListView listView;
     String data;
     public static ArrayList<String> locations = new ArrayList<>(), likes = new ArrayList<>(), likesids = new ArrayList<>(), ids = new ArrayList<>(), descriptions = new ArrayList<>(), subjects = new ArrayList<>(), projects = new ArrayList<>(), dates = new ArrayList<>(), authors = new ArrayList<>(), authors_keys = new ArrayList<>(),
-            images = new ArrayList<>();;
-    ProgressDialog progressDialog;
+            images = new ArrayList<>();
+
+    SpotsDialog progressDialog;
     DateParser dateParser = null;
 
     public Parser() {
 
     }
 
-    public Parser(Context context, String data, Activity activity, ListView listView) {
+    public Parser(Context context, String data) {
         this.context = context;
         this.data = data;
-        this.activity = activity;
-        this.listView = listView;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Parser");
-        progressDialog.setMessage("Parsing ....Please wait");
+        progressDialog = new SpotsDialog(context, R.style.CustomDialogParse);
         progressDialog.show();
     }
 
@@ -57,47 +52,10 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
     protected void onPostExecute(Integer integer) {
         super.onPostExecute(integer);
         if (integer == 1) {
-
-            // ADAPTER
-            ListViewAdapter lviewAdapter;
             dateParser = new DateParser();
-            for(int i = 0; i < dates.size(); i++) {
+            for (int i = 0; i < dates.size(); i++) {
                 dates.set(i, dateParser.getDate(dates.get(i)));
             }
-            lviewAdapter = new ListViewAdapter(activity, ids, subjects, authors, likes, dates);
-            // ADAPT TO LISTVIEW
-            listView.setAdapter(lviewAdapter);
-
-            // LISTENER
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    Intent intent = new Intent(context, ProjectActivity.class);
-                    TextView textView = (TextView) view.findViewById(R.id.textViewIds);
-
-                    // ProjectActivity.textViewAuthor.setText("");
-                    if (ids.contains(textView.getText() + "")) {
-                        position = ids.indexOf(textView.getText() + "");
-                    } else {
-                        position = -1;
-                    }
-                    if (position != -1) {
-                        intent.putExtra("subject", subjects.get(position));
-                        intent.putExtra("description", descriptions.get(position));
-                        intent.putExtra("location", locations.get(position));
-                        intent.putExtra("date", dates.get(position));
-                        intent.putExtra("author", authors.get(position));
-                        intent.putExtra("author_key", authors_keys.get(position));
-                        intent.putExtra("image", images.get(position));
-                        intent.putExtra("id", ids.get(position));
-                        intent.putExtra("likes", likes.get(position));
-                        intent.putExtra("likesids", likesids.get(position));
-                        context.startActivity(intent);
-                    }
-                }
-            });
-
         } else {
             Toast.makeText(context, "Unable to Parse", Toast.LENGTH_SHORT).show();
         }
@@ -113,6 +71,16 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
             //CREATE JO OBJ TO HOLD A SINGLE ITEM
             JSONObject jo = null;
             projects.clear();
+            subjects.clear();
+            descriptions.clear();
+            locations.clear();
+            dates.clear();
+            authors.clear();
+            authors_keys.clear();
+            ids.clear();
+            likes.clear();
+            likesids.clear();
+            images.clear();
 
             // LOOP THROUGH ARRAY
             for (int i = ja.length() - 1; i > -1; i--) {

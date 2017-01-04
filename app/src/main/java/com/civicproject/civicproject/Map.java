@@ -26,14 +26,14 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.in_from_left,R.anim.out_to_right);
+        overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        overridePendingTransition(R.anim.right_in,R.anim.left_out);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -64,16 +64,34 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
             String[] splited = location.split("\\s+");
             if (splited.length > 1) {
                 LatLng xy = new LatLng(Double.parseDouble(splited[0]), Double.parseDouble(splited[1]));
-                int color = random.nextInt(360 - 0 + 1) + 0;
-                mMap.addMarker(new MarkerOptions().position(xy).title(parser.subjects.get(i)).icon(BitmapDescriptorFactory.defaultMarker(color)));
+                int color = random.nextInt(360 + 1);
+                mMap.addMarker(new MarkerOptions().position(xy).title(parser.ids.get(i) + " " + parser.subjects.get(i)).icon(BitmapDescriptorFactory.defaultMarker(color)));
             }
         }
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                Intent intent = new Intent(Map.this, AboutActivity.class);
-                startActivity(intent);
+                String[] splited = marker.getTitle().split("\\s+");
+                if (splited.length > 1) {
+                    String id = splited[0];
+                    for (int i = 0; i < parser.ids.size(); i++) {
+                        if (parser.ids.get(i).equals(id)) {
+                            Intent intent = new Intent(Map.this, ProjectActivity.class);
+                            intent.putExtra("subject", parser.subjects.get(i));
+                            intent.putExtra("description", parser.descriptions.get(i));
+                            intent.putExtra("location", parser.locations.get(i));
+                            intent.putExtra("date", parser.dates.get(i));
+                            intent.putExtra("author", parser.authors.get(i));
+                            intent.putExtra("author_key", parser.authors_keys.get(i));
+                            intent.putExtra("image", parser.images.get(i));
+                            intent.putExtra("id", parser.ids.get(i));
+                            intent.putExtra("likes", parser.likes.get(i));
+                            intent.putExtra("likesids", parser.likesids.get(i));
+                            startActivity(intent);
+                        }
+                    }
+                }
             }
         });
     }

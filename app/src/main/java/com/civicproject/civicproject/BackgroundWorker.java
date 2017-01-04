@@ -4,8 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.design.widget.Snackbar;
-import android.view.View;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -23,12 +22,14 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
     Context context;
     AlertDialog alertDialog;
+
     BackgroundWorker(Context context) {
         this.context = context;
     }
 
     String tempJSON;
     String tempAuthor;
+    String projects_url = "http://188.128.220.60/projects.php";
 
     @Override
     protected String doInBackground(String... params) {
@@ -61,7 +62,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   //było iso-8859-1
                 String result = "";
                 String line = "";
                 while ((line = bufferedReader.readLine()) != null) {
@@ -106,7 +107,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   ///było iso-8859-1
                 String result = "";
                 String line = "";
                 while ((line = bufferedReader.readLine()) != null) {
@@ -151,7 +152,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));    //było iso-8859-1
                 String result = "";
                 String line = "";
                 while ((line = bufferedReader.readLine()) != null) {
@@ -188,7 +189,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   //było iso-8859-1
                 String result = "";
                 String line = "";
                 while ((line = bufferedReader.readLine()) != null) {
@@ -270,7 +271,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   //było iso-8859-1
                 String result = "";
                 String line = "";
                 while ((line = bufferedReader.readLine()) != null) {
@@ -334,7 +335,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));    //było iso-8859-1
                 String result = "";
                 String line = "";
                 while ((line = bufferedReader.readLine()) != null) {
@@ -367,7 +368,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   //było iso-8859-1
                 String result = "";
                 String line = "";
                 while ((line = bufferedReader.readLine()) != null) {
@@ -389,8 +390,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPreExecute() {
-        alertDialog = new AlertDialog.Builder(context).create();
-        alertDialog.setTitle("Login Status");
+        //alertDialog = new AlertDialog.Builder(context).create();
     }
 
     @Override
@@ -398,14 +398,18 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         String temp = "Login success. Welcome!";
 
         if (result.equals(temp)) {
+            final Downloader downloader = new Downloader(context, projects_url);
+            downloader.execute();
+
             Intent intent = new Intent(context, RootActivity.class);
             context.startActivity(intent);
+            Toast.makeText(context, "Zalogowano poprawnie.", Toast.LENGTH_SHORT).show();
+
         } else if (result.contains("[{")) {
 
         } else {
             result = result.replaceAll("<", "");
-            alertDialog.setMessage(result);
-            alertDialog.show();
+            Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
         }
     }
 

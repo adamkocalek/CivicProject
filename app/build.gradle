@@ -33,5 +33,6 @@ dependencies {
     compile 'com.google.android.gms:play-services:9.6.1'
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:support-v4:24.2.1'
+    compile 'com.github.d-max:spots-dialog:0.4@aar'
     testCompile 'junit:junit:4.12'
 }

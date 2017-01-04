@@ -13,8 +13,8 @@
             android:id="@+id/listView_new"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@android:color/transparent"
-            android:scrollbarSize="30dp" />
+            android:divider="@drawable/shadow_drawable"
+            android:dividerHeight="12dp" />
 
     </LinearLayout>
 

@@ -1,10 +1,8 @@
 package com.civicproject.civicproject;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.SystemClock;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,27 +15,23 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import dmax.dialog.SpotsDialog;
+
 public class Downloader extends AsyncTask<Void, Integer, String> {
     Context context;
     String address;
-    Activity activity;
-    ListView listView;
-    ProgressDialog progressDialog;
+    SpotsDialog progressDialog;
 
-    public Downloader(Context context, String address, Activity activity, ListView listView) {
+    public Downloader(Context context, String address) {
         this.context = context;
         this.address = address;
-        this.activity = activity;
-        this.listView = listView;
     }
 
     //B4 JOB STARTS
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Fetch Data");
-        progressDialog.setMessage("Fetching Data...Please wait");
+        progressDialog = new SpotsDialog(context, R.style.CustomDialogDownload);
         progressDialog.show();
     }
 
@@ -51,12 +45,12 @@ public class Downloader extends AsyncTask<Void, Integer, String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         progressDialog.dismiss();
-        ;
+
         if (s != null) {
-            Parser p = new Parser(context, s, activity, listView);
+            Parser p = new Parser(context, s);
             p.execute();
         } else {
-            Toast.makeText(context, "Unable to download data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Nie można pobrać danych.", Toast.LENGTH_SHORT).show();
         }
     }
 
