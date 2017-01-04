@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class LocationActivity extends AppCompatActivity  {
 
-
+    String localizationList;
     String locations;
     Parser parser = new Parser();
     Button buttonAddProject;
@@ -36,26 +36,24 @@ public class LocationActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.scrolling_addproject);
 
-        final ArrayList<String> locations = new ArrayList<>();
-      //  locations = parser.locations;
+        buttonAddProject = (Button) findViewById(R.id.buttonAddProject);
+
+        SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
+        locations = myprefs.getString("location", null);
+
+        ArrayList<String> myProjects = new ArrayList<String>();
+        final ArrayList<Integer> indexs = new ArrayList<Integer>();
 
         for (int i = 0; i < parser.locations.size(); i++) {
-            locations.add(parser.locations.get(i));
+                myProjects.add(parser.locations.get(i));
+                indexs.add(parser.locations.indexOf(parser.locations.get(i)));
+
         }
 
 
-        buttonAddProject = (Button) findViewById(R.id.buttonAddProject);
-        buttonAddProject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                Toast.makeText(getApplicationContext(),locations.get(3), Toast.LENGTH_LONG).show();
-            }
-        });
-
+        Toast.makeText(getApplicationContext(),locations, Toast.LENGTH_LONG).show();
     }
 
 }
-
