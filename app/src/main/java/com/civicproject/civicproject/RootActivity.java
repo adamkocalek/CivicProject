@@ -57,6 +57,7 @@ public class RootActivity extends AppCompatActivity {
 
                 if(menuItem.getItemId() == R.id.nav_idea){
                     Intent intent = new Intent(RootActivity.this, AddProjectActivity.class);
+                    // Intent intent = new Intent(RootActivity.this, LocationActivity.class);
                     startActivity(intent);
                 }
 
