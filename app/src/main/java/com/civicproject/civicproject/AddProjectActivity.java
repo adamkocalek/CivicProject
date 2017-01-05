@@ -199,50 +199,48 @@ public class AddProjectActivity extends AppCompatActivity {
                     if (TextUtils.isEmpty(editTextDesctiption_check)) {
                         editTextDesctiption.setError("Pole nie może być puste!");
                     }
-
                 } else {
-                    if (!locationX.isNaN() && !locationY.isNaN()) {
-                        if (locationX <= 51.843678 && locationX >= 51.690382 && locationY <= 19.619980 && locationY >= 19.324036) {
-                            String subject = editTextSubject.getText().toString();
-                            String description = editTextDesctiption.getText().toString();
-                            String author = textViewAuthor.getText().toString();
-                            String date = textViewDate.getText().toString();
-                            String location = locationX + " " + locationY;
-                            String type = "addProject";
-                            String image = ftpUploadImage();
-                            BackgroundWorker backgroundWorker = new BackgroundWorker(AddProjectActivity.this);
-                            backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey, image);
-                            editTextSubject.setText("");
-                            editTextDesctiption.setText("");
-                            if (textViewLocation == null) {
-                                Toast.makeText(getApplicationContext(), "Twój projekt został dodany bez lokalizacji, nie wyświetli się na mapie...", Toast.LENGTH_LONG).show();
-                            }
-                            Toast.makeText(getApplicationContext(), "Dodano projekt. Bedzie on widoczny po ponownym zalogowaniu ; )", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Znajdujesz się poza Łodzią twój projekt nie może zostać dodany...", Toast.LENGTH_LONG).show();
-                        }
+                    if (null != imageViewPicture.getDrawable()) {
+                        //ftpCheckImageNudity();
+                        //do {
+                        //} while (nudityResponse.isEmpty());
+
+                        //try {
+                        //    if (!unpackJSON(nudityResponse)) {
+                                if (!locationX.isNaN() && !locationY.isNaN()) {
+                                    if (locationX <= 51.843678 && locationX >= 51.690382 && locationY <= 19.619980 && locationY >= 19.324036) {
+                                        String subject = editTextSubject.getText().toString();
+                                        String description = editTextDesctiption.getText().toString();
+                                        String author = textViewAuthor.getText().toString();
+                                        String date = textViewDate.getText().toString();
+                                        String location = locationX + " " + locationY;
+                                        String type = "addProject";
+                                        String image = ftpUploadImage();
+                                        BackgroundWorker backgroundWorker = new BackgroundWorker(AddProjectActivity.this);
+                                        backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey, image);
+                                        editTextSubject.setText("");
+                                        editTextDesctiption.setText("");
+                                        if (textViewLocation == null) {
+                                            Toast.makeText(getApplicationContext(), "Twój projekt został dodany bez lokalizacji, nie wyświetli się na mapie...", Toast.LENGTH_LONG).show();
+                                        }
+                                        Toast.makeText(getApplicationContext(), "Dodano projekt. Bedzie on widoczny po ponownym zalogowaniu ; )", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Znajdujesz się poza Łodzią twój projekt nie może zostać dodany...", Toast.LENGTH_LONG).show();
+                                    }
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Musisz poczekać na znalezienie twojej lokalizacji...", Toast.LENGTH_LONG).show();
+                                }
+                        //    } else {
+                        //        Toast.makeText(getApplicationContext(), "Zdjęcie niezgodne z regulaminem.", Toast.LENGTH_LONG).show();
+                        //    }
+                        //} catch (JSONException e) {
+                        //    e.printStackTrace();
+                        //}
+                        //nudityResponse = "";
                     } else {
-                        Toast.makeText(getApplicationContext(), "Musisz poczekać na znalezienie twojej lokalizacji...", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Musisz zrobić zdjęcie zanim dodasz projekt", Toast.LENGTH_LONG).show();
                     }
-
                 }
-
-                /*
-                ftpCheckImageNudity();
-                do {
-                } while (nudityResponse.isEmpty());
-
-                try {
-                    if (unpackJSON(nudityResponse)) {
-                        Toast.makeText(getApplicationContext(), "UFO PORNO!", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "UFO PORNO FALSE!", Toast.LENGTH_LONG).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                nudityResponse = "";
-                */
             }
         });
     }
