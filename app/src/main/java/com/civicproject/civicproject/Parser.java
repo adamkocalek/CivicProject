@@ -52,10 +52,6 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
     protected void onPostExecute(Integer integer) {
         super.onPostExecute(integer);
         if (integer == 1) {
-            dateParser = new DateParser();
-            for (int i = 0; i < dates.size(); i++) {
-                dates.set(i, dateParser.getDate(dates.get(i)));
-            }
         } else {
             Toast.makeText(context, "Unable to Parse", Toast.LENGTH_SHORT).show();
         }
@@ -82,6 +78,8 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
             likesids.clear();
             images.clear();
 
+            dateParser = new DateParser();
+
             // LOOP THROUGH ARRAY
             for (int i = ja.length() - 1; i > -1; i--) {
                 jo = ja.getJSONObject(i);
@@ -103,6 +101,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
                 subjects.add(subject);
                 descriptions.add(description);
                 locations.add(location);
+                date = dateParser.getDate(date);
                 dates.add(date);
                 authors.add(author);
                 authors_keys.add(author_key);

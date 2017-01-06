@@ -1,9 +1,15 @@
 package com.civicproject.civicproject;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -17,19 +23,33 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
-    Context context;
-    AlertDialog alertDialog;
+    private Context context;
+    private Activity activity;
+    private ListView listView;
+    private AlertDialog alertDialog;
+    private ArrayList<String> myProjects = new ArrayList<>(), ids = new ArrayList<>(), likes = new ArrayList<>(), dates = new ArrayList<>(), images = new ArrayList<>();
+    private ArrayList<Integer> indexs = new ArrayList<>();
+    private ArrayList<Bitmap> imagesBitmaps = new ArrayList<>();
 
     BackgroundWorker(Context context) {
         this.context = context;
     }
 
+    BackgroundWorker(Context context, Activity activity, ListView listView) {
+        this.context = context;
+        this.activity = activity;
+        this.listView = listView;
+    }
+
     String tempJSON;
     String tempAuthor;
     String projects_url = "http://188.128.220.60/projects.php";
+    private Parser parser = new Parser();
+    private UseMyFTPClientFunctions useFTP = new UseMyFTPClientFunctions();
 
     @Override
     protected String doInBackground(String... params) {
@@ -41,6 +61,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         String update_url = "http://188.128.220.60/updateUser.php";
         String updateProject_url = "http://188.128.220.60/updateProject.php";
         String updateLikes_url = "http://188.128.220.60/updateProjectLikes.php";
+        String updatePermission_url = "http://188.128.220.60/updateProjectPermission.php";
         String deleteUser_url = "http://188.128.220.60/deleteUser.php";
         String deleteProject_url = "http://188.128.220.60/deleteProject.php";
 
@@ -244,7 +265,40 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+        } else if (type.equals("updateProjectPermission")) {
+            try {
+                String permited = params[1];
+                String id = params[2];
+                URL url = new URL(updatePermission_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("permited", "UTF-8") + "=" + URLEncoder.encode(permited, "UTF-8") + "&"
+                        + URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                String result = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                System.out.println(result);
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else if (type.equals("updateUser")) {
             try {
                 String name = params[1];
@@ -386,7 +440,34 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else if (type.equals("getMyProjects")) {
+            String result = "Fault";
+
+
+
+            String author_key = params[1];
+
+            for (int i = 0; i < parser.subjects.size(); i++) {
+                if (parser.authors_keys.get(i).equals(author_key)) {
+                    ids.add(parser.ids.get(i));
+                    myProjects.add(parser.subjects.get(i));
+                    likes.add(parser.likes.get(i));
+                    dates.add(parser.dates.get(i));
+                    images.add(parser.images.get(i));
+                    indexs.add(parser.subjects.indexOf(parser.subjects.get(i)));
+                }
+            }
+
+            for (int i = 0; i < images.size(); i++) {
+                imagesBitmaps.add(useFTP.ftpDownloadImage(images.get(i)));
+            }
+
+            result = "MyProjects";
+
+            tempJSON = result;
+            return result;
         }
+
         return null;
     }
 
@@ -409,6 +490,37 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
         } else if (result.contains("[{")) {
 
+        } else if (result.equals("MyProjects")) {
+            ListViewAdapterUser lviewAdapter;
+            lviewAdapter = new ListViewAdapterUser(activity, ids, myProjects, likes, dates, imagesBitmaps);
+            listView.setAdapter(lviewAdapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    TextView textView = (TextView) view.findViewById(R.id.textViewIds);
+                    if (ids.contains(textView.getText() + "")) {
+                        position = ids.indexOf(textView.getText() + "");
+                    } else {
+                        position = -1;
+                    }
+                    if (position != -1) {
+                        Intent intent = new Intent(activity, UserProjectActivity.class);
+                        intent.putExtra("subject", parser.subjects.get(indexs.get(position)));
+                        intent.putExtra("description", parser.descriptions.get(indexs.get(position)));
+                        intent.putExtra("location", parser.locations.get(indexs.get(position)));
+                        intent.putExtra("date", parser.dates.get(indexs.get(position)));
+                        intent.putExtra("image", parser.images.get(indexs.get(position)));
+                        intent.putExtra("id", parser.ids.get(indexs.get(position)));
+                        intent.putExtra("likes", parser.likes.get(indexs.get(position)));
+                        intent.putExtra("likesids", parser.likesids.get(indexs.get(position)));
+                        intent.putExtra("author", parser.authors.get(indexs.get(position)));
+                        intent.putExtra("author_key", parser.authors_keys.get(indexs.get(position)));
+                        intent.putExtra("likesnames", parser.likesNames.get(indexs.get(position)));
+                        activity.startActivity(intent);
+                    }
+                }
+            });
         } else {
             result = result.replaceAll("<", "");
             Toast.makeText(context, result, Toast.LENGTH_SHORT).show();

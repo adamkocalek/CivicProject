@@ -28,7 +28,7 @@ import java.util.Locale;
 public class ProjectActivity extends AppCompatActivity implements View.OnClickListener {
     Parser parser = new Parser();
 
-    Button buttonEditProject, buttonDeleteProject;
+    Button buttonEditProject, buttonDeleteProject, buttonPermission;
     ImageButton buttonLikeProject;
     TextView textViewLocation, textViewDate, textViewAuthor, textViewLike, editTextSubject, editTextDesctiption;
     LocationManager locationManager;
@@ -120,6 +120,18 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         } else {
             buttonLikeProject.setVisibility(View.VISIBLE);
         }
+
+        buttonPermission = (Button) findViewById(R.id.buttonPermission);
+        buttonPermission.setVisibility(View.INVISIBLE);
+        buttonPermission.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String type = "updateProjectPermission";
+                String permited = "1";
+                BackgroundWorker backgroundWorker = new BackgroundWorker(ProjectActivity.this);
+                backgroundWorker.execute(type, permited, id);
+            }
+        });
     }
 
     public void onLikeProjectButtonClick(View view) {
