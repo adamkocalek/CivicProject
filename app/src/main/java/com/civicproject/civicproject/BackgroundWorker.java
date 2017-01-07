@@ -107,7 +107,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 Log.d(TAG, NetworkException);
                 result = "null";
             } catch (IOException e) {
-                Log.d(TAG,IOException);
+                Log.d(TAG, IOException);
                 result = "null";
             }
             return result;
@@ -155,10 +155,10 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 System.out.println(result);
 
             } catch (MalformedURLException e) {
-                Log.d(TAG,NetworkException);
+                Log.d(TAG, NetworkException);
                 result = "null";
             } catch (IOException e) {
-                Log.d(TAG,IOException);
+                Log.d(TAG, IOException);
                 result = "null";
             }
             return result;
@@ -491,6 +491,15 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
             tempJSON = result;
             return result;
+        } else if (type.equals("updateLogins")) {
+            String result;
+
+            useFTP.ftpUploadFileWithLogins(params[1], "RegisterActivity");
+
+            result = "";
+
+            tempJSON = result;
+            return result;
         }
 
         return null;
@@ -522,11 +531,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                         }
                     }).show();
 
-        } else if (result.contains("[{")) {
-
         } else if (result.equals("Logins")) {
-            //Toast.makeText(context, input, Toast.LENGTH_SHORT).show();
-            ((RegisterActivity)context).editTextEmail.setText(output);
+            ((RegisterActivity) context).loginsDownloaded = output;
 
         } else if (result.equals("MyProjects")) {
             ListViewAdapterUser lviewAdapter;
@@ -559,6 +565,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     }
                 }
             });
+
+        } else if (result.contains("")) {
 
         } else {
             result = result.replaceAll("<", "");

@@ -1,6 +1,8 @@
 package com.civicproject.civicproject;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -17,8 +19,6 @@ import java.util.Scanner;
 public class RegisterActivity extends AppCompatActivity {
     EditText etRegisterAge, etRegisterName, etRegisterUsername, etRegisterPassword, etRegisterSurname, editTextTelephone, editTextEmail;
     TextView tvRegisterRules;
-    private FTPClientFunctions ftpclient = null;
-    private static final String TAG = "RegisterActivity";
     String loginsDownloaded = null, loginsUptaded = null;
     private Validator validator = null;
 
@@ -45,12 +45,14 @@ public class RegisterActivity extends AppCompatActivity {
 
         validator = new Validator();
 
-        ftpclient = new FTPClientFunctions();
-        ftpDownloadFileWithLogins();
-
-        //BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        //backgroundWorker.execute("getLogins");
-        //Toast.makeText(this, loginsDownloaded, Toast.LENGTH_SHORT).show();
+        if (isOnline()) {
+            // POBIERANIE LOGINÓW
+            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+            backgroundWorker.execute("getLogins");
+        } else {
+            Toast.makeText(getApplicationContext(), "Brak połączenia z internetem.", Toast.LENGTH_SHORT).show();
+            onBackPressed();
+        }
 
         tvRegisterRules.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +71,6 @@ public class RegisterActivity extends AppCompatActivity {
         String str_password = etRegisterPassword.getText().toString();
         String str_telephone = editTextTelephone.getText().toString();
         String str_email = editTextEmail.getText().toString();
-        String type = "register";
 
 
         if (!validator.isEmpty(str_name) && !validator.isEmpty(str_surname) && !validator.isEmpty(str_age) && !validator.isEmpty(str_username) && !validator.isEmpty(str_password) && !validator.isEmpty(str_telephone) && !validator.isEmpty(str_email)) {
@@ -88,13 +89,22 @@ public class RegisterActivity extends AppCompatActivity {
 
                         if (i == 0) {
                             loginsUptaded = loginsDownloaded + "\n" + str_username;
-                            ftpUploadFileWithLogins();
-                            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-                            backgroundWorker.execute(type, validator.trimSpaces(str_name), validator.trimSpaces(str_surname), validator.trimSpaces(str_age), validator.trimSpaces(str_username), validator.trimSpaces(str_password), validator.trimSpaces(str_telephone), validator.trimSpaces(str_email));
-                            Toast toast = Toast.makeText(getApplicationContext(), "Zarejestrowano, możesz się zalogować ; )", Toast.LENGTH_LONG);
-                            toast.show();
-                            Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-                            RegisterActivity.this.startActivity(myIntent);
+
+                            if (isOnline()) {
+                                // UPLOAD LOGINÓW
+                                BackgroundWorker backgroundWorker1 = new BackgroundWorker(this);
+                                backgroundWorker1.execute("updateLogins", loginsUptaded);
+
+                                BackgroundWorker backgroundWorker2 = new BackgroundWorker(this);
+                                backgroundWorker2.execute("register", validator.trimSpaces(str_name), validator.trimSpaces(str_surname), validator.trimSpaces(str_age), validator.trimSpaces(str_username), validator.trimSpaces(str_password), validator.trimSpaces(str_telephone), validator.trimSpaces(str_email));
+
+                                Toast toast = Toast.makeText(getApplicationContext(), "Zarejestrowano, możesz się zalogować ; )", Toast.LENGTH_LONG);
+                                toast.show();
+                                Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                RegisterActivity.this.startActivity(myIntent);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Brak połączenia z internetem.", Toast.LENGTH_SHORT).show();
+                            }
 
                         } else {
                             etRegisterUsername.setError("Wybrany login już istnieje.");
@@ -139,53 +149,9 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    public void ftpUploadFileWithLogins() {
-        new Thread(new Runnable() {
-            public void run() {
-                boolean status;
-                status = ftpclient.ftpConnect("serwer1633804.home.pl", "serwer1633804", "33murs0tKiby", 21);
-                if (status) {
-                    Log.d(TAG, "Połączenie udane");
-                } else {
-                    Log.d(TAG, "Połączenie nieudane");
-                }
-
-                InputStream input = new ByteArrayInputStream(loginsUptaded.getBytes());
-
-                ftpclient.ftpChangeDirectory("/important_data/");
-                ftpclient.ftpUploadString(input, "Logins.txt");
-
-                status = ftpclient.ftpDisconnect();
-                if (status) {
-                    Log.d(TAG, "Połączenie zakończone.");
-                } else {
-                    Log.d(TAG, "Połączenie nie mogło zostać zakończone.");
-                }
-            }
-        }).start();
-    }
-
-    public void ftpDownloadFileWithLogins() {
-        new Thread(new Runnable() {
-            public void run() {
-                boolean status;
-                status = ftpclient.ftpConnect("serwer1633804.home.pl", "serwer1633804", "33murs0tKiby", 21);
-                if (status) {
-                    Log.d(TAG, "Połączenie udane.");
-                } else {
-                    Log.d(TAG, "Połączenie nieudane.");
-                }
-
-                ftpclient.ftpChangeDirectory("/important_data/");
-                loginsDownloaded = ftpclient.ftpDownloadString("Logins.txt");
-
-                status = ftpclient.ftpDisconnect();
-                if (status) {
-                    Log.d(TAG, "Połączenie zakończone.");
-                } else {
-                    Log.d(TAG, "Połączenie nie mogło zostać zakończone.");
-                }
-            }
-        }).start();
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        android.net.NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }
