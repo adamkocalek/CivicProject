@@ -22,6 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
     String loginsDownloaded = null, loginsUptaded = null;
     private Validator validator = null;
 
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -53,6 +54,9 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Brak połączenia z internetem.", Toast.LENGTH_SHORT).show();
             onBackPressed();
         }
+
+        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+        backgroundWorker.execute("getLogins");
 
         tvRegisterRules.setOnClickListener(new View.OnClickListener() {
             @Override
