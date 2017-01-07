@@ -1,6 +1,9 @@
 package com.civicproject.civicproject;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -9,6 +12,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +22,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -176,6 +181,15 @@ public class AddProjectActivity extends AppCompatActivity {
     }
 
     public void events() {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(new ContextThemeWrapper(AddProjectActivity.this, R.style.Dialog_Theme))
+                .setTitle("Wystąpił błąd!")
+                .setMessage("Problem z dostępem do internetu. Sprawdź połączenie i spróbuj ponownie później.")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
         buttonCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -189,6 +203,13 @@ public class AddProjectActivity extends AppCompatActivity {
         buttonAddProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                boolean networkCheck = isOnline();
+                if (!networkCheck) {
+                    Log.d("LOG", "Błąd połączenia z internetem.");
+                    alertDialog.show();
+                    return;
+                }
+
                 String editTextSubject_check = editTextSubject.getText().toString();
                 String editTextDesctiption_check = editTextDesctiption.getText().toString();
 
@@ -207,29 +228,29 @@ public class AddProjectActivity extends AppCompatActivity {
 
                         //try {
                         //    if (!unpackJSON(nudityResponse)) {
-                                if (!locationX.isNaN() && !locationY.isNaN()) {
-                                    if (locationX <= 51.843678 && locationX >= 51.690382 && locationY <= 19.619980 && locationY >= 19.324036) {
-                                        String subject = editTextSubject.getText().toString();
-                                        String description = editTextDesctiption.getText().toString();
-                                        String author = textViewAuthor.getText().toString();
-                                        String date = textViewDate.getText().toString();
-                                        String location = locationX + " " + locationY;
-                                        String type = "addProject";
-                                        String image = ftpUploadImage();
-                                        BackgroundWorker backgroundWorker = new BackgroundWorker(AddProjectActivity.this);
-                                        backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey, image);
-                                        editTextSubject.setText("");
-                                        editTextDesctiption.setText("");
-                                        if (textViewLocation == null) {
-                                            Toast.makeText(getApplicationContext(), "Twój projekt został dodany bez lokalizacji, nie wyświetli się na mapie...", Toast.LENGTH_LONG).show();
-                                        }
-                                        Toast.makeText(getApplicationContext(), "Dodano projekt. Bedzie on widoczny po ponownym zalogowaniu ; )", Toast.LENGTH_LONG).show();
-                                    } else {
-                                        Toast.makeText(getApplicationContext(), "Znajdujesz się poza Łodzią twój projekt nie może zostać dodany...", Toast.LENGTH_LONG).show();
-                                    }
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Musisz poczekać na znalezienie twojej lokalizacji...", Toast.LENGTH_LONG).show();
+                        if (!locationX.isNaN() && !locationY.isNaN()) {
+                            if (locationX <= 51.843678 && locationX >= 51.690382 && locationY <= 19.619980 && locationY >= 19.324036) {
+                                String subject = editTextSubject.getText().toString();
+                                String description = editTextDesctiption.getText().toString();
+                                String author = textViewAuthor.getText().toString();
+                                String date = textViewDate.getText().toString();
+                                String location = locationX + " " + locationY;
+                                String type = "addProject";
+                                String image = ftpUploadImage();
+                                BackgroundWorker backgroundWorker = new BackgroundWorker(AddProjectActivity.this);
+                                backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey, image);
+                                editTextSubject.setText("");
+                                editTextDesctiption.setText("");
+                                if (textViewLocation == null) {
+                                    Toast.makeText(getApplicationContext(), "Twój projekt został dodany bez lokalizacji, nie wyświetli się na mapie...", Toast.LENGTH_LONG).show();
                                 }
+                                Toast.makeText(getApplicationContext(), "Dodano projekt. Bedzie on widoczny po ponownym zalogowaniu ; )", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Znajdujesz się poza Łodzią twój projekt nie może zostać dodany...", Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Musisz poczekać na znalezienie twojej lokalizacji...", Toast.LENGTH_LONG).show();
+                        }
                         //    } else {
                         //        Toast.makeText(getApplicationContext(), "Zdjęcie niezgodne z regulaminem.", Toast.LENGTH_LONG).show();
                         //    }
@@ -394,5 +415,11 @@ public class AddProjectActivity extends AppCompatActivity {
         } else {
             return false;
         }
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        android.net.NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }

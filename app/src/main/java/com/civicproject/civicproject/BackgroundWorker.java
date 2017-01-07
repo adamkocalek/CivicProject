@@ -445,7 +445,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     inputStream.close();
                     httpURLConnection.disconnect();
                     tempJSON = result;
-                    return result;
+                    return "";
 
                 } catch (MalformedURLException e) {
                     Log.d(TAG, NetworkException);
