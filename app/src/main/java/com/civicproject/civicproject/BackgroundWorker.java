@@ -33,6 +33,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     private Context context;
     private Activity activity;
     private ListView listView;
+    private String output;
     private AlertDialog alertDialog;
     private ArrayList<String> myProjects = new ArrayList<>(), ids = new ArrayList<>(), likes = new ArrayList<>(), dates = new ArrayList<>(), images = new ArrayList<>();
     private ArrayList<Integer> indexs = new ArrayList<>();
@@ -50,12 +51,12 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
     String tempJSON;
     String tempAuthor;
-    String projects_url = "http://188.128.220.60/projects.php";
+    private String projects_url = "http://188.128.220.60/projects.php";
     private Parser parser = new Parser();
-    private UseMyFTPClientFunctions useFTP = new UseMyFTPClientFunctions();
-    String NetworkException = "Błąd połączenia z internetem";
-    String IOException = "Nieoczekiwany błąd, IOException";
-    String TAG = "+++++ TAG +++++";
+    private FTPClientFunctionsUses useFTP = new FTPClientFunctionsUses();
+    private String NetworkException = "Błąd połączenia z internetem";
+    private String IOException = "Nieoczekiwany błąd, IOException";
+    private String TAG = "+++++ TAG +++++";
 
     @Override
     protected String doInBackground(String... params) {
@@ -459,8 +460,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 e.printStackTrace();
             }
         } else if (type.equals("getMyProjects")) {
-            String result = "Fault";
-
+            String result;
             String author_key = params[1];
 
             for (int i = 0; i < parser.subjects.size(); i++) {
@@ -475,10 +475,19 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             }
 
             for (int i = 0; i < images.size(); i++) {
-                imagesBitmaps.add(useFTP.ftpDownloadImage(images.get(i)));
+                imagesBitmaps.add(useFTP.ftpDownloadImage(images.get(i), "UserProjectsActivity"));
             }
 
             result = "MyProjects";
+
+            tempJSON = result;
+            return result;
+        } else if (type.equals("getLogins")) {
+            String result;
+
+            output = useFTP.ftpDownloadFileWithLogins("RegisterActivity");
+
+            result = "Logins";
 
             tempJSON = result;
             return result;
@@ -514,6 +523,10 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     }).show();
 
         } else if (result.contains("[{")) {
+
+        } else if (result.equals("Logins")) {
+            //Toast.makeText(context, input, Toast.LENGTH_SHORT).show();
+            ((RegisterActivity)context).editTextEmail.setText(output);
 
         } else if (result.equals("MyProjects")) {
             ListViewAdapterUser lviewAdapter;

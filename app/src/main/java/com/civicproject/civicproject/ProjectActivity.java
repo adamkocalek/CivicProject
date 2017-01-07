@@ -17,7 +17,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,7 +35,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
     ImageView imageViewPicture;
     String id, author_key, image, likesidss, author_id, author, likesnamestemp;
     Bitmap imageBitmap;
-    private MyFTPClientFunctions ftpclient = null;
+    private FTPClientFunctions ftpclient = null;
     private static final String TAG = "ProjectActivity";
 
     @Override
@@ -80,7 +79,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         buttonDeleteProject = (Button) findViewById(R.id.buttonDeleteProject);
         textViewDate = (TextView) findViewById(R.id.textViewDate);
 
-        ftpclient = new MyFTPClientFunctions();
+        ftpclient = new FTPClientFunctions();
 
         Intent intent = getIntent();
         id = intent.getStringExtra("id");

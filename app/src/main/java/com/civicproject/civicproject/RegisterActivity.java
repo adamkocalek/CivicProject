@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class RegisterActivity extends AppCompatActivity {
     EditText etRegisterAge, etRegisterName, etRegisterUsername, etRegisterPassword, etRegisterSurname, editTextTelephone, editTextEmail;
     TextView tvRegisterRules;
-    private MyFTPClientFunctions ftpclient = null;
+    private FTPClientFunctions ftpclient = null;
     private static final String TAG = "RegisterActivity";
     String loginsDownloaded = null, loginsUptaded = null;
     private Validator validator = null;
@@ -45,8 +45,12 @@ public class RegisterActivity extends AppCompatActivity {
 
         validator = new Validator();
 
-        ftpclient = new MyFTPClientFunctions();
+        ftpclient = new FTPClientFunctions();
         ftpDownloadFileWithLogins();
+
+        //BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+        //backgroundWorker.execute("getLogins");
+        //Toast.makeText(this, loginsDownloaded, Toast.LENGTH_SHORT).show();
 
         tvRegisterRules.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,19 +98,19 @@ public class RegisterActivity extends AppCompatActivity {
 
                         } else {
                             etRegisterUsername.setError("Wybrany login już istnieje.");
-                            Toast.makeText(getApplicationContext(), "Wybrany login już istnieje.", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), "Wybrany login już istnieje.", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         editTextTelephone.setError("Numer telefonu musi być 9 cyfrowy (XXXXXXXXX).");
-                        Toast.makeText(getApplicationContext(), "Numer telefonu musi być 9 cyfrowy (XXXXXXXXX).", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Numer telefonu musi być 9 cyfrowy (XXXXXXXXX).", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     editTextEmail.setError("Niepoprawny adres email.");
-                    Toast.makeText(getApplicationContext(), "Niepoprawny adres email.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Niepoprawny adres email.", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 etRegisterPassword.setError("Hasło musi mieć długość od 6 do 20 znaków i zawierać przynajmniej jedną cyfrę.");
-                Toast.makeText(getApplicationContext(), "Hasło musi mieć długość od 6 do 20 znaków i zawierać przynajmniej jedną cyfrę.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Hasło musi mieć długość od 6 do 20 znaków i zawierać przynajmniej jedną cyfrę.", Toast.LENGTH_SHORT).show();
             }
         } else {
             if (TextUtils.isEmpty(validator.trimSpaces(str_name))) {

@@ -18,11 +18,11 @@ import android.util.Log;
  * Created by Patrycjusz on 2016-12-14.
  */
 
-public class MyFTPClientFunctions {
+public class FTPClientFunctions {
 
     // Now, declare a public FTP client object.
 
-    private static final String TAG = "MyFTPClientFunctions";
+    private static final String TAG = "FTPClientFunctions";
     public FTPClient mFTPClient = null;
 
     // Method to connect to FTP server:

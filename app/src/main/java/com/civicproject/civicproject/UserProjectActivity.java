@@ -39,7 +39,7 @@ public class UserProjectActivity extends AppCompatActivity implements View.OnCli
     String id, author_key, image, likesidss, author_id, author, likesnamestemp;
     Bitmap imageBitmap;
 
-    private MyFTPClientFunctions ftpclient = null;
+    private FTPClientFunctions ftpclient = null;
     private static final String TAG = "UserProjectActivity";
 
     @Override
@@ -83,7 +83,7 @@ public class UserProjectActivity extends AppCompatActivity implements View.OnCli
         buttonDeleteProject = (Button) findViewById(R.id.buttonDeleteProject);
         textViewDate = (TextView) findViewById(R.id.textViewDate);
 
-        ftpclient = new MyFTPClientFunctions();
+        ftpclient = new FTPClientFunctions();
 
         Intent intent = getIntent();
         id = intent.getStringExtra("id");

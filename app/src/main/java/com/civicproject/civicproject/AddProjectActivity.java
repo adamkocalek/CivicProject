@@ -56,7 +56,7 @@ public class AddProjectActivity extends AppCompatActivity {
     Double locationX = Double.NaN, locationY = Double.NaN;
     Uri file;
     private Camera camera = null;
-    private MyFTPClientFunctions ftpclient = null;
+    private FTPClientFunctions ftpclient = null;
     private static final String TAG = "AddProjectActivity";
     private static final String api_user = "63501098", api_secret = "pwQhu5WbwEHUqc2S";
     private static final String API_URL = "https://api.sightengine.com/1.0/nudity.json?api_user=" + api_user + "&api_secret=" + api_secret + "&url=";
@@ -172,7 +172,7 @@ public class AddProjectActivity extends AppCompatActivity {
         imageViewPicture = (ImageView) findViewById(R.id.imageViewPicture);
 
         camera = new Camera();
-        ftpclient = new MyFTPClientFunctions();
+        ftpclient = new FTPClientFunctions();
     }
 
     public void events() {
