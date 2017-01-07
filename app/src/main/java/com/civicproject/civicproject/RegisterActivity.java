@@ -120,8 +120,6 @@ public class RegisterActivity extends AppCompatActivity {
                             BackgroundWorker backgroundWorker2 = new BackgroundWorker(this);
                             backgroundWorker2.execute("register", validator.trimSpaces(str_name), validator.trimSpaces(str_surname), validator.trimSpaces(str_age), validator.trimSpaces(str_username), validator.trimSpaces(str_password), validator.trimSpaces(str_telephone), validator.trimSpaces(str_email));
 
-                            Toast toast = Toast.makeText(getApplicationContext(), "Zarejestrowano, możesz się zalogować ; )", Toast.LENGTH_LONG);
-                            toast.show();
                             Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                             RegisterActivity.this.startActivity(myIntent);
 

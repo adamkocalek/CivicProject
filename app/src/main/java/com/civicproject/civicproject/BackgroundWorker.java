@@ -1,13 +1,10 @@
 package com.civicproject.civicproject;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -72,470 +69,457 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         String IOException = "Nieoczekiwany błąd, IOException";
         String TAG = "LOG";
 
-        if (type.equals("login")) {
+        switch (type) {
+            case "login":
+                try {
+                    String user_name = params[1];
+                    String password = params[2];
+                    URL url = new URL(login_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream outputStream = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                    String post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8") + "&"
+                            + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
+                    bufferedWriter.write(post_data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   //było iso-8859-1
+                    String result = "";
+                    String line = "";
 
-            try {
-                String user_name = params[1];
-                String password = params[2];
-                URL url = new URL(login_url);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8") + "&"
-                        + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
-                bufferedWriter.write(post_data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   //było iso-8859-1
-                String result = "";
-                String line = "";
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result += line;
+                    }
 
-                while ((line = bufferedReader.readLine()) != null) {
-                    result += line;
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    System.out.println(result);
+                    return result;
+
+                } catch (MalformedURLException e) {
+                    Log.d(TAG, NetworkException);
+                } catch (IOException e) {
+                    Log.d(TAG, IOException);
+                }
+                break;
+
+            case "register":
+                try {
+                    String name = params[1];
+                    String surname = params[2];
+                    String age = params[3];
+                    String usename = params[4];
+                    String password = params[5];
+                    String telephone = params[6];
+                    String email = params[7];
+                    URL url = new URL(register_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream outputStream = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                    String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&"
+                            + URLEncoder.encode("surname", "UTF-8") + "=" + URLEncoder.encode(surname, "UTF-8") + "&"
+                            + URLEncoder.encode("age", "UTF-8") + "=" + URLEncoder.encode(age, "UTF-8") + "&"
+                            + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(usename, "UTF-8") + "&"
+                            + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") + "&"
+                            + URLEncoder.encode("telephone", "UTF-8") + "=" + URLEncoder.encode(telephone, "UTF-8") + "&"
+                            + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
+                    bufferedWriter.write(post_data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   ///było iso-8859-1
+                    String result = "";
+                    String line = "";
+
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result += line;
+                    }
+
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    System.out.println(result);
+                    return result;
+
+                } catch (MalformedURLException e) {
+                    Log.d(TAG, NetworkException);
+                } catch (IOException e) {
+                    Log.d(TAG, IOException);
+                }
+                break;
+
+            case "addProject":
+                try {
+                    String author = params[1];
+                    String subject = params[2];
+                    String description = params[3];
+                    String location = params[4];
+                    String date = params[5];
+                    String author_key = params[6];
+                    String image = params[7];
+                    URL url = new URL(addProject_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream outputStream = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                    String post_data = URLEncoder.encode("author", "UTF-8") + "=" + URLEncoder.encode(author, "UTF-8") + "&"
+                            + URLEncoder.encode("subject", "UTF-8") + "=" + URLEncoder.encode(subject, "UTF-8") + "&"
+                            + URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode(description, "UTF-8") + "&"
+                            + URLEncoder.encode("location", "UTF-8") + "=" + URLEncoder.encode(location, "UTF-8") + "&"
+                            + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&"
+                            + URLEncoder.encode("author_key", "UTF-8") + "=" + URLEncoder.encode(author_key, "UTF-8") + "&"
+                            + URLEncoder.encode("image", "UTF-8") + "=" + URLEncoder.encode(image, "UTF-8");
+                    bufferedWriter.write(post_data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));    //było iso-8859-1
+                    String result = "";
+                    String line = "";
+
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result += line;
+                    }
+
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    System.out.println(result);
+                    return result;
+
+                } catch (MalformedURLException e) {
+                    Log.d(TAG, NetworkException);
+                } catch (IOException e) {
+                    Log.d(TAG, IOException);
+                }
+                break;
+
+            case "updateProject":
+                try {
+                    String subject = params[1];
+                    String description = params[2];
+                    String id = params[3];
+                    URL url = new URL(updateProject_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream outputStream = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                    String post_data = URLEncoder.encode("subject", "UTF-8") + "=" + URLEncoder.encode(subject, "UTF-8") + "&"
+                            + URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode(description, "UTF-8") + "&"
+                            + URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8");
+                    bufferedWriter.write(post_data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   //było iso-8859-1
+                    String result = "";
+                    String line = "";
+
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result += line;
+                    }
+
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    System.out.println(result);
+                    return result;
+
+                } catch (MalformedURLException e) {
+                    Log.d(TAG, NetworkException);
+                } catch (IOException e) {
+                    Log.d(TAG, IOException);
+                }
+                break;
+
+            case "updateProjectLikes":
+                try {
+                    String likesids = params[1];
+                    String likes = params[2];
+                    String id = params[3];
+                    String likesnames = params[4];
+                    URL url = new URL(updateLikes_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream outputStream = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                    String post_data = URLEncoder.encode("likesids", "UTF-8") + "=" + URLEncoder.encode(likesids, "UTF-8") + "&"
+                            + URLEncoder.encode("likes", "UTF-8") + "=" + URLEncoder.encode(likes, "UTF-8") + "&"
+                            + URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8") + "&"
+                            + URLEncoder.encode("likesnames", "UTF-8") + "=" + URLEncoder.encode(likesnames, "UTF-8");
+                    bufferedWriter.write(post_data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                    String result = "";
+                    String line = "";
+
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result += line;
+                    }
+
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    System.out.println(result);
+                    return result;
+
+                } catch (MalformedURLException e) {
+                    Log.d(TAG, NetworkException);
+                } catch (IOException e) {
+                    Log.d(TAG, IOException);
+                }
+                break;
+
+            case "updateProjectPermission":
+                try {
+                    String permited = params[1];
+                    String id = params[2];
+                    URL url = new URL(updatePermission_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream outputStream = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                    String post_data = URLEncoder.encode("permited", "UTF-8") + "=" + URLEncoder.encode(permited, "UTF-8") + "&"
+                            + URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8");
+                    bufferedWriter.write(post_data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                    String result = "";
+                    String line = "";
+
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result += line;
+                    }
+
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    System.out.println(result);
+                    return result;
+
+                } catch (MalformedURLException e) {
+                    Log.d(TAG, NetworkException);
+                } catch (IOException e) {
+                    Log.d(TAG, IOException);
+                }
+                break;
+
+            case "updateUser":
+                try {
+                    String name = params[1];
+                    String surname = params[2];
+                    String age = params[3];
+                    String usename = params[4];
+                    String password = params[5];
+                    String telephone = params[6];
+                    String email = params[7];
+                    URL url = new URL(update_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream outputStream = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                    String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&"
+                            + URLEncoder.encode("surname", "UTF-8") + "=" + URLEncoder.encode(surname, "UTF-8") + "&"
+                            + URLEncoder.encode("age", "UTF-8") + "=" + URLEncoder.encode(age, "UTF-8") + "&"
+                            + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(usename, "UTF-8") + "&"
+                            + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") + "&"
+                            + URLEncoder.encode("telephone", "UTF-8") + "=" + URLEncoder.encode(telephone, "UTF-8") + "&"
+                            + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
+                    bufferedWriter.write(post_data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   //było iso-8859-1
+                    String result = "";
+                    String line = "";
+
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result += line;
+                    }
+
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    System.out.println(result);
+                    return result;
+
+                } catch (MalformedURLException e) {
+                    Log.d(TAG, NetworkException);
+                } catch (IOException e) {
+                    Log.d(TAG, IOException);
+                }
+                break;
+
+            case "getUser":
+                try {
+                    String user_name = params[1];
+                    URL url = new URL(getUser_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream outputStream = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                    String post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8");
+                    bufferedWriter.write(post_data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                    String result = "";
+                    String line = "";
+
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result += line;
+                    }
+
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    tempJSON = result;
+                    return result;
+
+                } catch (MalformedURLException e) {
+                    Log.d(TAG, NetworkException);
+                } catch (IOException e) {
+                    Log.d(TAG, IOException);
+                }
+                break;
+
+            case "deleteUser":
+                try {
+                    String id = params[1];
+                    URL url = new URL(deleteUser_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream outputStream = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                    String post_data = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8");
+                    bufferedWriter.write(post_data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));    //było iso-8859-1
+                    String result = "";
+                    String line = "";
+
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result += line;
+                    }
+
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    tempJSON = result;
+                    return result;
+
+                } catch (MalformedURLException e) {
+                    Log.d(TAG, NetworkException);
+                } catch (IOException e) {
+                    Log.d(TAG, IOException);
+                }
+                break;
+
+            case "deleteProject":
+                try {
+                    String id = params[1];
+                    URL url = new URL(deleteProject_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream outputStream = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                    String post_data = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8");
+                    bufferedWriter.write(post_data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   //było iso-8859-1
+                    String result = "";
+                    String line = "";
+
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result += line;
+                    }
+
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    tempJSON = result;
+                    return result;
+
+                } catch (MalformedURLException e) {
+                    Log.d(TAG, NetworkException);
+                } catch (IOException e) {
+                    Log.d(TAG, IOException);
+                }
+                break;
+
+            case "getMyProjects":
+                String author_key = params[1];
+
+                for (int i = 0; i < parser.subjects.size(); i++) {
+                    if (parser.authors_keys.get(i).equals(author_key)) {
+                        ids.add(parser.ids.get(i));
+                        myProjects.add(parser.subjects.get(i));
+                        likes.add(parser.likes.get(i));
+                        dates.add(parser.dates.get(i));
+                        images.add(parser.images.get(i));
+                        indexs.add(parser.subjects.indexOf(parser.subjects.get(i)));
+                    }
                 }
 
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                System.out.println(result);
-                return result;
-
-            } catch (MalformedURLException e) {
-                Log.d(TAG, NetworkException);
-            } catch (IOException e) {
-                Log.d(TAG, IOException);
-            }
-
-
-        } else if (type.equals("register")) {
-
-            try {
-                String name = params[1];
-                String surname = params[2];
-                String age = params[3];
-                String usename = params[4];
-                String password = params[5];
-                String telephone = params[6];
-                String email = params[7];
-                URL url = new URL(register_url);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&"
-                        + URLEncoder.encode("surname", "UTF-8") + "=" + URLEncoder.encode(surname, "UTF-8") + "&"
-                        + URLEncoder.encode("age", "UTF-8") + "=" + URLEncoder.encode(age, "UTF-8") + "&"
-                        + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(usename, "UTF-8") + "&"
-                        + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") + "&"
-                        + URLEncoder.encode("telephone", "UTF-8") + "=" + URLEncoder.encode(telephone, "UTF-8") + "&"
-                        + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
-                bufferedWriter.write(post_data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   ///było iso-8859-1
-                String result = "";
-                String line = "";
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    result += line;
+                for (int i = 0; i < images.size(); i++) {
+                    imagesBitmaps.add(useFTP.ftpDownloadImage(images.get(i), "UserProjectsActivity"));
                 }
+                return "MyProjects";
 
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                System.out.println(result);
-                return result;
+            case "getLogins":
+                output = useFTP.ftpDownloadFileWithLogins("RegisterActivity");
+                return "Logins";
 
-            } catch (MalformedURLException e) {
-                Log.d(TAG, NetworkException);
-            } catch (IOException e) {
-                Log.d(TAG, IOException);
-            }
+            case "updateLogins":
+                useFTP.ftpUploadFileWithLogins(params[1], "RegisterActivity");
+                return "";
 
-
-        } else if (type.equals("addProject")) {
-            try {
-                String author = params[1];
-                String subject = params[2];
-                String description = params[3];
-                String location = params[4];
-                String date = params[5];
-                String author_key = params[6];
-                String image = params[7];
-                URL url = new URL(addProject_url);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("author", "UTF-8") + "=" + URLEncoder.encode(author, "UTF-8") + "&"
-                        + URLEncoder.encode("subject", "UTF-8") + "=" + URLEncoder.encode(subject, "UTF-8") + "&"
-                        + URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode(description, "UTF-8") + "&"
-                        + URLEncoder.encode("location", "UTF-8") + "=" + URLEncoder.encode(location, "UTF-8") + "&"
-                        + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&"
-                        + URLEncoder.encode("author_key", "UTF-8") + "=" + URLEncoder.encode(author_key, "UTF-8") + "&"
-                        + URLEncoder.encode("image", "UTF-8") + "=" + URLEncoder.encode(image, "UTF-8");
-                bufferedWriter.write(post_data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));    //było iso-8859-1
-                String result = "";
-                String line = "";
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    result += line;
-                }
-
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                System.out.println(result);
-                return result;
-
-            } catch (MalformedURLException e) {
-                Log.d(TAG, NetworkException);
-            } catch (IOException e) {
-                Log.d(TAG, IOException);
-            }
-
-
-        } else if (type.equals("updateProject")) {
-            try {
-                String subject = params[1];
-                String description = params[2];
-                String id = params[3];
-                URL url = new URL(updateProject_url);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("subject", "UTF-8") + "=" + URLEncoder.encode(subject, "UTF-8") + "&"
-                        + URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode(description, "UTF-8") + "&"
-                        + URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8");
-                bufferedWriter.write(post_data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   //było iso-8859-1
-                String result = "";
-                String line = "";
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    result += line;
-                }
-
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                System.out.println(result);
-                return result;
-
-            } catch (MalformedURLException e) {
-                Log.d(TAG, NetworkException);
-            } catch (IOException e) {
-                Log.d(TAG, IOException);
-            }
-
-
-        } else if (type.equals("updateProjectLikes")) {
-            try {
-                String likesids = params[1];
-                String likes = params[2];
-                String id = params[3];
-                String likesnames = params[4];
-                URL url = new URL(updateLikes_url);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("likesids", "UTF-8") + "=" + URLEncoder.encode(likesids, "UTF-8") + "&"
-                        + URLEncoder.encode("likes", "UTF-8") + "=" + URLEncoder.encode(likes, "UTF-8") + "&"
-                        + URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8") + "&"
-                        + URLEncoder.encode("likesnames", "UTF-8") + "=" + URLEncoder.encode(likesnames, "UTF-8");
-                bufferedWriter.write(post_data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
-                String result = "";
-                String line = "";
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    result += line;
-                }
-
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                System.out.println(result);
-                return result;
-
-            } catch (MalformedURLException e) {
-                Log.d(TAG, NetworkException);
-            } catch (IOException e) {
-                Log.d(TAG, IOException);
-            }
-
-
-        } else if (type.equals("updateProjectPermission")) {
-            try {
-                String permited = params[1];
-                String id = params[2];
-                URL url = new URL(updatePermission_url);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("permited", "UTF-8") + "=" + URLEncoder.encode(permited, "UTF-8") + "&"
-                        + URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8");
-                bufferedWriter.write(post_data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-                String result = "";
-                String line = "";
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    result += line;
-                }
-
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                System.out.println(result);
-                return result;
-
-            } catch (MalformedURLException e) {
-                Log.d(TAG, NetworkException);
-            } catch (IOException e) {
-                Log.d(TAG, IOException);
-            }
-
-
-        } else if (type.equals("updateUser")) {
-            try {
-                String name = params[1];
-                String surname = params[2];
-                String age = params[3];
-                String usename = params[4];
-                String password = params[5];
-                String telephone = params[6];
-                String email = params[7];
-                URL url = new URL(update_url);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&"
-                        + URLEncoder.encode("surname", "UTF-8") + "=" + URLEncoder.encode(surname, "UTF-8") + "&"
-                        + URLEncoder.encode("age", "UTF-8") + "=" + URLEncoder.encode(age, "UTF-8") + "&"
-                        + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(usename, "UTF-8") + "&"
-                        + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") + "&"
-                        + URLEncoder.encode("telephone", "UTF-8") + "=" + URLEncoder.encode(telephone, "UTF-8") + "&"
-                        + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
-                bufferedWriter.write(post_data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   //było iso-8859-1
-                String result = "";
-                String line = "";
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    result += line;
-                }
-
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                System.out.println(result);
-                return result;
-
-            } catch (MalformedURLException e) {
-                Log.d(TAG, NetworkException);
-            } catch (IOException e) {
-                Log.d(TAG, IOException);
-            }
-
-
-        } else if (type.equals("getUser")) {
-            try {
-                String user_name = params[1];
-                URL url = new URL(getUser_url);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8");
-                bufferedWriter.write(post_data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
-                String result = "";
-                String line = "";
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    result += line;
-                }
-
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                tempJSON = result;
-                return result;
-
-            } catch (MalformedURLException e) {
-                Log.d(TAG, NetworkException);
-            } catch (IOException e) {
-                Log.d(TAG, IOException);
-            }
-
-
-        } else if (type.equals("deleteUser")) {
-            try {
-                String id = params[1];
-                URL url = new URL(deleteUser_url);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8");
-                bufferedWriter.write(post_data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));    //było iso-8859-1
-                String result = "";
-                String line = "";
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    result += line;
-                }
-
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                tempJSON = result;
-                return result;
-
-            } catch (MalformedURLException e) {
-                Log.d(TAG, NetworkException);
-            } catch (IOException e) {
-                Log.d(TAG, IOException);
-            }
-
-
-        } else if (type.equals("deleteProject")) {
-            try {
-                String id = params[1];
-                URL url = new URL(deleteProject_url);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8");
-                bufferedWriter.write(post_data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   //było iso-8859-1
-                String result = "";
-                String line = "";
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    result += line;
-                }
-
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                tempJSON = result;
-                return result;
-
-            } catch (MalformedURLException e) {
-                Log.d(TAG, NetworkException);
-            } catch (IOException e) {
-                Log.d(TAG, IOException);
-            }
-
-
-        } else if (type.equals("getMyProjects")) {
-            String result;
-            String author_key = params[1];
-
-            for (int i = 0; i < parser.subjects.size(); i++) {
-                if (parser.authors_keys.get(i).equals(author_key)) {
-                    ids.add(parser.ids.get(i));
-                    myProjects.add(parser.subjects.get(i));
-                    likes.add(parser.likes.get(i));
-                    dates.add(parser.dates.get(i));
-                    images.add(parser.images.get(i));
-                    indexs.add(parser.subjects.indexOf(parser.subjects.get(i)));
-                }
-            }
-
-            for (int i = 0; i < images.size(); i++) {
-                imagesBitmaps.add(useFTP.ftpDownloadImage(images.get(i), "UserProjectsActivity"));
-            }
-
-            result = "MyProjects";
-
-            tempJSON = result;
-            return result;
-
-
-        } else if (type.equals("getLogins")) {
-            String result;
-
-            output = useFTP.ftpDownloadFileWithLogins("RegisterActivity");
-            result = "Logins";
-            tempJSON = result;
-            return result;
-
-
-        } else if (type.equals("updateLogins")) {
-            String result;
-
-            useFTP.ftpUploadFileWithLogins(params[1], "RegisterActivity");
-            result = "";
-            tempJSON = result;
-            return result;
+            default:
         }
+
         return null;
     }
 
@@ -546,57 +530,63 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        String temp = "Login success. Welcome!";
 
-        if (result.equals(temp)) {
-            final Downloader downloader = new Downloader(context, projects_url);
-            downloader.execute();
+        switch (result) {
+            case "Login success. Welcome!":
+                final Downloader downloader = new Downloader(context, projects_url);
+                downloader.execute();
 
-            Intent intent = new Intent(context, RootActivity.class);
-            context.startActivity(intent);
-            Toast.makeText(context, "Zalogowano poprawnie.", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, RootActivity.class);
+                context.startActivity(intent);
+                Toast.makeText(context, "Zalogowano poprawnie.", Toast.LENGTH_SHORT).show();
+                break;
 
-        }  else if (result.equals("Logins")) {
-            ((RegisterActivity) context).loginsDownloaded = output;
+            case "Logins":
+                ((RegisterActivity) context).loginsDownloaded = output;
+                break;
 
-        } else if (result.equals("MyProjects")) {
-            ListViewAdapterUser lviewAdapter;
-            lviewAdapter = new ListViewAdapterUser(activity, ids, myProjects, likes, dates, imagesBitmaps);
-            listView.setAdapter(lviewAdapter);
+            case "MyProjects":
+                ListViewAdapterUser lviewAdapter;
+                lviewAdapter = new ListViewAdapterUser(activity, ids, myProjects, likes, dates, imagesBitmaps);
+                listView.setAdapter(lviewAdapter);
 
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    TextView textView = (TextView) view.findViewById(R.id.textViewIds);
-                    if (ids.contains(textView.getText() + "")) {
-                        position = ids.indexOf(textView.getText() + "");
-                    } else {
-                        position = -1;
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        TextView textView = (TextView) view.findViewById(R.id.textViewIds);
+                        if (ids.contains(textView.getText() + "")) {
+                            position = ids.indexOf(textView.getText() + "");
+                        } else {
+                            position = -1;
+                        }
+                        if (position != -1) {
+                            Intent intent = new Intent(activity, UserProjectActivity.class);
+                            intent.putExtra("subject", parser.subjects.get(indexs.get(position)));
+                            intent.putExtra("description", parser.descriptions.get(indexs.get(position)));
+                            intent.putExtra("location", parser.locations.get(indexs.get(position)));
+                            intent.putExtra("date", parser.dates.get(indexs.get(position)));
+                            intent.putExtra("image", parser.images.get(indexs.get(position)));
+                            intent.putExtra("id", parser.ids.get(indexs.get(position)));
+                            intent.putExtra("likes", parser.likes.get(indexs.get(position)));
+                            intent.putExtra("likesids", parser.likesids.get(indexs.get(position)));
+                            intent.putExtra("author", parser.authors.get(indexs.get(position)));
+                            intent.putExtra("author_key", parser.authors_keys.get(indexs.get(position)));
+                            intent.putExtra("likesnames", parser.likesNames.get(indexs.get(position)));
+                            activity.startActivity(intent);
+                        }
                     }
-                    if (position != -1) {
-                        Intent intent = new Intent(activity, UserProjectActivity.class);
-                        intent.putExtra("subject", parser.subjects.get(indexs.get(position)));
-                        intent.putExtra("description", parser.descriptions.get(indexs.get(position)));
-                        intent.putExtra("location", parser.locations.get(indexs.get(position)));
-                        intent.putExtra("date", parser.dates.get(indexs.get(position)));
-                        intent.putExtra("image", parser.images.get(indexs.get(position)));
-                        intent.putExtra("id", parser.ids.get(indexs.get(position)));
-                        intent.putExtra("likes", parser.likes.get(indexs.get(position)));
-                        intent.putExtra("likesids", parser.likesids.get(indexs.get(position)));
-                        intent.putExtra("author", parser.authors.get(indexs.get(position)));
-                        intent.putExtra("author_key", parser.authors_keys.get(indexs.get(position)));
-                        intent.putExtra("likesnames", parser.likesNames.get(indexs.get(position)));
-                        activity.startActivity(intent);
-                    }
-                }
-            });
+                });
+                break;
 
-        } else if (result.contains("")) {
+            case "":
 
-        } else {
-            result = result.replaceAll("<", "");
-            Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+                break;
+
+            default:
+                result = result.replaceAll("<", "");
+                Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
         }
+
     }
 
     @Override

@@ -1,9 +1,7 @@
 package com.civicproject.civicproject;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
