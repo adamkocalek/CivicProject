@@ -500,7 +500,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 return "";
 
             case "getImage":
-                outputBitmap = useFTP.ftpDownloadImage(params[1], "UserProjectsActivity");
+                outputBitmap = useFTP.ftpDownloadImage(params[1], params[2]);
+                outputString = params[2];
                 return "Image";
 
             case "getMyProjects":
@@ -551,7 +552,18 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 break;
 
             case "Image":
-                ((UserProjectActivity) context).imageViewPicture.setImageBitmap(outputBitmap);
+                switch (outputString) {
+                    case "ProjectActivity":
+                        ((ProjectActivity) context).imageViewPicture.setImageBitmap(outputBitmap);
+                        break;
+                    
+                    case "UserProjectActivity":
+                        ((UserProjectActivity) context).imageViewPicture.setImageBitmap(outputBitmap);
+                        break;
+
+                    default:
+                }
+
                 break;
 
             case "MyProjects":

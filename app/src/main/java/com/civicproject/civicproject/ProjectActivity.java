@@ -90,7 +90,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
 
         image = intent.getStringExtra("image");
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute("getImage", image);
+        backgroundWorker.execute("getImage", image, "ProjectActivity");
 
         String location = intent.getStringExtra("location");
         String[] splited = location.split("\\s+");

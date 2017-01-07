@@ -91,7 +91,7 @@ public class UserProjectActivity extends AppCompatActivity implements View.OnCli
 
         image = intent.getStringExtra("image");
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute("getImage", image);
+        backgroundWorker.execute("getImage", image, "UserProjectActivity");
 
         SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
 
