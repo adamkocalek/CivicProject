@@ -1,6 +1,8 @@
 package com.civicproject.civicproject;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -21,6 +23,7 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
     String loginsDownloaded = null, loginsUptaded = null;
     private Validator validator = null;
+
 
     @Override
     public void onBackPressed() {
@@ -46,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         validator = new Validator();
 
         ftpclient = new FTPClientFunctions();
+
         ftpDownloadFileWithLogins();
 
         //BackgroundWorker backgroundWorker = new BackgroundWorker(this);
@@ -62,6 +66,15 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void onRegisterButtonClick(View view) {
+        boolean networkTest = isOnline();
+
+        if(networkTest){
+            Log.d("", "++++");
+        }
+        else{
+            Log.d("", "----");
+        }
+
         String str_name = etRegisterName.getText().toString();
         String str_surname = etRegisterSurname.getText().toString();
         String str_age = etRegisterAge.getText().toString();
@@ -187,5 +200,11 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         }).start();
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        android.net.NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }
