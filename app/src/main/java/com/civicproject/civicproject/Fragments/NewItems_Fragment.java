@@ -1,33 +1,32 @@
 package com.civicproject.civicproject.Fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.civicproject.civicproject.Downloader;
 import com.civicproject.civicproject.ListViewAdapter;
 import com.civicproject.civicproject.Parser;
 import com.civicproject.civicproject.ProjectActivity;
 import com.civicproject.civicproject.R;
-import com.civicproject.civicproject.RootActivity;
 
 public class NewItems_Fragment extends Fragment {
     private Parser parser = null;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.new_frag_layout, null);
+        final View view = inflater.inflate(R.layout.new_frag_layout, null);
 
         final ListView listView_new = (ListView) view.findViewById(R.id.listView_new);
         parser = new Parser();
@@ -36,6 +35,15 @@ public class NewItems_Fragment extends Fragment {
         lviewAdapter = new ListViewAdapter(getActivity(), parser.ids, parser.subjects, parser.authors, parser.likes, parser.dates);
 
         listView_new.setAdapter(lviewAdapter);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.new_frag_swipe);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Toast.makeText(view.getContext(),"Refresh Test", Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         listView_new.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

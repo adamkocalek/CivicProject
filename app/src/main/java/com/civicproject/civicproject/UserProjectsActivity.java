@@ -2,15 +2,18 @@ package com.civicproject.civicproject;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 public class UserProjectsActivity extends AppCompatActivity {
     ListView listViewMyProjects;
     String author_key;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -40,6 +43,15 @@ public class UserProjectsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.user_projects_swipe);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Toast.makeText(getApplicationContext(),"Refresh Test", Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         listViewMyProjects = (ListView) findViewById(R.id.listViewMyProjects);
 

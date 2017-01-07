@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.civicproject.civicproject.ListViewAdapter;
 import com.civicproject.civicproject.Parser;
@@ -25,12 +27,14 @@ import java.util.Map;
 
 public class PopularItems_Fragment extends Fragment {
     private Parser parser = null;
+    SwipeRefreshLayout swipeRefreshLayout;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.popular_frag_layout, null);
+        final View view = inflater.inflate(R.layout.popular_frag_layout, null);
 
         final HashMap<Integer, String> mapLikes = new HashMap<Integer, String>();
         final List sortedList;
@@ -68,6 +72,15 @@ public class PopularItems_Fragment extends Fragment {
             ListViewAdapter lviewAdapter;
             lviewAdapter = new ListViewAdapter(getActivity(), ids, subjects, authors, likes, dates);
             listView_popular.setAdapter(lviewAdapter);
+
+            swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.popular_frag_swipe);
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    Toast.makeText(view.getContext(),"Refresh Test", Toast.LENGTH_SHORT).show();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            });
 
             listView_popular.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
