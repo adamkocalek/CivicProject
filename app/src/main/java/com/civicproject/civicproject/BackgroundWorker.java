@@ -30,7 +30,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     private Context context;
     private Activity activity;
     private ListView listView;
-    private String output;
+    private String outputString;
+    private Bitmap outputBitmap;
     private ArrayList<String> myProjects = new ArrayList<>(), ids = new ArrayList<>(), likes = new ArrayList<>(), dates = new ArrayList<>(), images = new ArrayList<>();
     private ArrayList<Integer> indexs = new ArrayList<>();
     private ArrayList<Bitmap> imagesBitmaps = new ArrayList<>();
@@ -407,7 +408,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     inputStream.close();
                     httpURLConnection.disconnect();
                     tempJSON = result;
-                    return result;
+                    return "";
 
                 } catch (MalformedURLException e) {
                     Log.d(TAG, NetworkException);
@@ -490,6 +491,18 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 }
                 break;
 
+            case "getLogins":
+                outputString = useFTP.ftpDownloadFileWithLogins("RegisterActivity");
+                return "Logins";
+
+            case "updateLogins":
+                useFTP.ftpUploadFileWithLogins(params[1], "RegisterActivity");
+                return "";
+
+            case "getImage":
+                outputBitmap = useFTP.ftpDownloadImage(params[1], "UserProjectsActivity");
+                return "Image";
+
             case "getMyProjects":
                 String author_key = params[1];
 
@@ -508,14 +521,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     imagesBitmaps.add(useFTP.ftpDownloadImage(images.get(i), "UserProjectsActivity"));
                 }
                 return "MyProjects";
-
-            case "getLogins":
-                output = useFTP.ftpDownloadFileWithLogins("RegisterActivity");
-                return "Logins";
-
-            case "updateLogins":
-                useFTP.ftpUploadFileWithLogins(params[1], "RegisterActivity");
-                return "";
 
             default:
         }
@@ -542,7 +547,11 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 break;
 
             case "Logins":
-                ((RegisterActivity) context).loginsDownloaded = output;
+                ((RegisterActivity) context).loginsDownloaded = outputString;
+                break;
+
+            case "Image":
+                ((UserProjectActivity) context).imageViewPicture.setImageBitmap(outputBitmap);
                 break;
 
             case "MyProjects":

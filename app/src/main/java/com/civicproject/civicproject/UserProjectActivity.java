@@ -27,8 +27,6 @@ import java.util.Locale;
 
 public class UserProjectActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Parser parser = new Parser();
-
     Button buttonEditProject, buttonDeleteProject;
     ImageButton buttonLikeProject;
     TextView textViewLocation, textViewDate, textViewLike, textViewLikesNames;
@@ -37,10 +35,6 @@ public class UserProjectActivity extends AppCompatActivity implements View.OnCli
     EditText editTextSubject, editTextDesctiption;
     ImageView imageViewPicture;
     String id, author_key, image, likesidss, author_id, author, likesnamestemp;
-    Bitmap imageBitmap;
-
-    private FTPClientFunctions ftpclient = null;
-    private static final String TAG = "UserProjectActivity";
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -83,8 +77,6 @@ public class UserProjectActivity extends AppCompatActivity implements View.OnCli
         buttonDeleteProject = (Button) findViewById(R.id.buttonDeleteProject);
         textViewDate = (TextView) findViewById(R.id.textViewDate);
 
-        ftpclient = new FTPClientFunctions();
-
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         editTextSubject.setText(intent.getStringExtra("subject"));
@@ -95,11 +87,11 @@ public class UserProjectActivity extends AppCompatActivity implements View.OnCli
         likesidss = intent.getStringExtra("likesids");
         likesnamestemp = intent.getStringExtra("likesnames");
         author_key = intent.getStringExtra("author_key");
-
         toolbar.setTitle(intent.getStringExtra("subject"));
 
         image = intent.getStringExtra("image");
-        ftpDownloadImage(image);
+        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+        backgroundWorker.execute("getImage", image);
 
         SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
 
@@ -212,36 +204,5 @@ public class UserProjectActivity extends AppCompatActivity implements View.OnCli
             return;
         }
         locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
-    }
-
-    public void ftpDownloadImage(final String srcFilePath) {
-        new Thread(new Runnable() {
-            public void run() {
-                boolean status = false;
-                status = ftpclient.ftpConnect("serwer1633804.home.pl", "serwer1633804", "33murs0tKiby", 21);
-                if (status == true) {
-                    Log.d(TAG, "Połączenie udane");
-                } else {
-                    Log.d(TAG, "Połączenie nieudane");
-                }
-
-                ftpclient.ftpChangeDirectory("/images/");
-                imageBitmap = ftpclient.ftpDownloadBitmap(srcFilePath);
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        imageViewPicture.setImageBitmap(imageBitmap);
-                    }
-                });
-
-                status = ftpclient.ftpDisconnect();
-                if (status == true) {
-                    Log.d(TAG, "Połączenie zakończone");
-                } else {
-                    Log.d(TAG, "Połączenie nie mogło zostać zakończone");
-                }
-            }
-        }).start();
     }
 }

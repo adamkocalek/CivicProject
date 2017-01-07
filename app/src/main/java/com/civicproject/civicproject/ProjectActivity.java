@@ -34,9 +34,6 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
     LocationListener locationListener;
     ImageView imageViewPicture;
     String id, author_key, image, likesidss, author_id, author, likesnamestemp;
-    Bitmap imageBitmap;
-    private FTPClientFunctions ftpclient = null;
-    private static final String TAG = "ProjectActivity";
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -79,8 +76,6 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         buttonDeleteProject = (Button) findViewById(R.id.buttonDeleteProject);
         textViewDate = (TextView) findViewById(R.id.textViewDate);
 
-        ftpclient = new FTPClientFunctions();
-
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         editTextSubject.setText(intent.getStringExtra("subject"));
@@ -94,7 +89,8 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         toolbar.setTitle(intent.getStringExtra("subject"));
 
         image = intent.getStringExtra("image");
-        ftpDownloadImage(image);
+        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+        backgroundWorker.execute("getImage", image);
 
         String location = intent.getStringExtra("location");
         String[] splited = location.split("\\s+");
@@ -190,36 +186,5 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
             return;
         }
         locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
-    }
-
-    public void ftpDownloadImage(final String srcFilePath) {
-        new Thread(new Runnable() {
-            public void run() {
-                boolean status = false;
-                status = ftpclient.ftpConnect("serwer1633804.home.pl", "serwer1633804", "33murs0tKiby", 21);
-                if (status == true) {
-                    Log.d(TAG, "Połączenie udane");
-                } else {
-                    Log.d(TAG, "Połączenie nieudane");
-                }
-
-                ftpclient.ftpChangeDirectory("/images/");
-                imageBitmap = ftpclient.ftpDownloadBitmap(srcFilePath);
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        imageViewPicture.setImageBitmap(imageBitmap);
-                    }
-                });
-
-                status = ftpclient.ftpDisconnect();
-                if (status == true) {
-                    Log.d(TAG, "Połączenie zakończone");
-                } else {
-                    Log.d(TAG, "Połączenie nie mogło zostać zakończone");
-                }
-            }
-        }).start();
     }
 }
