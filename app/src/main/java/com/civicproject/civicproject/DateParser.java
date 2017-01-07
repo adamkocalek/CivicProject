@@ -17,8 +17,8 @@ public class DateParser {
         String statement = "null";
 
         Calendar actualDate = Calendar.getInstance();
-        actualDate.clear();
-        actualDate.set(2016, 9, 18);
+//        actualDate.clear();
+//        actualDate.set(2016, 9, 18);
 
         SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
         String year_string = yearFormat.format(actualDate.getTime());
@@ -37,12 +37,8 @@ public class DateParser {
         // warunek 1
         if (actualDate.before(startDate)) {
             daysCounterBefore = daysCounter(actualDate.getTime(), startDate.getTime());
-            if (daysCounterBefore > 30) {
-                statement = "hidden";
-            } else {
-                setDays(daysCounterBefore);
-                statement = "Głosowanie rozpocznie się za " + getDays() + " dni. Aby uzyskać więcej informacji...";
-            }
+            setDays(daysCounterBefore);
+            statement = "Głosowanie rozpocznie się za " + getDays() + " dni. Aby uzyskać więcej informacji...";
         }
 
         // warunek 2
@@ -59,7 +55,7 @@ public class DateParser {
 
         // warunek 4
         if (actualDate.after(endDate)) {
-            statement = "hidden";
+            statement = "W tym roku głosowanie już się odbyło.";
         }
 
         return statement;

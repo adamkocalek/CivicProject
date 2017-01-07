@@ -85,6 +85,7 @@
         <activity
             android:name=".UserProjectActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".VoteActivity"></activity>
     </application>
 
 </manifest>

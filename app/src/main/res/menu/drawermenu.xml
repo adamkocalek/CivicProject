@@ -45,6 +45,11 @@
             android:id="@+id/nav_about"
             android:icon="@drawable/drawer_about_icon"
             android:title="O Aplikacji" />
+
+        <item
+            android:id="@+id/nav_voting"
+            android:icon="@drawable/drawer_about_icon"
+            android:title="O Głosowaniu" />
     </group>
 
     <group android:id="@+id/group_logout">

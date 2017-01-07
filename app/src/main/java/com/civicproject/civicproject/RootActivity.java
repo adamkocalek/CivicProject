@@ -91,6 +91,11 @@ public class RootActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
 
+                else if(menuItem.getItemId() == R.id.nav_voting){
+                    Intent intent = new Intent(RootActivity.this, VoteActivity.class);
+                    startActivity(intent);
+                }
+
                 else if(menuItem.getItemId() == R.id.nav_logout){
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -3,9 +3,12 @@ package com.civicproject.civicproject;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.support.v7.view.ContextThemeWrapper;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -50,6 +53,9 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     String projects_url = "http://188.128.220.60/projects.php";
     private Parser parser = new Parser();
     private UseMyFTPClientFunctions useFTP = new UseMyFTPClientFunctions();
+    String NetworkException = "Błąd połączenia z internetem";
+    String IOException = "Nieoczekiwany błąd, IOException";
+    String TAG = "+++++ TAG +++++";
 
     @Override
     protected String doInBackground(String... params) {
@@ -66,6 +72,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         String deleteProject_url = "http://188.128.220.60/deleteProject.php";
 
         if (type.equals("login")) {
+            String result = "";
             try {
                 String user_name = params[1];
                 String password = params[2];
@@ -84,23 +91,29 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   //było iso-8859-1
-                String result = "";
                 String line = "";
+
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
                 }
+
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
                 System.out.println(result);
-                return result;
+
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                Log.d(TAG, NetworkException);
+                result = "null";
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.d(TAG,IOException);
+                result = "null";
             }
+            return result;
+
 
         } else if (type.equals("register")) {
+            String result = "";
             try {
                 String name = params[1];
                 String surname = params[2];
@@ -129,21 +142,26 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   ///było iso-8859-1
-                String result = "";
                 String line = "";
+
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
                 }
+
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
                 System.out.println(result);
-                return result;
+
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                Log.d(TAG,NetworkException);
+                result = "null";
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.d(TAG,IOException);
+                result = "null";
             }
+            return result;
+
 
         } else if (type.equals("addProject")) {
             try {
@@ -443,8 +461,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         } else if (type.equals("getMyProjects")) {
             String result = "Fault";
 
-
-
             String author_key = params[1];
 
             for (int i = 0; i < parser.subjects.size(); i++) {
@@ -473,7 +489,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPreExecute() {
-        //alertDialog = new AlertDialog.Builder(context).create();
+        super.onPreExecute();
     }
 
     @Override
@@ -487,6 +503,15 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             Intent intent = new Intent(context, RootActivity.class);
             context.startActivity(intent);
             Toast.makeText(context, "Zalogowano poprawnie.", Toast.LENGTH_SHORT).show();
+
+        } else if (result.equals("null")) {
+            new android.support.v7.app.AlertDialog.Builder(new ContextThemeWrapper(context, R.style.Dialog_Theme))
+                    .setTitle("Wystąpił błąd!").setMessage("Sprawdź swoje połączenie internetowe i spróbuj ponownie.")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            return;
+                        }
+                    }).show();
 
         } else if (result.contains("[{")) {
 
@@ -521,6 +546,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     }
                 }
             });
+
         } else {
             result = result.replaceAll("<", "");
             Toast.makeText(context, result, Toast.LENGTH_SHORT).show();

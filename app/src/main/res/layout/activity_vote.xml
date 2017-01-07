@@ -2,47 +2,46 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_about"
+    android:id="@+id/activity_vote"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.civicproject.civicproject.AboutActivity">
+    tools:context="com.civicproject.civicproject.VoteActivity">
 
     <LinearLayout
-        android:layout_above="@+id/description"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/dateContainer"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/toolbar_rules"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_drawer"
-            android:id="@+id/toolbar_about"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:title="O Aplikacji" />
+            app:title="Głosowanie" />
 
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginTop="20dp"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/app_logo"
-            android:id="@+id/imageView" />
+            android:layout_marginTop="20dp"
+            app:srcCompat="@drawable/app_logo" />
 
         <TextView
-            android:text=""
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textColor="#878787"
+            android:id="@+id/tvVote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
             android:gravity="center"
-            android:id="@+id/tvAboutText" />
+            android:text=""
+            android:textColor="#878787" />
 
     </LinearLayout>
 
@@ -50,21 +49,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        android:id="@+id/description"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:id="@+id/dateContainer"
+        android:background="@drawable/custom_border">
 
         <TextView
-            android:id="@+id/tvAboutUs"
-            android:gravity="center"
+            android:id="@+id/tvDate"
             android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
             android:text=""
-            android:textColor="#878787"
-            android:textSize="12sp" />
+            android:textColor="@color/black" />
 
     </LinearLayout>
 

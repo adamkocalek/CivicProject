@@ -97,8 +97,8 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Wybrany login już istnieje.", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        editTextTelephone.setError("Numer telefonu musi być 9 cyfrowy (XXX-XXX-XXX).");
-                        Toast.makeText(getApplicationContext(), "Numer telefonu musi być 9 cyfrowy (XXX-XXX-XXX).", Toast.LENGTH_SHORT).show();
+                        editTextTelephone.setError("Numer telefonu musi być 9 cyfrowy (XXXXXXXXX).");
+                        Toast.makeText(getApplicationContext(), "Numer telefonu musi być 9 cyfrowy (XXXXXXXXX).", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     editTextEmail.setError("Niepoprawny adres email.");

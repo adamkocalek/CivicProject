@@ -38,6 +38,7 @@ public class UserProjectActivity extends AppCompatActivity implements View.OnCli
     ImageView imageViewPicture;
     String id, author_key, image, likesidss, author_id, author, likesnamestemp;
     Bitmap imageBitmap;
+
     private MyFTPClientFunctions ftpclient = null;
     private static final String TAG = "UserProjectActivity";
 
