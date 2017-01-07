@@ -1,10 +1,13 @@
 package com.civicproject.civicproject;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -12,8 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.Scanner;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -46,14 +47,18 @@ public class RegisterActivity extends AppCompatActivity {
 
         validator = new Validator();
 
-        if (isOnline()) {
-            // POBIERANIE LOGINÓW
-            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-            backgroundWorker.execute("getLogins");
-        } else {
-            Toast.makeText(getApplicationContext(), "Brak połączenia z internetem.", Toast.LENGTH_SHORT).show();
-            onBackPressed();
-        }
+        // CZĘŚĆ PATRYKA
+//        if (isOnline()) {
+//            // POBIERANIE LOGINÓW
+//            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+//            backgroundWorker.execute("getLogins");
+//        } else {
+//            Toast.makeText(getApplicationContext(), "Brak połączenia z internetem.", Toast.LENGTH_SHORT).show();
+//            onBackPressed();
+//        }
+
+        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+        backgroundWorker.execute("getLogins");
 
         tvRegisterRules.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +70,23 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void onRegisterButtonClick(View view) {
+
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(new ContextThemeWrapper(RegisterActivity.this, R.style.Dialog_Theme))
+                .setTitle("Wystąpił błąd!")
+                .setMessage("Problem z dostępem do internetu. Sprawdź połączenie i spróbuj ponownie później.")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        boolean networkCheck = isOnline();
+        if (!networkCheck) {
+            Log.d("LOG", "Błąd połączenia z internetem.");
+            alertDialog.show();
+            return;
+        }
+
         String str_name = etRegisterName.getText().toString();
         String str_surname = etRegisterSurname.getText().toString();
         String str_age = etRegisterAge.getText().toString();
@@ -91,37 +113,34 @@ public class RegisterActivity extends AppCompatActivity {
                         if (i == 0) {
                             loginsUptaded = loginsDownloaded + "\n" + str_username;
 
-                            if (isOnline()) {
-                                // UPLOAD LOGINÓW
-                                BackgroundWorker backgroundWorker1 = new BackgroundWorker(this);
-                                backgroundWorker1.execute("updateLogins", loginsUptaded);
+                            // UPLOAD LOGINÓW
+                            BackgroundWorker backgroundWorker1 = new BackgroundWorker(this);
+                            backgroundWorker1.execute("updateLogins", loginsUptaded);
 
-                                BackgroundWorker backgroundWorker2 = new BackgroundWorker(this);
-                                backgroundWorker2.execute("register", validator.trimSpaces(str_name), validator.trimSpaces(str_surname), validator.trimSpaces(str_age), validator.trimSpaces(str_username), validator.trimSpaces(str_password), validator.trimSpaces(str_telephone), validator.trimSpaces(str_email));
+                            BackgroundWorker backgroundWorker2 = new BackgroundWorker(this);
+                            backgroundWorker2.execute("register", validator.trimSpaces(str_name), validator.trimSpaces(str_surname), validator.trimSpaces(str_age), validator.trimSpaces(str_username), validator.trimSpaces(str_password), validator.trimSpaces(str_telephone), validator.trimSpaces(str_email));
 
-                                Toast toast = Toast.makeText(getApplicationContext(), "Zarejestrowano, możesz się zalogować ; )", Toast.LENGTH_LONG);
-                                toast.show();
-                                Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                RegisterActivity.this.startActivity(myIntent);
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Brak połączenia z internetem.", Toast.LENGTH_SHORT).show();
-                            }
+                            Toast toast = Toast.makeText(getApplicationContext(), "Zarejestrowano, możesz się zalogować ; )", Toast.LENGTH_LONG);
+                            toast.show();
+                            Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+                            RegisterActivity.this.startActivity(myIntent);
+
 
                         } else {
                             etRegisterUsername.setError("Wybrany login już istnieje.");
-                            //Toast.makeText(getApplicationContext(), "Wybrany login już istnieje.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Niepoprawnie wypełnione pola.", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        editTextTelephone.setError("Numer telefonu musi być 9 cyfrowy (XXXXXXXXX).");
-                        //Toast.makeText(getApplicationContext(), "Numer telefonu musi być 9 cyfrowy (XXXXXXXXX).", Toast.LENGTH_SHORT).show();
+                        editTextTelephone.setError("Numer telefonu musi być 9 cyfrowy (XXX-XXX-XXX).");
+                        Toast.makeText(getApplicationContext(), "Niepoprawnie wypełnione pola.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     editTextEmail.setError("Niepoprawny adres email.");
-                    //Toast.makeText(getApplicationContext(), "Niepoprawny adres email.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Niepoprawnie wypełnione pola.", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 etRegisterPassword.setError("Hasło musi mieć długość od 6 do 20 znaków i zawierać przynajmniej jedną cyfrę.");
-                //Toast.makeText(getApplicationContext(), "Hasło musi mieć długość od 6 do 20 znaków i zawierać przynajmniej jedną cyfrę.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Niepoprawnie wypełnione pola.", Toast.LENGTH_SHORT).show();
             }
         } else {
             if (TextUtils.isEmpty(validator.trimSpaces(str_name))) {

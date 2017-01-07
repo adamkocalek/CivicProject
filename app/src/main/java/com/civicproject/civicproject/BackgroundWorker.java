@@ -34,7 +34,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     private Activity activity;
     private ListView listView;
     private String output;
-    private AlertDialog alertDialog;
     private ArrayList<String> myProjects = new ArrayList<>(), ids = new ArrayList<>(), likes = new ArrayList<>(), dates = new ArrayList<>(), images = new ArrayList<>();
     private ArrayList<Integer> indexs = new ArrayList<>();
     private ArrayList<Bitmap> imagesBitmaps = new ArrayList<>();
@@ -54,9 +53,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     private String projects_url = "http://188.128.220.60/projects.php";
     private Parser parser = new Parser();
     private FTPClientFunctionsUses useFTP = new FTPClientFunctionsUses();
-    private String NetworkException = "Błąd połączenia z internetem";
-    private String IOException = "Nieoczekiwany błąd, IOException";
-    private String TAG = "+++++ TAG +++++";
 
     @Override
     protected String doInBackground(String... params) {
@@ -72,8 +68,12 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         String deleteUser_url = "http://188.128.220.60/deleteUser.php";
         String deleteProject_url = "http://188.128.220.60/deleteProject.php";
 
+        String NetworkException = "Błąd połączenia z internetem";
+        String IOException = "Nieoczekiwany błąd, IOException";
+        String TAG = "LOG";
+
         if (type.equals("login")) {
-            String result = "";
+
             try {
                 String user_name = params[1];
                 String password = params[2];
@@ -92,6 +92,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   //było iso-8859-1
+                String result = "";
                 String line = "";
 
                 while ((line = bufferedReader.readLine()) != null) {
@@ -102,19 +103,17 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 inputStream.close();
                 httpURLConnection.disconnect();
                 System.out.println(result);
+                return result;
 
             } catch (MalformedURLException e) {
                 Log.d(TAG, NetworkException);
-                result = "null";
             } catch (IOException e) {
                 Log.d(TAG, IOException);
-                result = "null";
             }
-            return result;
 
 
         } else if (type.equals("register")) {
-            String result = "";
+
             try {
                 String name = params[1];
                 String surname = params[2];
@@ -143,6 +142,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   ///było iso-8859-1
+                String result = "";
                 String line = "";
 
                 while ((line = bufferedReader.readLine()) != null) {
@@ -153,15 +153,13 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 inputStream.close();
                 httpURLConnection.disconnect();
                 System.out.println(result);
+                return result;
 
             } catch (MalformedURLException e) {
                 Log.d(TAG, NetworkException);
-                result = "null";
             } catch (IOException e) {
                 Log.d(TAG, IOException);
-                result = "null";
             }
-            return result;
 
 
         } else if (type.equals("addProject")) {
@@ -195,19 +193,23 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));    //było iso-8859-1
                 String result = "";
                 String line = "";
+
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
                 }
+
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
                 System.out.println(result);
                 return result;
+
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                Log.d(TAG, NetworkException);
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.d(TAG, IOException);
             }
+
 
         } else if (type.equals("updateProject")) {
             try {
@@ -232,19 +234,23 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   //było iso-8859-1
                 String result = "";
                 String line = "";
+
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
                 }
+
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
                 System.out.println(result);
                 return result;
+
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                Log.d(TAG, NetworkException);
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.d(TAG, IOException);
             }
+
 
         } else if (type.equals("updateProjectLikes")) {
             try {
@@ -271,19 +277,24 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
                 String result = "";
                 String line = "";
+
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
                 }
+
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
                 System.out.println(result);
                 return result;
+
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                Log.d(TAG, NetworkException);
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.d(TAG, IOException);
             }
+
+
         } else if (type.equals("updateProjectPermission")) {
             try {
                 String permited = params[1];
@@ -305,19 +316,24 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
                 String result = "";
                 String line = "";
+
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
                 }
+
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
                 System.out.println(result);
                 return result;
+
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                Log.d(TAG, NetworkException);
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.d(TAG, IOException);
             }
+
+
         } else if (type.equals("updateUser")) {
             try {
                 String name = params[1];
@@ -349,19 +365,24 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   //było iso-8859-1
                 String result = "";
                 String line = "";
+
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
                 }
+
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
                 System.out.println(result);
                 return result;
+
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                Log.d(TAG, NetworkException);
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.d(TAG, IOException);
             }
+
+
         } else if (type.equals("getUser")) {
             try {
                 String user_name = params[1];
@@ -381,19 +402,24 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
                 String result = "";
                 String line = "";
+
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
                 }
+
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
                 tempJSON = result;
                 return result;
+
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                Log.d(TAG, NetworkException);
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.d(TAG, IOException);
             }
+
+
         } else if (type.equals("deleteUser")) {
             try {
                 String id = params[1];
@@ -413,19 +439,23 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));    //było iso-8859-1
                 String result = "";
                 String line = "";
+
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
                 }
+
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
                 tempJSON = result;
                 return result;
+
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                Log.d(TAG, NetworkException);
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.d(TAG, IOException);
             }
+
 
         } else if (type.equals("deleteProject")) {
             try {
@@ -446,19 +476,24 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   //było iso-8859-1
                 String result = "";
                 String line = "";
+
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
                 }
+
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
                 tempJSON = result;
                 return result;
+
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                Log.d(TAG, NetworkException);
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.d(TAG, IOException);
             }
+
+
         } else if (type.equals("getMyProjects")) {
             String result;
             String author_key = params[1];
@@ -482,26 +517,25 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
             tempJSON = result;
             return result;
+
+
         } else if (type.equals("getLogins")) {
             String result;
 
             output = useFTP.ftpDownloadFileWithLogins("RegisterActivity");
-
             result = "Logins";
-
             tempJSON = result;
             return result;
+
+
         } else if (type.equals("updateLogins")) {
             String result;
 
             useFTP.ftpUploadFileWithLogins(params[1], "RegisterActivity");
-
             result = "";
-
             tempJSON = result;
             return result;
         }
-
         return null;
     }
 
@@ -522,16 +556,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             context.startActivity(intent);
             Toast.makeText(context, "Zalogowano poprawnie.", Toast.LENGTH_SHORT).show();
 
-        } else if (result.equals("null")) {
-            new android.support.v7.app.AlertDialog.Builder(new ContextThemeWrapper(context, R.style.Dialog_Theme))
-                    .setTitle("Wystąpił błąd!").setMessage("Sprawdź swoje połączenie internetowe i spróbuj ponownie.")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            return;
-                        }
-                    }).show();
-
-        } else if (result.equals("Logins")) {
+        }  else if (result.equals("Logins")) {
             ((RegisterActivity) context).loginsDownloaded = output;
 
         } else if (result.equals("MyProjects")) {

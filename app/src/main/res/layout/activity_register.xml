@@ -20,24 +20,21 @@
             android:ems="10"
             android:hint="Imię"
             android:inputType="textPersonName"
-            android:textColorHint="@color/colorAccent"
-            android:textCursorDrawable="@drawable/cursor" />
+            android:textColorHint="@color/colorAccent" />
 
         <EditText
             android:id="@+id/etRegisterSurname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nazwisko"
-            android:textColorHint="@color/colorAccent"
-            android:textCursorDrawable="@drawable/cursor" />
+            android:textColorHint="@color/colorAccent" />
 
         <EditText
             android:id="@+id/etRegisterUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Login"
-            android:textColorHint="@color/colorAccent"
-            android:textCursorDrawable="@drawable/cursor" />
+            android:textColorHint="@color/colorAccent" />
 
         <EditText
             android:id="@+id/etRegisterPassword"
@@ -46,8 +43,7 @@
             android:ems="10"
             android:hint="Hasło"
             android:inputType="textPassword"
-            android:textColorHint="@color/colorAccent"
-            android:textCursorDrawable="@drawable/cursor" />
+            android:textColorHint="@color/colorAccent" />
 
         <EditText
             android:id="@+id/etRegisterAge"
@@ -56,8 +52,7 @@
             android:ems="10"
             android:hint="Wiek"
             android:inputType="number"
-            android:textColorHint="@color/colorAccent"
-            android:textCursorDrawable="@drawable/cursor" />
+            android:textColorHint="@color/colorAccent" />
 
         <EditText
             android:id="@+id/editTextTelephone"
@@ -66,8 +61,7 @@
             android:ems="10"
             android:hint="Telefon"
             android:inputType="number"
-            android:textColorHint="@color/colorAccent"
-            android:textCursorDrawable="@drawable/cursor" />
+            android:textColorHint="@color/colorAccent" />
 
         <EditText
             android:id="@+id/editTextEmail"
@@ -75,8 +69,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Email"
-            android:textColorHint="@color/colorAccent"
-            android:textCursorDrawable="@drawable/cursor" />
+            android:textColorHint="@color/colorAccent" />
 
     </LinearLayout>
 

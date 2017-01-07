@@ -1,23 +1,30 @@
 package com.civicproject.civicproject;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static com.civicproject.civicproject.R.layout.dialog;
+
 public class LoginActivity extends AppCompatActivity {
     EditText etLoginUsername, etLoginPassword;
     Button bLogin, bRegisterLink;
     TextView tvLoginAbout, tvLoginRules;
     int back;
+
 
     @Override
     public void onBackPressed() {
@@ -45,9 +52,26 @@ public class LoginActivity extends AppCompatActivity {
         tvLoginAbout = (TextView) findViewById(R.id.tvLoginAbout);
         tvLoginRules = (TextView) findViewById(R.id.tvLoginRules);
 
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(new ContextThemeWrapper(LoginActivity.this, R.style.Dialog_Theme))
+                .setTitle("Wystąpił błąd!")
+                .setMessage("Problem z dostępem do internetu. Sprawdź połączenie i spróbuj ponownie później.")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
         bRegisterLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                boolean networkCheck = isOnline();
+                if(!networkCheck){
+                    Log.d("LOG", "Błąd połączenia z internetem.");
+                    alertDialog.show();
+                    return;
+                }
+
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 LoginActivity.this.startActivity(registerIntent);
             }
@@ -72,6 +96,13 @@ public class LoginActivity extends AppCompatActivity {
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                boolean networkCheck = isOnline();
+                if(!networkCheck){
+                    Log.d("LOG", "Błąd połączenia z internetem.");
+                    alertDialog.show();
+                    return;
+                }
 
                 String username = etLoginUsername.getText().toString();
                 String password = etLoginPassword.getText().toString();
