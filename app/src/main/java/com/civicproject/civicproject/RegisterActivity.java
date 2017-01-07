@@ -55,9 +55,6 @@ public class RegisterActivity extends AppCompatActivity {
             onBackPressed();
         }
 
-        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute("getLogins");
-
         tvRegisterRules.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
