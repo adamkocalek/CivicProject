@@ -10,5 +10,5 @@
 
     <color name="header">#4F88A6</color>
     <color name="textColorSecondary">#8acfcbcb</color>
-
+    <color name="progress">#65A5FF</color>
 </resources>

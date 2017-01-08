@@ -1,6 +1,7 @@
 package com.civicproject.civicproject.Fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.civicproject.civicproject.Downloader;
 import com.civicproject.civicproject.ListViewAdapter;
 import com.civicproject.civicproject.Parser;
 import com.civicproject.civicproject.ProjectActivity;
@@ -21,6 +23,7 @@ import com.civicproject.civicproject.R;
 public class NewItems_Fragment extends Fragment {
     private Parser parser = null;
     SwipeRefreshLayout swipeRefreshLayout;
+    private String projects_url = "http://188.128.220.60/projects.php";
 
     @Nullable
     @Override
@@ -37,10 +40,21 @@ public class NewItems_Fragment extends Fragment {
         listView_new.setAdapter(lviewAdapter);
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.new_frag_swipe);
+        swipeRefreshLayout.setColorSchemeResources(R.color.progress,R.color.colorPrimary);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Toast.makeText(view.getContext(),"Refresh Test", Toast.LENGTH_SHORT).show();
+                final Downloader downloader = new Downloader(view.getContext(), projects_url);
+                downloader.execute();
+
+                parser = new Parser();
+
+                ListViewAdapter lviewAdapter;
+                lviewAdapter = new ListViewAdapter(getActivity(), parser.ids, parser.subjects, parser.authors, parser.likes, parser.dates);
+
+                listView_new.setAdapter(lviewAdapter);
+
                 swipeRefreshLayout.setRefreshing(false);
             }
         });

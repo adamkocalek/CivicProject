@@ -51,7 +51,7 @@ public class PopularItems_Fragment extends Fragment {
             mapLikes.put(i, parser.likes.get(i));
         }
 
-        if (mapLikes.size() > 2) {
+        if (mapLikes.size() > 1) {
             sortedList = sortByValue(mapLikes);
 
             for (int i = 0; i < 10; i++) {
