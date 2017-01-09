@@ -221,9 +221,9 @@ public class AddProjectActivity extends AppCompatActivity {
                 } else {
                     if (null != imageViewPicture.getDrawable()) {
                         //sightengine_CheckImageNudity();
-                        //if (!nudityResponse.equals("")) {
-                          //  try {
-                            //    if (unpackJSON(nudityResponse)) {
+                        if (!nudityResponse.equals("")) {
+                            try {
+                                if (unpackJSON(nudityResponse)) {
                                     if (!locationX.isNaN() && !locationY.isNaN()) {
                                         if (locationX <= 51.843678 && locationX >= 51.690382 && locationY <= 19.619980 && locationY >= 19.324036) {
                                             String subject = editTextSubject.getText().toString();
@@ -247,15 +247,15 @@ public class AddProjectActivity extends AppCompatActivity {
                                     } else {
                                         Toast.makeText(getApplicationContext(), "Musisz poczekać na znalezienie twojej lokalizacji...", Toast.LENGTH_LONG).show();
                                     }
-                               // } else {
-                                 //   Toast.makeText(getApplicationContext(), "Zdjęcie niezgodne z regulaminem.", Toast.LENGTH_LONG).show();
-                                //}
-                            //} catch (JSONException e) {
-                            //    e.printStackTrace();
-                           //}
-                        //} else {
-                        //    Toast.makeText(getApplicationContext(), "Autoryzacja obrazka, prosze czekać.", Toast.LENGTH_LONG).show();
-                        //}
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Zdjęcie niezgodne z regulaminem.", Toast.LENGTH_LONG).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Autoryzacja obrazka, prosze czekać.", Toast.LENGTH_LONG).show();
+                        }
                     } else {
                         Toast.makeText(getApplicationContext(), "Musisz zrobić zdjęcie zanim dodasz projekt", Toast.LENGTH_LONG).show();
                     }
