@@ -1,46 +1,46 @@
 package com.civicproject.civicproject;
 
-        import android.content.Intent;
-        import android.content.SharedPreferences;
-        import android.content.pm.PackageManager;
-        import android.location.Address;
-        import android.location.Geocoder;
-        import android.location.Location;
-        import android.location.LocationListener;
-        import android.location.LocationManager;
-        import android.net.Uri;
-        import android.os.Build;
-        import android.os.Bundle;
-        import android.provider.Settings;
-        import android.support.annotation.NonNull;
-        import android.support.v4.app.ActivityCompat;
-        import android.support.v7.app.AppCompatActivity;
-        import android.support.v7.widget.Toolbar;
-        import android.util.Log;
-        import android.view.Gravity;
-        import android.view.MenuItem;
-        import android.view.View;
-        import android.widget.AdapterView;
-        import android.widget.ArrayAdapter;
-        import android.widget.Button;
-        import android.widget.ListView;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import com.google.android.gms.appindexing.Action;
-        import com.google.android.gms.appindexing.AppIndex;
-        import com.google.android.gms.appindexing.Thing;
-        import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 
-        import org.json.JSONArray;
-        import org.json.JSONException;
-        import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-        import java.util.ArrayList;
-        import java.util.List;
-        import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
-        import static com.civicproject.civicproject.R.id.buttonCamera;
+import static com.civicproject.civicproject.R.id.buttonCamera;
 
 public class LocationActivity extends AppCompatActivity {
 
@@ -51,9 +51,10 @@ public class LocationActivity extends AppCompatActivity {
     String splited[];
     LocationManager locationManager;
     LocationListener locationListener;
-    public String Temp="";
-    private ArrayList<String> myProjects = new ArrayList<>(), ids = new ArrayList<>(), likes = new ArrayList<>(), dates = new ArrayList<>(), images = new ArrayList<>();
+    public String Temp = "";
+    private ArrayList<String> ids = new ArrayList<>(), subjects = new ArrayList<>(), authors = new ArrayList<>(), likes = new ArrayList<>(), dates = new ArrayList<>();
     private ArrayList<Integer> indexs = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,30 +86,19 @@ public class LocationActivity extends AppCompatActivity {
 
         };
 
-
         final ArrayList<String> locations = new ArrayList<>();
         final ArrayList<String> X = new ArrayList<>();
         final ArrayList<String> Y = new ArrayList<>();
-        final ArrayList<Double>  distance_temp = new ArrayList<>();
+        final ArrayList<Double> distance_temp = new ArrayList<>();
 
         //  locations = parser.locations;
-
-
-
 
         buttonAddProject = (Button) findViewById(R.id.buttonAddProject);
         buttonAddProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
                 for (int i = 0; i < parser.locations.size(); i++) {
-                    ids.add(parser.ids.get(i));
-                    myProjects.add(parser.subjects.get(i));
-                    likes.add(parser.likes.get(i));
-                    dates.add(parser.dates.get(i));
-                    images.add(parser.images.get(i));
-                    indexs.add(parser.subjects.indexOf(parser.subjects.get(i)));
                     splited = parser.locations.get(i).split("\\s");
                     locations.add(parser.locations.get(i));
                     X.add(splited[0]);
@@ -118,25 +108,40 @@ public class LocationActivity extends AppCompatActivity {
                 double lat1 = 51.731916, lon1 = 19.529735;
                 //distance = haversine(lat1, lon1, lat2, lon2);
 
-                for(int i = 0; i < parser.locations.size(); i++) {
+                for (int i = 0; i < parser.locations.size(); i++) {
                     distance = haversine(lat1, lon1, Double.parseDouble(X.get(i)), Double.parseDouble(Y.get(i)));
                     distance *= 1000;
                     //distance_temp.add(distance);
-                    if(distance <= 1000){
+                    if (distance <= 1000) {
+                        indexs.add(i);
                         //   Temp += "Nr projektu: " + i + " odl. " + distance.toString() + "\n";
 
                         distance_temp.add(distance);
                     }
                 }
 
+                for (int i = 0; i < distance_temp.size(); i++) {
+                    ids.add(parser.ids.get(indexs.get(i)));
+                    subjects.add(parser.subjects.get(indexs.get(i)));
+                    authors.add(parser.authors.get(indexs.get(i)));
+                    likes.add(parser.likes.get(indexs.get(i)));
+                    dates.add(parser.dates.get(indexs.get(i)));
+                }
+
                 setContentView(R.layout.activity_locations);
+
                 ListView locations_nearby = (ListView) findViewById(R.id.listViewMyProjects);
-                ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,distance_temp);
-                locations_nearby.setAdapter(adapter);
+
+                ListViewAdapter lviewAdapter;
+                lviewAdapter = new ListViewAdapter(LocationActivity.this, ids, subjects, authors, likes, dates);
+
+                //ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,distance_temp);
+                locations_nearby.setAdapter(lviewAdapter);
+
                 locations_nearby.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(getApplicationContext(),ProjectActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), ProjectActivity.class);
                         System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX  " + position + "  xxxxx   " + indexs.get(position));
                         intent.putExtra("subject", parser.subjects.get(indexs.get(position)));
                         intent.putExtra("description", parser.descriptions.get(indexs.get(position)));
@@ -154,22 +159,13 @@ public class LocationActivity extends AppCompatActivity {
                     }
                 });
 
-
                 // setContentView(R.layout.activity_locations);
-                for (int i=0; i < 2; i++)
-                {
-                    Toast.makeText(getApplicationContext(),"Sprawdź, czy ktoś nie ma takiego samego pomysłu ! " , Toast.LENGTH_SHORT).show();
+                for (int i = 0; i < 2; i++) {
+                    Toast.makeText(getApplicationContext(), "Sprawdź, czy ktoś nie ma takiego samego pomysłu ! ", Toast.LENGTH_SHORT).show();
 
                 }
-
-
-
-
             }
         });
-
-
-
     }
 
 
@@ -184,8 +180,6 @@ public class LocationActivity extends AppCompatActivity {
         double d = r * c;
         return d;
     }
-
-
 
 
 }
