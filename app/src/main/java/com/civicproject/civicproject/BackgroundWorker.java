@@ -12,6 +12,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -32,6 +35,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     private ListView listView;
     private String outputString;
     private Bitmap outputBitmap;
+    private Boolean outputBoolean;
     private ArrayList<String> myProjects = new ArrayList<>(), ids = new ArrayList<>(), likes = new ArrayList<>(), dates = new ArrayList<>(), images = new ArrayList<>();
     private ArrayList<Integer> indexs = new ArrayList<>();
     private ArrayList<Bitmap> imagesBitmaps = new ArrayList<>();
@@ -499,10 +503,18 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 useFTP.ftpUploadFileWithLogins(params[1], "RegisterActivity");
                 return "";
 
+            case "updateImage":
+                useFTP.ftpUploadImage(params[1], params[2]);
+                return "";
+
             case "getImage":
                 outputBitmap = useFTP.ftpDownloadImage(params[1], params[2]);
                 outputString = params[2];
                 return "Image";
+
+            case "checkImageNudity":
+                useFTP.ftpUploadImageNudity(params[1]);
+                return "ImageNudity";
 
             case "getMyProjects":
                 String author_key = params[1];
@@ -556,14 +568,28 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     case "ProjectActivity":
                         ((ProjectActivity) context).imageViewPicture.setImageBitmap(outputBitmap);
                         break;
-                    
+
                     case "UserProjectActivity":
                         ((UserProjectActivity) context).imageViewPicture.setImageBitmap(outputBitmap);
                         break;
 
                     default:
                 }
+                break;
 
+            case "ImageNudity":
+                String api_user = "63501098", api_secret = "pwQhu5WbwEHUqc2S";
+                String API_URL = "https://api.sightengine.com/1.0/nudity.json?api_user=" + api_user + "&api_secret=" + api_secret + "&url=";
+
+                AsyncHttpClient client = new AsyncHttpClient();
+                String API_URL_COMPLETE = API_URL + "http://188.128.220.60/CheckImageNudity.jpg";
+                client.get(API_URL_COMPLETE, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(String response) {
+                        Log.i("Połączenie nawiązane", "HTTP Sucess");
+                        ((AddProjectActivity) context).nudityResponse = response;
+                    }
+                });
                 break;
 
             case "MyProjects":

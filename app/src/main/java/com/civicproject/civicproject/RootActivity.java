@@ -72,6 +72,9 @@ public class RootActivity extends AppCompatActivity {
                         return false;
                     }
                     finish();
+                    String projects_url = "http://188.128.220.60/projects.php";
+                    //Downloader downloader = new Downloader(RootActivity.this, projects_url);
+                    //downloader.execute();
                     Intent intent = new Intent(RootActivity.this, RootActivity.class);
                     startActivity(intent);
                 }
