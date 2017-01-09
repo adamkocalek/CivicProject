@@ -86,8 +86,6 @@ public class RootActivity extends AppCompatActivity {
                         alertDialog.show();
                         return false;
                     }
-                    Intent intent = new Intent(RootActivity.this, AddProjectActivity.class);
-                    // Intent intent = new Intent(RootActivity.this, LocationActivity.class);
                     startActivity(intent);
 
                 } else if (menuItem.getItemId() == R.id.nav_map) {
