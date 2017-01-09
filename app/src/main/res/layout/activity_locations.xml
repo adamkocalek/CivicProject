@@ -23,7 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="37dp"
         android:id="@+id/AddAnyway"
-        android:background="@drawable/button_primary" />
+        android:background="@drawable/button_primary"
+        android:textColor="@color/cast_expanded_controller_progress_text_color" />
 
     <ListView
         android:id="@+id/listViewMyProjects"

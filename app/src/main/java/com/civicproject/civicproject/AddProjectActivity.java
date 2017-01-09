@@ -41,9 +41,14 @@ import org.json.JSONObject;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+
+import static android.view.View.X;
+import static android.view.View.Y;
+import static com.civicproject.civicproject.LocationActivity.haversine;
 
 public class AddProjectActivity extends AppCompatActivity {
 
@@ -64,6 +69,9 @@ public class AddProjectActivity extends AppCompatActivity {
     private static final String API_URL = "https://api.sightengine.com/1.0/nudity.json?api_user=" + api_user + "&api_secret=" + api_secret + "&url=";
     public String nudityResponse = "";
     public Boolean safeImage;
+    Parser parser = new Parser();
+    String splited[];
+    Double distance;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -224,23 +232,56 @@ public class AddProjectActivity extends AppCompatActivity {
                         //if (!nudityResponse.equals("")) {
                           //  try {
                             //    if (unpackJSON(nudityResponse)) {
+
                                     if (!locationX.isNaN() && !locationY.isNaN()) {
                                         if (locationX <= 51.843678 && locationX >= 51.690382 && locationY <= 19.619980 && locationY >= 19.324036) {
-                                            String subject = editTextSubject.getText().toString();
-                                            String description = editTextDesctiption.getText().toString();
-                                            String author = textViewAuthor.getText().toString();
-                                            String date = textViewDate.getText().toString();
-                                            String location = locationX + " " + locationY;
-                                            String type = "addProject";
-                                            String image = ftpUploadImage();
-                                            BackgroundWorker backgroundWorker = new BackgroundWorker(AddProjectActivity.this);
-                                            backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey, image);
-                                            editTextSubject.setText("");
-                                            editTextDesctiption.setText("");
-                                            if (textViewLocation == null) {
-                                                Toast.makeText(getApplicationContext(), "Twój projekt został dodany bez lokalizacji, nie wyświetli się na mapie...", Toast.LENGTH_LONG).show();
+                                            final ArrayList<String> locations = new ArrayList<>();
+                                            final ArrayList<String> X = new ArrayList<>();
+                                            final ArrayList<String> Y = new ArrayList<>();
+                                            for (int i = 0; i < parser.locations.size(); i++) {
+                                                splited = parser.locations.get(i).split("\\s");
+                                                locations.add(parser.locations.get(i));
+                                                X.add(splited[0]);
+                                                Y.add(splited[1]);
                                             }
-                                            Toast.makeText(getApplicationContext(), "Dodano projekt. Bedzie on widoczny po ponownym zalogowaniu ; )", Toast.LENGTH_LONG).show();
+                                            for (int i = 0; i < parser.locations.size(); i++) {
+                                                distance = haversine(locationX, locationY, Double.parseDouble(X.get(i)), Double.parseDouble(Y.get(i)));
+                                                distance *= 1000;
+                                            }
+                                            if(distance <=1000){
+                                                String subject_temp = editTextSubject.getText().toString();
+                                                String description_temp = editTextDesctiption.getText().toString();
+                                                String author_temp = textViewAuthor.getText().toString();
+                                                String date_temp = textViewDate.getText().toString();
+                                                String type_temp = "addProject";
+                                                String image_temp = ftpUploadImage();
+                                                String location_temp = locationX + " " + locationY;
+                                                Intent intent = new Intent(AddProjectActivity.this, LocationActivity.class);
+                                                intent.putExtra("doubleValue_e1", locationX);
+                                                intent.putExtra("doubleValue_e2", locationY);
+                                                intent.putExtra("subject",subject_temp);
+                                                intent.putExtra("description",description_temp);
+                                                intent.putExtra("author",author_temp);
+                                                intent.putExtra("date",date_temp);
+                                                intent.putExtra("location",location_temp);
+                                                intent.putExtra("type",type_temp);
+                                                intent.putExtra("image",image_temp);
+                                                intent.putExtra("tempAuthorKey",tempAuthorKey);
+                                                startActivity(intent);
+                                            }else {
+                                                String subject = editTextSubject.getText().toString();
+                                                String description = editTextDesctiption.getText().toString();
+                                                String author = textViewAuthor.getText().toString();
+                                                String date = textViewDate.getText().toString();
+                                                String location = locationX + " " + locationY;
+                                                String type = "addProject";
+                                                String image = ftpUploadImage();
+                                                BackgroundWorker backgroundWorker = new BackgroundWorker(AddProjectActivity.this);
+                                                backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey, image);
+                                                editTextSubject.setText("");
+                                                editTextDesctiption.setText("");
+                                                Toast.makeText(getApplicationContext(), "Dodano projekt. Bedzie on widoczny po ponownym zalogowaniu ; )", Toast.LENGTH_LONG).show();
+                                            }
                                         } else {
                                             Toast.makeText(getApplicationContext(), "Znajdujesz się poza Łodzią twój projekt nie może zostać dodany...", Toast.LENGTH_LONG).show();
                                         }
@@ -260,8 +301,10 @@ public class AddProjectActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Musisz zrobić zdjęcie zanim dodasz projekt", Toast.LENGTH_LONG).show();
                     }
                 }
+
             }
         });
+
     }
 
     @Override

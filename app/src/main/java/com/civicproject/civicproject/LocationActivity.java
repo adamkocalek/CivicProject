@@ -16,6 +16,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -41,62 +42,43 @@ import java.util.List;
 import java.util.Locale;
 
 import static com.civicproject.civicproject.R.id.buttonCamera;
+import static com.civicproject.civicproject.R.id.editTextDesctiption;
+import static com.civicproject.civicproject.R.id.editTextSubject;
+import static com.civicproject.civicproject.R.id.textViewAuthor;
+import static com.civicproject.civicproject.R.id.textViewDate;
 
 public class LocationActivity extends AppCompatActivity {
 
     Double distance;
     Parser parser = new Parser();
-    Button buttonAddProject;
+    Button buttonAddAnyway;
     Double locationX = Double.NaN, locationY = Double.NaN;
     String splited[];
-    LocationManager locationManager;
-    LocationListener locationListener;
-    public String Temp = "";
     private ArrayList<String> ids = new ArrayList<>(), subjects = new ArrayList<>(), authors = new ArrayList<>(), likes = new ArrayList<>(), dates = new ArrayList<>();
     private ArrayList<Integer> indexs = new ArrayList<>();
+    String subject, description,image, date, author, type, location,tempAuthorKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scrolling_addproject);
-
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                locationX = location.getLatitude();
-                locationY = location.getLongitude();
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(i);
-            }
-
-
-        };
+        Intent receiveIntent = this.getIntent();
+        locationX = receiveIntent.getDoubleExtra("doubleValue_e1", locationX);
+        locationY = receiveIntent.getDoubleExtra("doubleValue_e2", locationY);
+        subject = receiveIntent.getStringExtra("subject");
+        description = receiveIntent.getStringExtra("description");
+        author = receiveIntent.getStringExtra("author");
+        date = receiveIntent.getStringExtra("date");
+        image = receiveIntent.getStringExtra("image");
+        type = receiveIntent.getStringExtra("type");
+        location = receiveIntent.getStringExtra("location");
+        tempAuthorKey = receiveIntent.getStringExtra("tempAuthorKey");
 
         final ArrayList<String> locations = new ArrayList<>();
         final ArrayList<String> X = new ArrayList<>();
         final ArrayList<String> Y = new ArrayList<>();
         final ArrayList<Double> distance_temp = new ArrayList<>();
 
-        //  locations = parser.locations;
-
-        buttonAddProject = (Button) findViewById(R.id.buttonAddProject);
-        buttonAddProject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
                 for (int i = 0; i < parser.locations.size(); i++) {
                     splited = parser.locations.get(i).split("\\s");
@@ -105,17 +87,15 @@ public class LocationActivity extends AppCompatActivity {
                     Y.add(splited[1]);
                 }
 
-                double lat1 = 51.731916, lon1 = 19.529735;
+                // double lat1 = 51.731916, lon1 = 19.529735;
                 //distance = haversine(lat1, lon1, lat2, lon2);
 
                 for (int i = 0; i < parser.locations.size(); i++) {
-                    distance = haversine(lat1, lon1, Double.parseDouble(X.get(i)), Double.parseDouble(Y.get(i)));
+                    distance = haversine(locationX, locationY, Double.parseDouble(X.get(i)), Double.parseDouble(Y.get(i)));
                     distance *= 1000;
-                    //distance_temp.add(distance);
+
                     if (distance <= 1000) {
                         indexs.add(i);
-                        //   Temp += "Nr projektu: " + i + " odl. " + distance.toString() + "\n";
-
                         distance_temp.add(distance);
                     }
                 }
@@ -129,16 +109,27 @@ public class LocationActivity extends AppCompatActivity {
                 }
 
                 setContentView(R.layout.activity_locations);
-
+                buttonAddAnyway = (Button) findViewById(R.id.AddAnyway);
                 ListView locations_nearby = (ListView) findViewById(R.id.listViewMyProjects);
-
                 ListViewAdapter lviewAdapter;
                 lviewAdapter = new ListViewAdapter(LocationActivity.this, ids, subjects, authors, likes, dates);
-
-                //ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,distance_temp);
                 locations_nearby.setAdapter(lviewAdapter);
 
-                locations_nearby.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           buttonAddAnyway.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   //Intent intent = new Intent(LocationActivity.this, AddProjectActivity.class);
+                   //startActivity(intent);
+
+                   BackgroundWorker backgroundWorker = new BackgroundWorker(LocationActivity.this);
+                   backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey, image);
+
+                   Toast.makeText(getApplicationContext(), "Dodano projekt. Bedzie on widoczny po ponownym zalogowaniu ; )", Toast.LENGTH_LONG).show();
+               }
+           });
+
+
+        locations_nearby.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(getApplicationContext(), ProjectActivity.class);
@@ -159,14 +150,12 @@ public class LocationActivity extends AppCompatActivity {
                     }
                 });
 
-                // setContentView(R.layout.activity_locations);
-                for (int i = 0; i < 2; i++) {
-                    Toast.makeText(getApplicationContext(), "Sprawdź, czy ktoś nie ma takiego samego pomysłu ! ", Toast.LENGTH_SHORT).show();
 
-                }
+                    Toast.makeText(getApplicationContext(), "Sprawdź, czy ktoś nie ma takiego samego pomysłu ! ", Toast.LENGTH_LONG).show();
             }
-        });
-    }
+
+
+
 
 
     public static double haversine(double lat1, double lng1, double lat2, double lng2) {
