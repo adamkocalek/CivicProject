@@ -9,12 +9,19 @@
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout">
 
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/popular_frag_swipe">
+
         <ListView
             android:id="@+id/listView_popular"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@drawable/shadow_drawable"
             android:dividerHeight="12dp"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
 
     </LinearLayout>
 
