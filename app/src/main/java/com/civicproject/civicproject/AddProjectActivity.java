@@ -232,9 +232,6 @@ public class AddProjectActivity extends AppCompatActivity {
                         if (!nudityResponse.equals("")) {
                             try {
                                 if (unpackJSON(nudityResponse)) {
-                        if (!nudityResponse.equals("")) {
-                            try {
-                                if (unpackJSON(nudityResponse)) {
                                     if (!locationX.isNaN() && !locationY.isNaN()) {
                                         if (locationX <= 51.843678 && locationX >= 51.690382 && locationY <= 19.619980 && locationY >= 19.324036) {
                                             final ArrayList<String> locations = new ArrayList<>();
@@ -250,7 +247,7 @@ public class AddProjectActivity extends AppCompatActivity {
                                                 distance = haversine(locationX, locationY, Double.parseDouble(X.get(i)), Double.parseDouble(Y.get(i)));
                                                 distance *= 1000;
                                             }
-                                            if(distance <=1000){
+                                            if (distance <= 1000) {
                                                 String subject_temp = editTextSubject.getText().toString();
                                                 String description_temp = editTextDesctiption.getText().toString();
                                                 String author_temp = textViewAuthor.getText().toString();
@@ -261,16 +258,16 @@ public class AddProjectActivity extends AppCompatActivity {
                                                 Intent intent = new Intent(AddProjectActivity.this, LocationActivity.class);
                                                 intent.putExtra("doubleValue_e1", locationX);
                                                 intent.putExtra("doubleValue_e2", locationY);
-                                                intent.putExtra("subject",subject_temp);
-                                                intent.putExtra("description",description_temp);
-                                                intent.putExtra("author",author_temp);
-                                                intent.putExtra("date",date_temp);
-                                                intent.putExtra("location",location_temp);
-                                                intent.putExtra("type",type_temp);
-                                                intent.putExtra("image",image_temp);
-                                                intent.putExtra("tempAuthorKey",tempAuthorKey);
+                                                intent.putExtra("subject", subject_temp);
+                                                intent.putExtra("description", description_temp);
+                                                intent.putExtra("author", author_temp);
+                                                intent.putExtra("date", date_temp);
+                                                intent.putExtra("location", location_temp);
+                                                intent.putExtra("type", type_temp);
+                                                intent.putExtra("image", image_temp);
+                                                intent.putExtra("tempAuthorKey", tempAuthorKey);
                                                 startActivity(intent);
-                                            }else {
+                                            } else {
                                                 String subject = editTextSubject.getText().toString();
                                                 String description = editTextDesctiption.getText().toString();
                                                 String author = textViewAuthor.getText().toString();
@@ -303,10 +300,8 @@ public class AddProjectActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Musisz zrobić zdjęcie zanim dodasz projekt", Toast.LENGTH_LONG).show();
                     }
                 }
-
             }
         });
-
     }
 
     @Override
@@ -334,7 +329,8 @@ public class AddProjectActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case 10:
                 buttonCamera.setEnabled(true);
