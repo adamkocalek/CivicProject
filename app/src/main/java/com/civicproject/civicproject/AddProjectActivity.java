@@ -68,7 +68,6 @@ public class AddProjectActivity extends AppCompatActivity {
     private static final String api_user = "63501098", api_secret = "pwQhu5WbwEHUqc2S";
     private static final String API_URL = "https://api.sightengine.com/1.0/nudity.json?api_user=" + api_user + "&api_secret=" + api_secret + "&url=";
     public String nudityResponse = "";
-    public Boolean safeImage;
     Parser parser = new Parser();
     String splited[];
     Double distance;
@@ -234,20 +233,26 @@ public class AddProjectActivity extends AppCompatActivity {
                                 if (unpackJSON(nudityResponse)) {
                                     if (!locationX.isNaN() && !locationY.isNaN()) {
                                         if (locationX <= 51.843678 && locationX >= 51.690382 && locationY <= 19.619980 && locationY >= 19.324036) {
-                                            final ArrayList<String> locations = new ArrayList<>();
-                                            final ArrayList<String> X = new ArrayList<>();
-                                            final ArrayList<String> Y = new ArrayList<>();
+
+                                            final ArrayList<String> locations = new ArrayList<>(), X = new ArrayList<>(), Y = new ArrayList<>();
+
                                             for (int i = 0; i < parser.locations.size(); i++) {
                                                 splited = parser.locations.get(i).split("\\s");
                                                 locations.add(parser.locations.get(i));
                                                 X.add(splited[0]);
                                                 Y.add(splited[1]);
                                             }
+
+                                            boolean isNearly = false;
                                             for (int i = 0; i < parser.locations.size(); i++) {
                                                 distance = haversine(locationX, locationY, Double.parseDouble(X.get(i)), Double.parseDouble(Y.get(i)));
                                                 distance *= 1000;
+                                                if(distance <= 1000) {
+                                                    isNearly = true;
+                                                }
                                             }
-                                            if (distance <= 1000) {
+
+                                            if (isNearly) {
                                                 String subject_temp = editTextSubject.getText().toString();
                                                 String description_temp = editTextDesctiption.getText().toString();
                                                 String author_temp = textViewAuthor.getText().toString();
