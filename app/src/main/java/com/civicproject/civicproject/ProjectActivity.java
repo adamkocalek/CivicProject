@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,12 +29,13 @@ import java.util.Locale;
 public class ProjectActivity extends AppCompatActivity implements View.OnClickListener {
     Parser parser = new Parser();
 
-    Button buttonEditProject, buttonDeleteProject, buttonPermission;
+    Button buttonEditProject, buttonDeleteProject, buttonPermission, buttonAddComment;
     ImageButton buttonLikeProject;
-    TextView textViewLocation, textViewDate, textViewAuthor, textViewLike, editTextSubject, editTextDesctiption;
+    TextView textViewLocation, textViewDate, textViewAuthor, textViewLike, editTextSubject, editTextDesctiption, textViewComment;
     LocationManager locationManager;
     LocationListener locationListener;
     ImageView imageViewPicture;
+    EditText editTextComment;
     String id, author_key, image, likesidss, author_id, author, likesnamestemp;
 
     @Override
@@ -72,16 +74,19 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
+        textViewComment = (TextView) findViewById(R.id.textViewComments);
         textViewLike = (TextView) findViewById(R.id.textViewLike);
         textViewLocation = (TextView) findViewById(R.id.textViewLocation);
         textViewAuthor = (TextView) findViewById(R.id.textViewAuthor);
         editTextSubject = (TextView) findViewById(R.id.editTextSubject);
         editTextDesctiption = (TextView) findViewById(R.id.editTextDesctiption);
+        editTextComment = (EditText) findViewById(R.id.editTextAddComment);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         imageViewPicture = (ImageView) findViewById(R.id.imageViewPictureExist);
         buttonEditProject = (Button) findViewById(R.id.buttonEditProject);
         buttonLikeProject = (ImageButton) findViewById(R.id.buttonLikeProject);
         buttonDeleteProject = (Button) findViewById(R.id.buttonDeleteProject);
+        buttonAddComment = (Button) findViewById(R.id.buttonAddComment);
         textViewDate = (TextView) findViewById(R.id.textViewDate);
 
         Intent intent = getIntent();
@@ -91,6 +96,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         textViewAuthor.setText(intent.getStringExtra("author"));
         textViewDate.setText(intent.getStringExtra("date"));
         textViewLike.setText(intent.getStringExtra("likes"));
+        textViewComment.setText(intent.getStringExtra("comments"));
         likesidss = intent.getStringExtra("likesids");
         author_key = intent.getStringExtra("author_key");
         likesnamestemp = intent.getStringExtra("likesnames");
@@ -146,6 +152,15 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         BackgroundWorker backgroundWorker = new BackgroundWorker(ProjectActivity.this);
         backgroundWorker.execute(type, likesidss, likes + "", id, likesnamestemp);
         buttonLikeProject.setVisibility(View.INVISIBLE);
+    }
+
+    public void onAddCommentButtonClick(View view) {
+        String comment = textViewComment.getText() + "";
+        comment = comment + editTextComment.getText() + "; ";
+        String type = "updateProjectComments";
+        BackgroundWorker backgroundWorker = new BackgroundWorker(ProjectActivity.this);
+        backgroundWorker.execute(type, id, comment);
+        Toast.makeText(getApplicationContext(), "Dodałeś komentarz", Toast.LENGTH_LONG).show();
     }
 
     @Override

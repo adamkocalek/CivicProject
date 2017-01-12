@@ -21,7 +21,7 @@ import dmax.dialog.SpotsDialog;
 public class Parser extends AsyncTask<Void, Integer, Integer> {
     Context context;
     String data;
-    public static ArrayList<String> locations = new ArrayList<>(), likesNames = new ArrayList<>(), likes = new ArrayList<>(), likesids = new ArrayList<>(), ids = new ArrayList<>(), descriptions = new ArrayList<>(), subjects = new ArrayList<>(), projects = new ArrayList<>(), dates = new ArrayList<>(), authors = new ArrayList<>(), authors_keys = new ArrayList<>(),
+    public static ArrayList<String> locations = new ArrayList<>(), comments = new ArrayList<>(), likesNames = new ArrayList<>(), likes = new ArrayList<>(), likesids = new ArrayList<>(), ids = new ArrayList<>(), descriptions = new ArrayList<>(), subjects = new ArrayList<>(), projects = new ArrayList<>(), dates = new ArrayList<>(), authors = new ArrayList<>(), authors_keys = new ArrayList<>(),
             images = new ArrayList<>();
 
     SpotsDialog progressDialog;
@@ -77,6 +77,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
             likes.clear();
             likesids.clear();
             images.clear();
+            comments.clear();
 
             dateParser = new DateParser();
 
@@ -96,6 +97,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
                 String like = jo.getString("likes");
                 String likeids = jo.getString("likesids");
                 String likesnames = jo.getString("likesnames");
+                String comment = jo.getString("comments");
 
                 // ADD IT TO OUR ARRAYLIST
                 projects.add(subject);
@@ -111,6 +113,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
                 likesids.add(likeids);
                 images.add(image);
                 likesNames.add(likesnames);
+                comments.add(comment);
             }
             return 1;
         } catch (JSONException e) {

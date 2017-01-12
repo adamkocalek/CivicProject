@@ -74,6 +74,7 @@ public class NewItems_Fragment extends Fragment {
                     intent.putExtra("likes", parser.likes.get(position));
                     intent.putExtra("likesids", parser.likesids.get(position));
                     intent.putExtra("likesnames", parser.likesNames.get(position));
+                    intent.putExtra("comments", parser.comments.get(position));
                     getContext().startActivity(intent);
                 }
             }

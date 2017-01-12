@@ -67,6 +67,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         String update_url = "http://188.128.220.60/updateUser.php";
         String updateProject_url = "http://188.128.220.60/updateProject.php";
         String updateLikes_url = "http://188.128.220.60/updateProjectLikes.php";
+        String updateComments_url = "http://188.128.220.60/updateProjectComments.php";
         String updatePermission_url = "http://188.128.220.60/updateProjectPermission.php";
         String deleteUser_url = "http://188.128.220.60/deleteUser.php";
         String deleteProject_url = "http://188.128.220.60/deleteProject.php";
@@ -271,6 +272,45 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                             + URLEncoder.encode("likes", "UTF-8") + "=" + URLEncoder.encode(likes, "UTF-8") + "&"
                             + URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8") + "&"
                             + URLEncoder.encode("likesnames", "UTF-8") + "=" + URLEncoder.encode(likesnames, "UTF-8");
+                    bufferedWriter.write(post_data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                    String result = "";
+                    String line = "";
+
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result += line;
+                    }
+
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    System.out.println(result);
+                    return result;
+
+                } catch (MalformedURLException e) {
+                    Log.d(TAG, NetworkException);
+                } catch (IOException e) {
+                    Log.d(TAG, IOException);
+                }
+                break;
+
+            case "updateProjectComments":
+                try {
+                    String id = params[1];
+                    String comments = params[2];
+                    URL url = new URL(updateComments_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream outputStream = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                    String post_data = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8") + "&"
+                            + URLEncoder.encode("comments", "UTF-8") + "=" + URLEncoder.encode(comments, "UTF-8");
                     bufferedWriter.write(post_data);
                     bufferedWriter.flush();
                     bufferedWriter.close();
@@ -626,6 +666,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                             intent.putExtra("author", parser.authors.get(indexs.get(position)));
                             intent.putExtra("author_key", parser.authors_keys.get(indexs.get(position)));
                             intent.putExtra("likesnames", parser.likesNames.get(indexs.get(position)));
+                            intent.putExtra("comments", parser.comments.get(indexs.get(position)));
                             activity.startActivity(intent);
                         }
                     }

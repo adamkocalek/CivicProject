@@ -30,7 +30,7 @@ public class UserProjectActivity extends AppCompatActivity implements View.OnCli
 
     Button buttonEditProject, buttonDeleteProject;
     ImageButton buttonLikeProject;
-    TextView textViewLocation, textViewDate, textViewLike, textViewLikesNames;
+    TextView textViewLocation, textViewDate, textViewLike, textViewLikesNames, textViewComments;
     LocationManager locationManager;
     LocationListener locationListener;
     EditText editTextSubject, editTextDesctiption;
@@ -73,6 +73,7 @@ public class UserProjectActivity extends AppCompatActivity implements View.OnCli
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
+        textViewComments = (TextView) findViewById(R.id.textViewComments);
         textViewLike = (TextView) findViewById(R.id.textViewLike);
         textViewLocation = (TextView) findViewById(R.id.textViewLocation);
         textViewLikesNames = (TextView) findViewById(R.id.textViewLikesNames);
@@ -91,6 +92,7 @@ public class UserProjectActivity extends AppCompatActivity implements View.OnCli
         editTextDesctiption.setText(intent.getStringExtra("description"));
         textViewDate.setText(intent.getStringExtra("date"));
         textViewLike.setText(intent.getStringExtra("likes"));
+        textViewComments.setText(intent.getStringExtra("comments"));
         textViewLikesNames.setText(intent.getStringExtra("likesnames"));
         likesidss = intent.getStringExtra("likesids");
         likesnamestemp = intent.getStringExtra("likesnames");
