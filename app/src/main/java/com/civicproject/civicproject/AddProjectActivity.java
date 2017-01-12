@@ -104,13 +104,6 @@ public class AddProjectActivity extends AppCompatActivity {
         init();
         events();
 
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-
-        }
-
         DateFormat df = new SimpleDateFormat("d.MM.yyyy, HH:mm");
         textViewDate.setText(df.format(Calendar.getInstance().getTime()));
 

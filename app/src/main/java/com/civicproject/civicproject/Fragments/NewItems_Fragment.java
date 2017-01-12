@@ -38,7 +38,6 @@ import java.util.ArrayList;
 public class NewItems_Fragment extends Fragment {
     private Parser parser = null;
     SwipeRefreshLayout swipeRefreshLayout;
-    private String projects_url = "http://188.128.220.60/projects.php";
     public static ArrayList<String> locations = new ArrayList<>(), likesNames = new ArrayList<>(), likes = new ArrayList<>(), likesids = new ArrayList<>(), ids = new ArrayList<>(), descriptions = new ArrayList<>(), subjects = new ArrayList<>(), projects = new ArrayList<>(), dates = new ArrayList<>(), authors = new ArrayList<>(), authors_keys = new ArrayList<>(),
             images = new ArrayList<>();
     DateParser dateParser = null;
@@ -94,34 +93,7 @@ public class NewItems_Fragment extends Fragment {
             public void onRefresh() {
 
                 String projects_url = "http://188.128.220.60/projects.php";
-                InputStream is = null;
-                String line = null, data = "";
-                try {
-                    URL url = new URL(projects_url);
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    is = new BufferedInputStream(con.getInputStream());
-                    BufferedReader br = new BufferedReader(new InputStreamReader(is));
-                    StringBuffer sb = new StringBuffer();
-                    if (br != null) {
-                        while ((line = br.readLine()) != null) {
-                            sb.append(line + "n");
-                        }
-                    } else {
-                    }
-                    data = sb.toString();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (is != null) {
-                        try {
-                            is.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
+                String data = downloadData(projects_url);
 
                 try {
                     // ADD THAT DATA TO JSON ARRAY FIRST
@@ -219,5 +191,39 @@ public class NewItems_Fragment extends Fragment {
         });
 
         return view;
+    }
+
+    public String downloadData(String address) {
+        //connect and get a stream
+        InputStream is = null;
+        String line = null;
+        try {
+            URL url = new URL(address);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            is = new BufferedInputStream(con.getInputStream());
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            StringBuffer sb = new StringBuffer();
+            if (br != null) {
+                while ((line = br.readLine()) != null) {
+                    sb.append(line + "n");
+                }
+            } else {
+                return null;
+            }
+            return sb.toString();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
     }
 }

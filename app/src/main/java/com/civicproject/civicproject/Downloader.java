@@ -30,7 +30,7 @@ public class Downloader extends AsyncTask<Void, Integer, String> {
     protected void onPreExecute() {
         super.onPreExecute();
         progressDialog = new SpotsDialog(context, R.style.CustomDialogDownload);
-        progressDialog.show();
+        //progressDialog.show();
     }
 
     @Override
@@ -42,7 +42,7 @@ public class Downloader extends AsyncTask<Void, Integer, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        progressDialog.dismiss();
+        //progressDialog.dismiss();
 
         if (s != null) {
             Parser p = new Parser(context, s);

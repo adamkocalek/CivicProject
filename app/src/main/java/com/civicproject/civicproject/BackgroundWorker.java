@@ -1,6 +1,7 @@
 package com.civicproject.civicproject;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -55,6 +56,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     private String projects_url = "http://188.128.220.60/projects.php";
     private Parser parser = new Parser();
     private FTPClientFunctionsUses useFTP = new FTPClientFunctionsUses();
+    ProgressDialog progressDialog;
 
     @Override
     protected String doInBackground(String... params) {
@@ -543,12 +545,15 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPreExecute() {
-        super.onPreExecute();
+        progressDialog = new ProgressDialog(context, R.style.CustomDialogDownload);
+        progressDialog.setMessage("Ładowanie danych");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
     }
 
     @Override
     protected void onPostExecute(String result) {
-
+        progressDialog.dismiss();
         switch (result) {
             case "Login success. Welcome!":
                 final Downloader downloader = new Downloader(context, projects_url);
