@@ -1,6 +1,7 @@
 package com.civicproject.civicproject;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +34,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
     private Context context;
     private Activity activity;
-    private ListView listView;
     private String outputString;
     private Bitmap outputBitmap;
     private Boolean outputBoolean;
@@ -44,10 +45,9 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         this.context = context;
     }
 
-    BackgroundWorker(Context context, Activity activity, ListView listView) {
+    BackgroundWorker(Context context, Activity activity) {
         this.context = context;
         this.activity = activity;
-        this.listView = listView;
     }
 
     String tempJSON;
@@ -548,7 +548,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-
         switch (result) {
             case "Login success. Welcome!":
                 final Downloader downloader = new Downloader(context, projects_url);
@@ -593,11 +592,12 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 break;
 
             case "MyProjects":
+                //((UserProjectsActivity) context).progressBar.setVisibility(View.GONE);
                 ListViewAdapterUser lviewAdapter;
                 lviewAdapter = new ListViewAdapterUser(activity, ids, myProjects, likes, dates, imagesBitmaps);
-                listView.setAdapter(lviewAdapter);
+                ((UserProjectsActivity) context).listViewMyProjects.setAdapter(lviewAdapter);
 
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                ((UserProjectsActivity) context).listViewMyProjects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         TextView textView = (TextView) view.findViewById(R.id.textViewIds);
@@ -624,7 +624,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     }
                 });
                 break;
-
             case "":
 
                 break;

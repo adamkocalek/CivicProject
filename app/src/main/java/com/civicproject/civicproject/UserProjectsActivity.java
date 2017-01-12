@@ -1,17 +1,21 @@
 package com.civicproject.civicproject;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
 public class UserProjectsActivity extends AppCompatActivity {
-    ListView listViewMyProjects;
+    public ListView listViewMyProjects;
+    public ProgressBar progressBar;
     String author_key;
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -48,17 +52,20 @@ public class UserProjectsActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Toast.makeText(getApplicationContext(),"Refresh Test", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Refresh Test", Toast.LENGTH_SHORT).show();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
 
         listViewMyProjects = (ListView) findViewById(R.id.listViewMyProjects);
+        progressBar = (ProgressBar) findViewById(R.id.progressBarUserListView);
 
         SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
         author_key = myprefs.getString("author_key", null);
 
-        BackgroundWorker backgroundWorker = new BackgroundWorker(UserProjectsActivity.this, UserProjectsActivity.this, listViewMyProjects);
+
+        progressBar.setVisibility(View.GONE);
+        BackgroundWorker backgroundWorker = new BackgroundWorker(UserProjectsActivity.this, UserProjectsActivity.this);
         backgroundWorker.execute("getMyProjects", author_key);
     }
 }
