@@ -40,7 +40,7 @@ public class NewItems_Fragment extends Fragment {
         listView_new.setAdapter(lviewAdapter);
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.new_frag_swipe);
-        swipeRefreshLayout.setColorSchemeResources(R.color.progress,R.color.colorPrimary);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

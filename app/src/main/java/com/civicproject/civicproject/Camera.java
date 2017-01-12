@@ -21,10 +21,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-/**
- * Created by Patrycjusz on 2016-12-12.
- */
-
 public class Camera extends AppCompatActivity {
 
     public static File getOutputMediaFile() {

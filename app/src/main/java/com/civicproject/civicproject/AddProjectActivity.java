@@ -284,10 +284,11 @@ public class AddProjectActivity extends AppCompatActivity {
                                                 backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey, image);
                                                 editTextSubject.setText("");
                                                 editTextDesctiption.setText("");
-                                                Toast.makeText(getApplicationContext(), "Dodano projekt. Bedzie on widoczny po ponownym zalogowaniu ; )", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getApplicationContext(), "Projekt dodany do poczekalni, będzie widoczny po zatwierdzeniu przez moderatora.", Toast.LENGTH_LONG).show();
+                                                onBackPressed();
                                             }
                                         } else {
-                                            Toast.makeText(getApplicationContext(), "Znajdujesz się poza Łodzią twój projekt nie może zostać dodany...", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(getApplicationContext(), "Znajdujesz się poza Łodzią twój projekt nie może zostać dodany.", Toast.LENGTH_LONG).show();
                                         }
                                     } else {
                                         Toast.makeText(getApplicationContext(), "Musisz poczekać na znalezienie twojej lokalizacji...", Toast.LENGTH_LONG).show();
@@ -302,7 +303,7 @@ public class AddProjectActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Autoryzacja obrazka, prosze czekać.", Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        Toast.makeText(getApplicationContext(), "Musisz zrobić zdjęcie zanim dodasz projekt", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Musisz zrobić zdjęcie zanim dodasz projekt.", Toast.LENGTH_LONG).show();
                     }
                 }
             }

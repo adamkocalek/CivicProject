@@ -142,8 +142,10 @@ public class UserProjectActivity extends AppCompatActivity implements View.OnCli
         String type = "deleteProject";
         BackgroundWorker backgroundWorker = new BackgroundWorker(UserProjectActivity.this);
         backgroundWorker.execute(type, id);
-        Intent myIntent = new Intent(UserProjectActivity.this, LoginActivity.class);
+
+        Intent myIntent = new Intent(UserProjectActivity.this, UserProjectsActivity.class);
         UserProjectActivity.this.startActivity(myIntent);
+        finish();
     }
 
     public void onLikeProjectButtonClick(View view) {

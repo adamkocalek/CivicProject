@@ -1,38 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_user_projects"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.civicproject.civicproject.UserProjectsActivity"
-    android:weightSum="1"
+    tools:context="com.civicproject.civicproject.LocationActivity"
     android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/linear_button"
+        android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_drawer"
-        android:id="@+id/toolbar_user_projects"
+        android:id="@+id/toolbar_locations"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:title="Projekty w Twojej okolicy"
-        android:elevation="2dp" />
-
-    <Button
-        android:text="Dodaj!"
-        android:layout_width="match_parent"
-        android:layout_height="37dp"
-        android:id="@+id/AddAnyway"
-        android:background="@drawable/button_primary"
-        android:textColor="@color/cast_expanded_controller_progress_text_color" />
+        app:title="Projekty w pobliżu" />
 
     <ListView
         android:id="@+id/listViewMyProjects"
-        android:layout_below="@+id/textViewMyProjects"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@drawable/shadow_drawable"
         android:dividerHeight="12dp"/>
 
-</LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="9dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginRight="9dp"
+        android:id="@+id/linear_button"
+        android:orientation="horizontal">
+
+        <Button
+            android:text="Dodaj!"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:id="@+id/AddAnyway"
+            android:background="@drawable/button_primary"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+</RelativeLayout>
 
