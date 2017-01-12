@@ -22,7 +22,6 @@ public class NewItems_Fragment extends Fragment {
     private Parser parser = null;
     SwipeRefreshLayout swipeRefreshLayout;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

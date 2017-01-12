@@ -40,7 +40,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
     protected void onPreExecute() {
         super.onPreExecute();
         progressDialog = new SpotsDialog(context, R.style.CustomDialogParse);
-        progressDialog.show();
+        //progressDialog.show();
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
         } else {
             Toast.makeText(context, "Unable to Parse", Toast.LENGTH_SHORT).show();
         }
-        progressDialog.dismiss();
+        //progressDialog.dismiss();
     }
 
     // PARSE RECEIVED DATA
