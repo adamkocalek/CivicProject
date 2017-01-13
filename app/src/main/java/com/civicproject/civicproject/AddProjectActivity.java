@@ -52,23 +52,26 @@ import static com.civicproject.civicproject.LocationActivity.haversine;
 
 public class AddProjectActivity extends AppCompatActivity {
 
-    Button buttonAddProject;
+    Button buttonAddProject, buttonLocationChange;
     ImageButton buttonCamera;
     TextView textViewLocation, textViewDate, textViewAuthor;
-    LocationManager locationManager;
-    LocationListener locationListener;
     EditText editTextSubject, editTextDesctiption;
     ImageView imageViewPicture;
+
     String tempAuthorKey;
+    String splited[];
+    Double distance;
+    LocationManager locationManager;
+    LocationListener locationListener;
     Double locationX = Double.NaN, locationY = Double.NaN;
     Uri file;
+
     private Camera camera = null;
     private FTPClientFunctions ftpclient = null;
     private static final String TAG = "AddProjectActivity";
     public String nudityResponse = "";
+
     Parser parser = new Parser();
-    String splited[];
-    Double distance;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -112,18 +115,19 @@ public class AddProjectActivity extends AppCompatActivity {
         tempAuthorKey = myprefs.getString("author_key", null);
         textViewAuthor.setText(name + " " + surname);
 
+//        asdasdsa
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 locationX = location.getLatitude();
                 locationY = location.getLongitude();
                 String address = getAddress(location.getLatitude(), location.getLongitude());
-                Log.d("BŁĄD: ", address);
                 textViewLocation.setText(location.getLatitude() + " " + location.getLongitude());
 
                 if (address != "") {
                     textViewLocation.setText(address);
                 }
+                Log.d("LOG", address);
             }
 
             @Override
@@ -144,8 +148,10 @@ public class AddProjectActivity extends AppCompatActivity {
         };
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+
+//            && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 buttonCamera.setEnabled(false);
                 requestPermissions(new String[]{
@@ -154,6 +160,7 @@ public class AddProjectActivity extends AppCompatActivity {
                         android.Manifest.permission.INTERNET,
                         android.Manifest.permission.CAMERA,
                         android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 10);
+
             }
             return;
         } else {
@@ -171,6 +178,7 @@ public class AddProjectActivity extends AppCompatActivity {
         editTextDesctiption = (EditText) findViewById(R.id.editTextDesctiption);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         imageViewPicture = (ImageView) findViewById(R.id.imageViewPicture);
+        buttonLocationChange = (Button) findViewById(R.id.buttonLocationChange);
 
         camera = new Camera();
         ftpclient = new FTPClientFunctions();
@@ -193,6 +201,13 @@ public class AddProjectActivity extends AppCompatActivity {
                 file = Uri.fromFile(camera.getOutputMediaFile());
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, file);
                 startActivityForResult(intent, 100);
+            }
+        });
+
+        buttonLocationChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                configureButton();
             }
         });
 
@@ -238,7 +253,7 @@ public class AddProjectActivity extends AppCompatActivity {
                                             for (int i = 0; i < parser.locations.size(); i++) {
                                                 distance = haversine(locationX, locationY, Double.parseDouble(X.get(i)), Double.parseDouble(Y.get(i)));
                                                 distance *= 1000;
-                                                if(distance <= 1000) {
+                                                if (distance <= 1000) {
                                                     isNearly = true;
                                                 }
                                             }
@@ -326,8 +341,7 @@ public class AddProjectActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case 10:
                 buttonCamera.setEnabled(true);
@@ -365,7 +379,7 @@ public class AddProjectActivity extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
+        locationManager.requestLocationUpdates("gps", 3000, 0, locationListener);
     }
 
     public String ftpUploadImage() {
