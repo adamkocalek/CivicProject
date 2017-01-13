@@ -36,7 +36,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     private Activity activity;
     private String outputString;
     private Bitmap outputBitmap;
-    private Boolean outputBoolean;
+    private ProgressDialog progressDialog;
+
     private ArrayList<String> myProjects = new ArrayList<>(), ids = new ArrayList<>(), likes = new ArrayList<>(), dates = new ArrayList<>(), images = new ArrayList<>();
     private ArrayList<Integer> indexs = new ArrayList<>();
     private ArrayList<Bitmap> imagesBitmaps = new ArrayList<>();
@@ -51,11 +52,9 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     }
 
     String tempJSON;
-    String tempAuthor;
     private String projects_url = "http://188.128.220.60/projects.php";
-    private Parser parser = new Parser();
     private FTPClientFunctionsUses useFTP = new FTPClientFunctionsUses();
-    ProgressDialog progressDialog;
+    private Parser parser = new Parser();
 
     @Override
     protected String doInBackground(String... params) {
@@ -277,7 +276,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     bufferedWriter.close();
                     outputStream.close();
                     InputStream inputStream = httpURLConnection.getInputStream();
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));   //niepotrzebne UTF-8 ze względu, że przekazywane są liczby
                     String result = "";
                     String line = "";
 
@@ -316,7 +315,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     bufferedWriter.close();
                     outputStream.close();
                     InputStream inputStream = httpURLConnection.getInputStream();
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));   //było iso-8859-1
                     String result = "";
                     String line = "";
 
@@ -355,7 +354,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     bufferedWriter.close();
                     outputStream.close();
                     InputStream inputStream = httpURLConnection.getInputStream();
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));    //było iso-8859-1
                     String result = "";
                     String line = "";
 
@@ -584,7 +583,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPreExecute() {
-        progressDialog = new ProgressDialog(context, R.style.CustomDialogDownload);
+        progressDialog = new ProgressDialog(context, R.style.CustomDialog);
         progressDialog.setMessage("Ładowanie danych");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
@@ -592,7 +591,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-
         progressDialog.dismiss();
 
         switch (result) {

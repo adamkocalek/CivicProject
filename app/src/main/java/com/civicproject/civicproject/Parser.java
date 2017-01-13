@@ -1,13 +1,9 @@
 package com.civicproject.civicproject;
 
-import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -16,15 +12,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import dmax.dialog.SpotsDialog;
-
 public class Parser extends AsyncTask<Void, Integer, Integer> {
     Context context;
     String data;
     public static ArrayList<String> locations = new ArrayList<>(), comments = new ArrayList<>(), likesNames = new ArrayList<>(), likes = new ArrayList<>(), likesids = new ArrayList<>(), ids = new ArrayList<>(), descriptions = new ArrayList<>(), subjects = new ArrayList<>(), projects = new ArrayList<>(), dates = new ArrayList<>(), authors = new ArrayList<>(), authors_keys = new ArrayList<>(),
             images = new ArrayList<>();
 
-    SpotsDialog progressDialog;
+    ProgressDialog progressDialog;
     DateParser dateParser = null;
 
     public Parser() {
@@ -39,8 +33,9 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new SpotsDialog(context, R.style.CustomDialogParse);
-        //progressDialog.show();
+//        progressDialog = new ProgressDialog(context);
+//        progressDialog.setMessage("Przetwarzanie danych");
+//        progressDialog.show();
     }
 
     @Override
@@ -53,18 +48,18 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
         super.onPostExecute(integer);
         if (integer == 1) {
         } else {
-            Toast.makeText(context, "Unable to Parse", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Nie można przetworzyć danych.", Toast.LENGTH_SHORT).show();
         }
-        //progressDialog.dismiss();
+//        progressDialog.dismiss();
     }
 
-    // PARSE RECEIVED DATA
+    // Parsowanie pobranego JSON Array
     private int parse() {
         try {
-            // ADD THAT DATA TO JSON ARRAY FIRST
+            // Dodanie danych do JSON Array
             JSONArray ja = new JSONArray(data);
 
-            //CREATE JO OBJ TO HOLD A SINGLE ITEM
+            // Tworzenie pojedynczego JSON Object to przechowywania pojedynczego elementu
             JSONObject jo = null;
             projects.clear();
             subjects.clear();
@@ -81,11 +76,10 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
 
             dateParser = new DateParser();
 
-            // LOOP THROUGH ARRAY
             for (int i = ja.length() - 1; i > -1; i--) {
                 jo = ja.getJSONObject(i);
 
-                // RETRIEVE DATA
+                // Odbieranie danych
                 String subject = jo.getString("subject");
                 String description = jo.getString("description");
                 String location = jo.getString("location");
@@ -99,7 +93,7 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
                 String likesnames = jo.getString("likesnames");
                 String comment = jo.getString("comments");
 
-                // ADD IT TO OUR ARRAYLIST
+                // Dodanie danych do normalnej listy
                 projects.add(subject);
                 subjects.add(subject);
                 descriptions.add(description);
@@ -116,8 +110,9 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
                 comments.add(comment);
             }
             return 1;
+
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.d("LOG Parser", e + "");
         }
         return 0;
     }

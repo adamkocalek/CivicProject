@@ -12,9 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.civicproject.civicproject.AddProjectActivity;
 import com.civicproject.civicproject.DateParser;
 import com.civicproject.civicproject.ListViewAdapter;
 import com.civicproject.civicproject.Parser;
@@ -29,25 +27,25 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-
 public class NewItems_Fragment extends Fragment {
     ListView listView_new;
     SwipeRefreshLayout swipeRefreshLayout;
-
     private Parser parser = null;
+
+    String projects_url = "http://188.128.220.60/projects.php";
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         final View view = inflater.inflate(R.layout.new_frag_layout, null);
-
         listView_new = (ListView) view.findViewById(R.id.listView_new);
-        parser = new Parser();
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.new_frag_swipe);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
+        parser = new Parser();
         ListViewAdapter lviewAdapter;
         lviewAdapter = new ListViewAdapter(getActivity(), parser.ids, parser.subjects, parser.authors, parser.likes, parser.dates);
-
         listView_new.setAdapter(lviewAdapter);
 
         listView_new.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -80,8 +78,6 @@ public class NewItems_Fragment extends Fragment {
             }
         });
 
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.new_frag_swipe);
-        swipeRefreshLayout.setColorSchemeResources(R.color.progress, R.color.colorPrimary);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -89,8 +85,6 @@ public class NewItems_Fragment extends Fragment {
                 final ArrayList<String> locations = new ArrayList<>(), likesNames = new ArrayList<>(), likes = new ArrayList<>(), likesids = new ArrayList<>(),
                         ids = new ArrayList<>(), descriptions = new ArrayList<>(), subjects = new ArrayList<>(), dates = new ArrayList<>(),
                         authors = new ArrayList<>(), authors_keys = new ArrayList<>(), images = new ArrayList<>();
-
-                String projects_url = "http://188.128.220.60/projects.php";
 
                 AsyncHttpClient client = new AsyncHttpClient();
                 client.get(projects_url, new AsyncHttpResponseHandler() {

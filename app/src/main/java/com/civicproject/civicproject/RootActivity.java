@@ -31,6 +31,7 @@ public class RootActivity extends AppCompatActivity {
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
     public Toolbar toolbar;
+    String TAG = "LOG RootActivity";
 
     @Override
     public void onBackPressed() {
@@ -66,34 +67,35 @@ public class RootActivity extends AppCompatActivity {
 
                 if (menuItem.getItemId() == R.id.nav_main) {
                     boolean networkCheck = isOnline();
-                    if(!networkCheck){
-                        Log.d("LOG", "Błąd połączenia z internetem.");
+                    if (!networkCheck) {
+                        Log.d(TAG, "Błąd połączenia z internetem.");
                         alertDialog.show();
                         return false;
                     }
-                    finish();
+
                     String projects_url = "http://188.128.220.60/projects.php";
-                    //Downloader downloader = new Downloader(RootActivity.this, projects_url);
-                    //downloader.execute();
+                    Downloader downloader = new Downloader(RootActivity.this, projects_url);
+                    downloader.execute();
+
+                    finish();
                     Intent intent = new Intent(RootActivity.this, RootActivity.class);
                     startActivity(intent);
                 }
 
                 if (menuItem.getItemId() == R.id.nav_idea) {
                     boolean networkCheck = isOnline();
-                    if(!networkCheck){
-                        Log.d("LOG", "Błąd połączenia z internetem.");
+                    if (!networkCheck) {
+                        Log.d(TAG, "Błąd połączenia z internetem.");
                         alertDialog.show();
                         return false;
                     }
                     Intent intent = new Intent(RootActivity.this, AddProjectActivity.class);
-//                    Intent intent = new Intent(RootActivity.this, LocationActivity.class);
                     startActivity(intent);
 
                 } else if (menuItem.getItemId() == R.id.nav_map) {
                     boolean networkCheck = isOnline();
-                    if(!networkCheck){
-                        Log.d("LOG", "Błąd połączenia z internetem.");
+                    if (!networkCheck) {
+                        Log.d(TAG, "Błąd połączenia z internetem.");
                         alertDialog.show();
                         return false;
                     }
@@ -102,8 +104,8 @@ public class RootActivity extends AppCompatActivity {
 
                 } else if (menuItem.getItemId() == R.id.nav_my_account) {
                     boolean networkCheck = isOnline();
-                    if(!networkCheck){
-                        Log.d("LOG", "Błąd połączenia z internetem.");
+                    if (!networkCheck) {
+                        Log.d(TAG, "Błąd połączenia z internetem.");
                         alertDialog.show();
                         return false;
                     }
@@ -112,8 +114,8 @@ public class RootActivity extends AppCompatActivity {
 
                 } else if (menuItem.getItemId() == R.id.nav_my_projects) {
                     boolean networkCheck = isOnline();
-                    if(!networkCheck){
-                        Log.d("LOG", "Błąd połączenia z internetem.");
+                    if (!networkCheck) {
+                        Log.d(TAG, "Błąd połączenia z internetem.");
                         alertDialog.show();
                         return false;
                     }
@@ -134,8 +136,8 @@ public class RootActivity extends AppCompatActivity {
 
                 } else if (menuItem.getItemId() == R.id.nav_voting) {
                     boolean networkCheck = isOnline();
-                    if(!networkCheck){
-                        Log.d("LOG", "Błąd połączenia z internetem.");
+                    if (!networkCheck) {
+                        Log.d(TAG, "Błąd połączenia z internetem.");
                         alertDialog.show();
                         return false;
                     }
@@ -168,12 +170,15 @@ public class RootActivity extends AppCompatActivity {
 
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         backgroundWorker.execute(type, username);
+
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
 
         }
+
         JSONArray ja = null;
+
         try {
             ja = new JSONArray(backgroundWorker.tempJSON);
             JSONObject jo1 = null;
@@ -197,8 +202,9 @@ public class RootActivity extends AppCompatActivity {
                 sharedPreferences.edit().putString("telephone", telephone).apply();
                 sharedPreferences.edit().putString("email", email).apply();
             }
+
         } catch (JSONException e) {
-            Log.d("LOG","Błąd, JSON Exception");
+            Log.d(TAG, e + "");
         }
     }
 

@@ -2,6 +2,7 @@ package com.civicproject.civicproject;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -10,27 +11,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-
-import dmax.dialog.SpotsDialog;
 
 public class Downloader extends AsyncTask<Void, Integer, String> {
     Context context;
     String address;
-    SpotsDialog progressDialog;
+//    ProgressDialog progressDialog;
 
     public Downloader(Context context, String address) {
         this.context = context;
         this.address = address;
     }
 
-    //B4 JOB STARTS
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new SpotsDialog(context, R.style.CustomDialogDownload);
-        //progressDialog.show();
+//        progressDialog = new ProgressDialog(context);
+//        progressDialog.setMessage("Pobieranie danych");
+//        progressDialog.show();
     }
 
     @Override
@@ -42,7 +40,7 @@ public class Downloader extends AsyncTask<Void, Integer, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        //progressDialog.dismiss();
+//        progressDialog.dismiss();
 
         if (s != null) {
             Parser p = new Parser(context, s);
@@ -53,7 +51,8 @@ public class Downloader extends AsyncTask<Void, Integer, String> {
     }
 
     public String downloadData() {
-        //connect and get a stream
+
+        // Połączenie i pobranie ciągu danych w postaci JSON Array
         InputStream is = null;
         String line = null;
         try {
@@ -62,6 +61,7 @@ public class Downloader extends AsyncTask<Void, Integer, String> {
             is = new BufferedInputStream(con.getInputStream());
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             StringBuffer sb = new StringBuffer();
+
             if (br != null) {
                 while ((line = br.readLine()) != null) {
                     sb.append(line + "n");
@@ -70,16 +70,15 @@ public class Downloader extends AsyncTask<Void, Integer, String> {
                 return null;
             }
             return sb.toString();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        } catch (Exception e) {
+            Log.d("LOG Downloader", e + "");
         } finally {
             if (is != null) {
                 try {
                     is.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.d("LOG Downloader", e + "");
                 }
             }
         }

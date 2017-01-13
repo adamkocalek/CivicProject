@@ -29,16 +29,9 @@
         <item name="android:textColorPrimary">#000000</item>
     </style>
 
-    <style name="CustomDialogDownload" parent="android:Theme.DeviceDefault.Dialog">
+    <style name="CustomDialog" parent="android:Theme.DeviceDefault.Dialog">
         <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
         <item name="DialogTitleText">Pobieranie, proszę czekać.</item>
-        <item name="DialogSpotColor">#FFFFFF</item>
-        <item name="DialogSpotCount">8</item>
-    </style>
-
-    <style name="CustomDialogParse" parent="android:Theme.DeviceDefault.Dialog">
-        <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
-        <item name="DialogTitleText">Przetwarzanie, proszę czekać.</item>
         <item name="DialogSpotColor">#FFFFFF</item>
         <item name="DialogSpotCount">8</item>
     </style>
