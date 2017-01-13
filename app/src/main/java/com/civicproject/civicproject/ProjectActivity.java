@@ -89,6 +89,7 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         buttonAddComment = (Button) findViewById(R.id.buttonAddComment);
         textViewDate = (TextView) findViewById(R.id.textViewDate);
 
+        String comments = "";
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         editTextSubject.setText(intent.getStringExtra("subject"));
@@ -96,7 +97,14 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
         textViewAuthor.setText(intent.getStringExtra("author"));
         textViewDate.setText(intent.getStringExtra("date"));
         textViewLike.setText(intent.getStringExtra("likes"));
-        textViewComment.setText(intent.getStringExtra("comments"));
+        if(intent.getStringExtra("comments")!=null){
+            comments = intent.getStringExtra("comments");
+            comments = comments.replace(";", "\n");
+            textViewComment.setText(comments);
+        }
+        else {
+            textViewComment.setText(intent.getStringExtra("comments"));
+        }
         likesidss = intent.getStringExtra("likesids");
         author_key = intent.getStringExtra("author_key");
         likesnamestemp = intent.getStringExtra("likesnames");
@@ -155,12 +163,16 @@ public class ProjectActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void onAddCommentButtonClick(View view) {
+        SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
+        String name = myprefs.getString("name", null);
+        String surname = myprefs.getString("surname",null);
+
         String comment = textViewComment.getText() + "";
-        comment = comment + editTextComment.getText() + "; ";
+        comment = comment + name + " " + surname + ": " + editTextComment.getText() + ";";
         String type = "updateProjectComments";
         BackgroundWorker backgroundWorker = new BackgroundWorker(ProjectActivity.this);
         backgroundWorker.execute(type, id, comment);
-        Toast.makeText(getApplicationContext(), "Dodałeś komentarz", Toast.LENGTH_LONG).show();
+        editTextComment.setText("");
     }
 
     @Override
