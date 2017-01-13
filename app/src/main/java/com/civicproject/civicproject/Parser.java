@@ -2,6 +2,7 @@ package com.civicproject.civicproject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 public class Parser extends AsyncTask<Void, Integer, Integer> {
     Context context;
     String data;
+    String taskName;
     public static ArrayList<String> locations = new ArrayList<>(), comments = new ArrayList<>(), likesNames = new ArrayList<>(), likes = new ArrayList<>(), likesids = new ArrayList<>(), ids = new ArrayList<>(), descriptions = new ArrayList<>(), subjects = new ArrayList<>(), projects = new ArrayList<>(), dates = new ArrayList<>(), authors = new ArrayList<>(), authors_keys = new ArrayList<>(),
             images = new ArrayList<>();
 
@@ -28,6 +30,12 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
     public Parser(Context context, String data) {
         this.context = context;
         this.data = data;
+    }
+
+    public Parser(Context context, String data, String taskName) {
+        this.context = context;
+        this.data = data;
+        this.taskName = taskName;
     }
 
     @Override
@@ -47,6 +55,16 @@ public class Parser extends AsyncTask<Void, Integer, Integer> {
     protected void onPostExecute(Integer integer) {
         super.onPostExecute(integer);
         if (integer == 1) {
+            if (taskName != null) {
+                switch (taskName) {
+                    case "RootActivityIntent":
+                        Intent intent = new Intent(context, RootActivity.class);
+                        context.startActivity(intent);
+                        break;
+
+                    default:
+                }
+            }
         } else {
             Toast.makeText(context, "Nie można przetworzyć danych.", Toast.LENGTH_SHORT).show();
         }

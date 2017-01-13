@@ -65,8 +65,6 @@ public class AddProjectActivity extends AppCompatActivity {
     private Camera camera = null;
     private FTPClientFunctions ftpclient = null;
     private static final String TAG = "AddProjectActivity";
-    private static final String api_user = "63501098", api_secret = "pwQhu5WbwEHUqc2S";
-    private static final String API_URL = "https://api.sightengine.com/1.0/nudity.json?api_user=" + api_user + "&api_secret=" + api_secret + "&url=";
     public String nudityResponse = "";
     Parser parser = new Parser();
     String splited[];

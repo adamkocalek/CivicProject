@@ -74,12 +74,12 @@ public class RootActivity extends AppCompatActivity {
                     }
 
                     String projects_url = "http://188.128.220.60/projects.php";
-                    Downloader downloader = new Downloader(RootActivity.this, projects_url);
+                    Downloader downloader = new Downloader(RootActivity.this, projects_url, "RootActivityIntent");
                     downloader.execute();
 
-                    finish();
-                    Intent intent = new Intent(RootActivity.this, RootActivity.class);
-                    startActivity(intent);
+                    //finish();
+                    //Intent intent = new Intent(RootActivity.this, RootActivity.class);
+                    //startActivity(intent);
                 }
 
                 if (menuItem.getItemId() == R.id.nav_idea) {
@@ -162,50 +162,6 @@ public class RootActivity extends AppCompatActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         mDrawerToggle.syncState();
-
-        SharedPreferences myprefs = getSharedPreferences("user", MODE_PRIVATE);
-
-        String username = myprefs.getString("username", null);
-        String type = "getUser";
-
-        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute(type, username);
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-
-        }
-
-        JSONArray ja = null;
-
-        try {
-            ja = new JSONArray(backgroundWorker.tempJSON);
-            JSONObject jo1 = null;
-            for (int i = 0; i < ja.length(); i++) {
-                SharedPreferences sharedPreferences = this.getSharedPreferences("user", MODE_PRIVATE);
-
-                jo1 = ja.getJSONObject(i);
-                String name = jo1.getString("name");
-                String surname = jo1.getString("surname");
-                String age = jo1.getString("age");
-                String password = jo1.getString("password");
-                String author_key = jo1.getString("id");
-                String telephone = jo1.getString("telephone");
-                String email = jo1.getString("email");
-
-                sharedPreferences.edit().putString("name", name).apply();
-                sharedPreferences.edit().putString("surname", surname).apply();
-                sharedPreferences.edit().putString("age", age).apply();
-                sharedPreferences.edit().putString("password", password).apply();
-                sharedPreferences.edit().putString("author_key", author_key).apply();
-                sharedPreferences.edit().putString("telephone", telephone).apply();
-                sharedPreferences.edit().putString("email", email).apply();
-            }
-
-        } catch (JSONException e) {
-            Log.d(TAG, e + "");
-        }
     }
 
     public boolean isOnline() {

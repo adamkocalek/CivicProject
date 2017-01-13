@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -16,6 +17,10 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -452,7 +457,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     inputStream.close();
                     httpURLConnection.disconnect();
                     tempJSON = result;
-                    return "";
+                    return "User";
 
                 } catch (MalformedURLException e) {
                     Log.d(TAG, NetworkException);
@@ -595,13 +600,54 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
         switch (result) {
             case "Login success. Welcome!":
-                final Downloader downloader = new Downloader(context, projects_url);
+                Downloader downloader = new Downloader(context, projects_url);
                 downloader.execute();
 
                 Intent intent = new Intent(context, RootActivity.class);
                 context.startActivity(intent);
                 Toast.makeText(context, "Zalogowano poprawnie.", Toast.LENGTH_SHORT).show();
+
+                // ----------------------- BackgroundWorker Dane Użytkownika ----------------------------
+                SharedPreferences myprefs = context.getSharedPreferences("user", context.MODE_PRIVATE);
+                String username = myprefs.getString("username", null);
+                String type = "getUser";
+
+                BackgroundWorker backgroundWorker = new BackgroundWorker(context);
+                backgroundWorker.execute(type, username);
+                // --------------------------------------------------------------------------------------
                 break;
+
+            case "User":
+                JSONArray ja = null;
+
+                try {
+                    ja = new JSONArray(tempJSON);
+                    JSONObject jo1 = null;
+                    for (int i = 0; i < ja.length(); i++) {
+                        SharedPreferences sharedPreferences = context.getSharedPreferences("user", context.MODE_PRIVATE);
+
+                        jo1 = ja.getJSONObject(i);
+                        String name = jo1.getString("name");
+                        String surname = jo1.getString("surname");
+                        String age = jo1.getString("age");
+                        String password = jo1.getString("password");
+                        String author_key = jo1.getString("id");
+                        String telephone = jo1.getString("telephone");
+                        String email = jo1.getString("email");
+
+                        sharedPreferences.edit().putString("name", name).apply();
+                        sharedPreferences.edit().putString("surname", surname).apply();
+                        sharedPreferences.edit().putString("age", age).apply();
+                        sharedPreferences.edit().putString("password", password).apply();
+                        sharedPreferences.edit().putString("author_key", author_key).apply();
+                        sharedPreferences.edit().putString("telephone", telephone).apply();
+                        sharedPreferences.edit().putString("email", email).apply();
+                    }
+
+                } catch (JSONException e) {
+                    Log.d("RootActivity", e + "");
+                }
+            break;
 
             case "Logins":
                 ((RegisterActivity) context).loginsDownloaded = outputString;

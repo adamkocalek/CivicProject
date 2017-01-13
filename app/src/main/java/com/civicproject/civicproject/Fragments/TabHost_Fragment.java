@@ -34,8 +34,8 @@ public class TabHost_Fragment extends Fragment {
             @Override
             public void run() {
                 tabLayout.setupWithViewPager(viewPager);
-                tabLayout.getTabAt(0).setIcon(R.drawable.home_icon_tab);
-                tabLayout.getTabAt(1).setIcon(R.drawable.flame_icon_tab);
+                //tabLayout.getTabAt(0).setIcon(R.drawable.home_icon_tab);
+                //tabLayout.getTabAt(1).setIcon(R.drawable.flame_icon_tab);
             }
         });
 
@@ -69,9 +69,9 @@ public class TabHost_Fragment extends Fragment {
 
             switch (position) {
                 case 0:
-                    return "";
+                    return "Najnowsze";
                 case 1:
-                    return "";
+                    return "Popularne";
             }
             return null;
         }

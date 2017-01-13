@@ -16,11 +16,18 @@ import java.net.URL;
 public class Downloader extends AsyncTask<Void, Integer, String> {
     Context context;
     String address;
+    String taskName;
 //    ProgressDialog progressDialog;
 
     public Downloader(Context context, String address) {
         this.context = context;
         this.address = address;
+    }
+
+    public Downloader(Context context, String address, String taskName) {
+        this.context = context;
+        this.address = address;
+        this.taskName = taskName;
     }
 
     @Override
@@ -43,8 +50,13 @@ public class Downloader extends AsyncTask<Void, Integer, String> {
 //        progressDialog.dismiss();
 
         if (s != null) {
-            Parser p = new Parser(context, s);
-            p.execute();
+            if (taskName == null) {
+                Parser p = new Parser(context, s);
+                p.execute();
+            } else {
+                Parser p = new Parser(context, s, taskName);
+                p.execute();
+            }
         } else {
             Toast.makeText(context, "Nie można pobrać danych.", Toast.LENGTH_SHORT).show();
         }
