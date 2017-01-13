@@ -71,7 +71,8 @@ public class LocationActivity extends AppCompatActivity {
         final ArrayList<String> locations = new ArrayList<>();
         final ArrayList<String> X = new ArrayList<>();
         final ArrayList<String> Y = new ArrayList<>();
-        final ArrayList<Double> distance_temp = new ArrayList<>();
+        final ArrayList<String> subjects_temp = new ArrayList<>();
+        final ArrayList<String> array_subjects = new ArrayList<>();
 
         for (int i = 0; i < parser.locations.size(); i++) {
             splited = parser.locations.get(i).split("\\s");
@@ -86,14 +87,20 @@ public class LocationActivity extends AppCompatActivity {
         for (int i = 0; i < parser.locations.size(); i++) {
             distance = haversine(locationX, locationY, Double.parseDouble(X.get(i)), Double.parseDouble(Y.get(i)));
             distance *= 1000;
-
+            //sprawdzanie podobnych tematów
+            int word = Levenshtein(subject,subjects_temp.get(i));
+            //sprawdzanie odległości
             if (distance <= 1000) {
-                indexs.add(i);
-                distance_temp.add(distance);
+                if (word <= 3) {
+                    String word_parse = String.valueOf(word);
+                    array_subjects.add(word_parse);
+                    indexs.add(i);
+                }
             }
+
         }
 
-        for (int i = 0; i < distance_temp.size(); i++) {
+        for (int i = 0; i < array_subjects.size(); i++) {
             ids.add(parser.ids.get(indexs.get(i)));
             subjects.add(parser.subjects.get(indexs.get(i)));
             authors.add(parser.authors.get(indexs.get(i)));
@@ -153,6 +160,29 @@ public class LocationActivity extends AppCompatActivity {
         double d = r * c;
         return d;
     }
+
+    public static int Levenshtein(String a, String b) {
+        a = a.toLowerCase();
+        b = b.toLowerCase();
+        // i == 0
+        int [] costs = new int [b.length() + 1];
+        for (int j = 0; j < costs.length; j++)
+            costs[j] = j;
+        for (int i = 1; i <= a.length(); i++) {
+            // j == 0; nw = lev(i - 1, j)
+            costs[0] = i;
+            int nw = i - 1;
+            for (int j = 1; j <= b.length(); j++) {
+                int cj = Math.min(1 + Math.min(costs[j], costs[j - 1]), a.charAt(i - 1) == b.charAt(j - 1) ? nw : nw + 1);
+                nw = costs[j];
+                costs[j] = cj;
+            }
+        }
+        return costs[b.length()];
+    }
+
+
+
 }
 
 
