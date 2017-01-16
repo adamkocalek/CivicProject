@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -26,6 +27,7 @@ import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -148,7 +150,7 @@ public class AddProjectActivity extends AppCompatActivity {
         };
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
 //            && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
 
@@ -237,67 +239,62 @@ public class AddProjectActivity extends AppCompatActivity {
                         if (!nudityResponse.equals("")) {
                             try {
                                 if (unpackJSON(nudityResponse)) {
-                                    if (!locationX.isNaN() && !locationY.isNaN()) {
-                                        if (locationX <= 51.843678 && locationX >= 51.690382 && locationY <= 19.619980 && locationY >= 19.324036) {
+                                    if (!textViewLocation.getText().equals(" ")) {
+                                        final ArrayList<String> locations = new ArrayList<>(), X = new ArrayList<>(), Y = new ArrayList<>();
 
-                                            final ArrayList<String> locations = new ArrayList<>(), X = new ArrayList<>(), Y = new ArrayList<>();
+                                        for (int i = 0; i < parser.locations.size(); i++) {
+                                            splited = parser.locations.get(i).split("\\s");
+                                            locations.add(parser.locations.get(i));
+                                            X.add(splited[0]);
+                                            Y.add(splited[1]);
+                                        }
 
-                                            for (int i = 0; i < parser.locations.size(); i++) {
-                                                splited = parser.locations.get(i).split("\\s");
-                                                locations.add(parser.locations.get(i));
-                                                X.add(splited[0]);
-                                                Y.add(splited[1]);
+                                        boolean isNearly = false;
+                                        for (int i = 0; i < parser.locations.size(); i++) {
+                                            distance = haversine(locationX, locationY, Double.parseDouble(X.get(i)), Double.parseDouble(Y.get(i)));
+                                            distance *= 1000;
+                                            if (distance <= 1000) {
+                                                isNearly = true;
                                             }
+                                        }
 
-                                            boolean isNearly = false;
-                                            for (int i = 0; i < parser.locations.size(); i++) {
-                                                distance = haversine(locationX, locationY, Double.parseDouble(X.get(i)), Double.parseDouble(Y.get(i)));
-                                                distance *= 1000;
-                                                if (distance <= 1000) {
-                                                    isNearly = true;
-                                                }
-                                            }
-
-                                            if (isNearly) {
-                                                String subject_temp = editTextSubject.getText().toString();
-                                                String description_temp = editTextDesctiption.getText().toString();
-                                                String author_temp = textViewAuthor.getText().toString();
-                                                String date_temp = textViewDate.getText().toString();
-                                                String type_temp = "addProject";
-                                                String image_temp = ftpUploadImage();
-                                                String location_temp = locationX + " " + locationY;
-                                                Intent intent = new Intent(AddProjectActivity.this, LocationActivity.class);
-                                                intent.putExtra("doubleValue_e1", locationX);
-                                                intent.putExtra("doubleValue_e2", locationY);
-                                                intent.putExtra("subject", subject_temp);
-                                                intent.putExtra("description", description_temp);
-                                                intent.putExtra("author", author_temp);
-                                                intent.putExtra("date", date_temp);
-                                                intent.putExtra("location", location_temp);
-                                                intent.putExtra("type", type_temp);
-                                                intent.putExtra("image", image_temp);
-                                                intent.putExtra("tempAuthorKey", tempAuthorKey);
-                                                startActivity(intent);
-                                            } else {
-                                                String subject = editTextSubject.getText().toString();
-                                                String description = editTextDesctiption.getText().toString();
-                                                String author = textViewAuthor.getText().toString();
-                                                String date = textViewDate.getText().toString();
-                                                String location = locationX + " " + locationY;
-                                                String type = "addProject";
-                                                String image = ftpUploadImage();
-                                                BackgroundWorker backgroundWorker = new BackgroundWorker(AddProjectActivity.this);
-                                                backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey, image);
-                                                editTextSubject.setText("");
-                                                editTextDesctiption.setText("");
-                                                Toast.makeText(getApplicationContext(), "Projekt dodany do poczekalni, będzie widoczny po zatwierdzeniu przez moderatora.", Toast.LENGTH_LONG).show();
-                                                onBackPressed();
-                                            }
+                                        if (isNearly) {
+                                            String subject_temp = editTextSubject.getText().toString();
+                                            String description_temp = editTextDesctiption.getText().toString();
+                                            String author_temp = textViewAuthor.getText().toString();
+                                            String date_temp = textViewDate.getText().toString();
+                                            String type_temp = "addProject";
+                                            String image_temp = ftpUploadImage();
+                                            String location_temp = locationX + " " + locationY;
+                                            Intent intent = new Intent(AddProjectActivity.this, LocationActivity.class);
+                                            intent.putExtra("doubleValue_e1", locationX);
+                                            intent.putExtra("doubleValue_e2", locationY);
+                                            intent.putExtra("subject", subject_temp);
+                                            intent.putExtra("description", description_temp);
+                                            intent.putExtra("author", author_temp);
+                                            intent.putExtra("date", date_temp);
+                                            intent.putExtra("location", location_temp);
+                                            intent.putExtra("type", type_temp);
+                                            intent.putExtra("image", image_temp);
+                                            intent.putExtra("tempAuthorKey", tempAuthorKey);
+                                            startActivity(intent);
                                         } else {
-                                            Toast.makeText(getApplicationContext(), "Znajdujesz się poza Łodzią twój projekt nie może zostać dodany.", Toast.LENGTH_LONG).show();
+                                            String subject = editTextSubject.getText().toString();
+                                            String description = editTextDesctiption.getText().toString();
+                                            String author = textViewAuthor.getText().toString();
+                                            String date = textViewDate.getText().toString();
+                                            String location = locationX + " " + locationY;
+                                            String type = "addProject";
+                                            String image = ftpUploadImage();
+                                            BackgroundWorker backgroundWorker = new BackgroundWorker(AddProjectActivity.this);
+                                            backgroundWorker.execute(type, author, subject, description, location, date, tempAuthorKey, image);
+                                            editTextSubject.setText("");
+                                            editTextDesctiption.setText("");
+                                            Toast.makeText(getApplicationContext(), "Projekt dodany do poczekalni, będzie widoczny po zatwierdzeniu przez moderatora.", Toast.LENGTH_LONG).show();
+                                            onBackPressed();
                                         }
                                     } else {
-                                        Toast.makeText(getApplicationContext(), "Musisz poczekać na znalezienie twojej lokalizacji...", Toast.LENGTH_LONG).show();
+                                        openDialog();
                                     }
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Zdjęcie niezgodne z regulaminem.", Toast.LENGTH_LONG).show();
@@ -434,4 +431,34 @@ public class AddProjectActivity extends AppCompatActivity {
         android.net.NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
+
+    private void openDialog() {
+        LayoutInflater inflater = LayoutInflater.from(AddProjectActivity.this);
+        View subView = inflater.inflate(R.layout.dialog_layout, null);
+        final EditText subEditText = (EditText) subView.findViewById(R.id.dialogEditText);
+        Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Błąd Lokalizacji");
+        builder.setMessage("Wystąpił‚ błąd podczas odczytywania lokalizacji...");
+        builder.setView(subView);
+        AlertDialog alertDialog = builder.create();
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                textViewLocation.setText(subEditText.getText().toString());
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(AddProjectActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        builder.show();
+    }
+
 }

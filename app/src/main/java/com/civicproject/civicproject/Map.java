@@ -12,6 +12,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.clustering.ClusterItem;
 
 import java.util.Random;
 
@@ -93,6 +94,9 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
             }
         });
     }
+
+
+
 
     /**
      * Manipulates the map once available.
