@@ -50,6 +50,7 @@ import java.util.Locale;
 
 import static android.view.View.X;
 import static android.view.View.Y;
+import static com.civicproject.civicproject.LocationActivity.Levenshtein;
 import static com.civicproject.civicproject.LocationActivity.haversine;
 
 public class AddProjectActivity extends AppCompatActivity {
@@ -254,7 +255,10 @@ public class AddProjectActivity extends AppCompatActivity {
                                             distance = haversine(locationX, locationY, Double.parseDouble(X.get(i)), Double.parseDouble(Y.get(i)));
                                             distance *= 1000;
                                             if (distance <= 1000) {
-                                                isNearly = true;
+                                                int word = Levenshtein(editTextSubject.getText() + "", parser.subjects.get(i));
+                                                if (word <= 3) {
+                                                    isNearly = true;
+                                                }
                                             }
                                         }
 

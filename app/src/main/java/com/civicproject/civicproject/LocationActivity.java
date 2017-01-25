@@ -71,6 +71,7 @@ public class LocationActivity extends AppCompatActivity {
         final ArrayList<String> locations = new ArrayList<>();
         final ArrayList<String> X = new ArrayList<>();
         final ArrayList<String> Y = new ArrayList<>();
+        final ArrayList<Double> distance_temp = new ArrayList<>();
         final ArrayList<String> subjects_temp = new ArrayList<>();
         final ArrayList<String> array_subjects = new ArrayList<>();
 
@@ -83,24 +84,26 @@ public class LocationActivity extends AppCompatActivity {
 
         // double lat1 = 51.731916, lon1 = 19.529735;
         //distance = haversine(lat1, lon1, lat2, lon2);
-
+        int word = 0;
         for (int i = 0; i < parser.locations.size(); i++) {
             distance = haversine(locationX, locationY, Double.parseDouble(X.get(i)), Double.parseDouble(Y.get(i)));
             distance *= 1000;
-            //sprawdzanie podobnych tematów
-            int word = Levenshtein(subject,subjects_temp.get(i));
             //sprawdzanie odległości
             if (distance <= 1000) {
+
+                //sprawdzanie podobnych tematów
+                word = Levenshtein(subject, parser.subjects.get(i));
+
                 if (word <= 3) {
-                    String word_parse = String.valueOf(word);
-                    array_subjects.add(word_parse);
+                    distance_temp.add(distance);
                     indexs.add(i);
                 }
             }
 
         }
 
-        for (int i = 0; i < array_subjects.size(); i++) {
+
+        for (int i = 0; i < distance_temp.size(); i++) {
             ids.add(parser.ids.get(indexs.get(i)));
             subjects.add(parser.subjects.get(indexs.get(i)));
             authors.add(parser.authors.get(indexs.get(i)));
@@ -165,7 +168,7 @@ public class LocationActivity extends AppCompatActivity {
         a = a.toLowerCase();
         b = b.toLowerCase();
         // i == 0
-        int [] costs = new int [b.length() + 1];
+        int[] costs = new int[b.length() + 1];
         for (int j = 0; j < costs.length; j++)
             costs[j] = j;
         for (int i = 1; i <= a.length(); i++) {
@@ -180,7 +183,6 @@ public class LocationActivity extends AppCompatActivity {
         }
         return costs[b.length()];
     }
-
 
 
 }
